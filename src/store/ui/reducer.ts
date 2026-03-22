@@ -19,3 +19,14 @@ export const updateTablePositionAction = (
   const { tableId, position } = action.payload;
   state.tablePositions[tableId] = position;
 };
+
+export const updateTableColorAction = (
+  state: IUIState,
+  action: PayloadAction<{
+    tableId: string;
+    color: string;
+  }>,
+) => {
+  const { tableId, color } = action.payload;
+  state.tableColors[tableId] = color;
+};

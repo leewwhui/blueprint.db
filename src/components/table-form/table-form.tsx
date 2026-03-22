@@ -27,11 +27,8 @@ interface TableFormProps extends React.PropsWithChildren {
 
 export const TableForm: FC<TableFormProps> = (props) => {
   const { children } = props;
-
   const [open, setOpen] = useState(false);
-
   const [tableName, setTableName] = useState(props.tableName);
-
   const [columns, setColumns] = useState<IColumn[]>(props.columns);
 
   const onColumnChange = (column: IColumn) => {

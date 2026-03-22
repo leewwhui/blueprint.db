@@ -1,10 +1,11 @@
 import { useTables } from "@/store/schema/selector";
-import { useSelectedTable } from "@/store/ui/selector";
+import { useSelectedTable, useTableColor } from "@/store/ui/selector";
 import { useDispatch } from "react-redux";
 import { selectTable } from "@/store/ui/slice";
 import { useReactFlow, useStoreApi } from "@xyflow/react";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { DefaultTableTheme } from "@/lib/colors";
 
 export const Sidebar = () => {
   const tables = useTables();
@@ -12,6 +13,7 @@ export const Sidebar = () => {
   const dispatch = useDispatch();
   const { setCenter } = useReactFlow();
   const selectedTable = useSelectedTable();
+  const tableColors = useTableColor();
 
   useEffect(() => {
     if (selectedTable?.id) {
@@ -41,11 +43,14 @@ export const Sidebar = () => {
   };
 
   return (
-    <aside className="w-(--side-width) border-r shadow p-3 flex flex-col">
+    <aside className="w-(--side-width) border-r shadow p-3 flex flex-col gap-1">
       {tables.map((table) => (
         <Button
           key={table.id}
-          className="w-full flex justify-start"
+          className="w-full border-l-4 rounded truncate line-clamp-1 text-start"
+          style={{
+            borderLeftColor: tableColors[table.id] || DefaultTableTheme,
+          }}
           variant={selectedTable?.id === table.id ? "secondary" : "ghost"}
           size="lg"
           onClick={() => onSelectTable(table.id)}

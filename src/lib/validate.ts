@@ -1,13 +1,13 @@
-import type { IField } from "@/contracts/schema";
+import type { IColumn } from "@/contracts/schema";
 
-export const validateTable = (name: string, fields: IField[]) => {
+export const validateTable = (name: string, columns: IColumn[]) => {
   // Validate table name
   if (!name || name.trim() === "") {
     return { valid: false, message: "Table name cannot be empty." };
   }
 
   // Validate each field
-  for (const field of fields) {
+  for (const field of columns) {
     if (!field.name || field.name.trim() === "") {
       return { valid: false, message: "Field name cannot be empty." };
     }
@@ -17,7 +17,7 @@ export const validateTable = (name: string, fields: IField[]) => {
   }
 
   // Validate primary key constraints
-  const primaryKeys = fields.filter((field) => field.isPrimary);
+  const primaryKeys = columns.filter((column) => column.isPrimary);
 
   if (primaryKeys.length === 0) {
     return { valid: false, message: "At least one primary key is required." };
