@@ -1,4 +1,4 @@
-import { NewTableButton } from "./new-table-button";
+import { NewTable } from "./new-table";
 
 export const NoTable = () => {
   return (
@@ -7,7 +7,7 @@ export const NoTable = () => {
       <p className="text-gray-500">
         Start by adding a new table from the sidebar.
       </p>
-      <NewTableButton />
+      <NewTable />
     </div>
   );
 };

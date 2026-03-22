@@ -11,14 +11,14 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar";
 import { ExportSQL } from "./export-sql";
-import { NewTableButton } from "../new-table-button";
 import { Separator } from "../ui/separator";
+import { NewTable } from "../new-table";
 
 export const Navbar = () => {
   return (
     <header className="h-(--nav-height) border-b shadow flex items-center px-10 justify-between">
       <div className="flex gap-2">
-        <NewTableButton />
+        <NewTable />
 
         <Button variant="outline">
           <IconDatabaseImport />

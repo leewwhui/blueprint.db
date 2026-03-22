@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { addTable } from "@/store/schema/slice";
 import type { IColumn } from "@/contracts/schema";
 
-export const NewTableButton = () => {
+export const NewTable = () => {
   const createDefaultColumn = () => {
     return {
       id: nanoid(),
