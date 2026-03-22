@@ -1,3 +1,5 @@
+import { Editor } from "./pages/editor";
+
 export const App = () => {
-  return <div className="bg-orange-300">Hello world</div>;
+  return <Editor />;
 };
