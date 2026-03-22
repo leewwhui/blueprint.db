@@ -1,14 +1,18 @@
+import type { TableNodeData } from "@/contracts/schema";
 import { useTables } from "@/store/schema/selector";
 import { useTablePosition } from "@/store/ui/selector";
-import type { Node } from "@xyflow/react";
-import { useMemo } from "react";
+import { useNodesState, type Node } from "@xyflow/react";
+import { useEffect } from "react";
 
-export const useTableNodes = (): Node[] => {
+export const useTableNodes = () => {
   const tables = useTables();
   const tablePositions = useTablePosition();
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node<TableNodeData>>(
+    [],
+  );
 
-  return useMemo(() => {
-    return tables.map((table) => {
+  useEffect(() => {
+    const aggregatedNodes = tables.map((table) => {
       const position = tablePositions[table.id];
 
       return {
@@ -22,5 +26,9 @@ export const useTableNodes = (): Node[] => {
         type: "tableNode",
       };
     });
+
+    setNodes(aggregatedNodes);
   }, [tables, tablePositions]);
+
+  return { nodes, setNodes, onNodesChange };
 };

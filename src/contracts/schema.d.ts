@@ -9,16 +9,18 @@ export interface IColumn {
   isUnique: boolean;
 }
 
+export interface IRelation {
+  id: string;
+  sourceTableId: string;
+  sourceColumnId: string;
+  targetTableId: string;
+  targetColumnId: string;
+}
+
 export interface ITable {
   id: string;
   name: string;
   columns: IColumn[];
 }
-
-// interface TableNodeData extends Record<string, unknown> {
-//   id: string;
-//   name: string;
-//   columns: IColumn[];
-// }
 
 export type TableNodeData = ITable & Record<string, unknown>;

@@ -1,6 +1,7 @@
-import type { ITable } from "@/contracts/schema";
+import type { IRelation, ITable } from "@/contracts/schema";
 import { createSlice } from "@reduxjs/toolkit";
 import {
+  addRelationAction,
   addTableAction,
   deleteTableAction,
   updateTableAction,
@@ -10,6 +11,7 @@ import { nanoid } from "nanoid";
 
 export interface ISchemaState {
   tables: ITable[];
+  relations: IRelation[];
 }
 
 const initialState: ISchemaState = {
@@ -29,6 +31,7 @@ const initialState: ISchemaState = {
       ],
     },
   ],
+  relations: [],
 };
 
 export const schemaSlice = createSlice({
@@ -38,7 +41,9 @@ export const schemaSlice = createSlice({
     addTable: addTableAction,
     updateTable: updateTableAction,
     deleteTable: deleteTableAction,
+    addRelation: addRelationAction,
   },
 });
 
-export const { addTable, updateTable, deleteTable } = schemaSlice.actions;
+export const { addTable, updateTable, deleteTable, addRelation } =
+  schemaSlice.actions;

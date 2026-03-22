@@ -1,6 +1,6 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { ISchemaState } from "./slice";
-import type { ITable } from "@/contracts/schema";
+import type { IRelation, ITable } from "@/contracts/schema";
 
 export const addTableAction = (
   state: ISchemaState,
@@ -26,4 +26,11 @@ export const deleteTableAction = (
 ) => {
   const { tableId } = action.payload;
   state.tables = state.tables.filter((t) => t.id !== tableId);
+};
+
+export const addRelationAction = (
+  state: ISchemaState,
+  action: PayloadAction<IRelation>,
+) => {
+  state.relations.push(action.payload);
 };
