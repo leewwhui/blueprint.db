@@ -1,32 +1,51 @@
-import { useTableNodes } from "@/hooks/use-table-nodes";
 import {
   ReactFlow,
   Background,
   Controls,
   type Viewport,
+  useNodesState,
   type Node,
-  type NodeChange,
 } from "@xyflow/react";
 import { TableNode } from "./nodes/table-node";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NoTable } from "./no-table";
+import { useTables } from "@/store/schema/selector";
+import { useTablePosition } from "@/store/ui/selector";
+import type { TableNodeData } from "@/contracts/schema";
 import { updateTablePosition } from "@/store/ui/slice";
 
 export const CanvasEditor = () => {
-  const nodes = useTableNodes();
+  const tables = useTables();
+  const tablePositions = useTablePosition();
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node<TableNodeData>>(
+    [],
+  );
   const dispatch = useDispatch();
   const [viewport, setViewport] = useState<Viewport>({ x: 0, y: 0, zoom: 1 });
 
-  const onNodesChange = (changes: NodeChange<Node>[]) => {
-    changes.forEach((change: NodeChange) => {
-      if (change.type !== "position" || !change.position) return;
+  useEffect(() => {
+    const aggregatedNodes = tables.map((table) => {
+      const position = tablePositions[table.id];
 
-      const position = {
-        tableId: change.id,
-        position: change.position,
+      return {
+        id: table.id,
+        position: position || { x: 0, y: 0 },
+        data: {
+          id: table.id,
+          name: table.name,
+          columns: table.columns,
+        },
+        type: "tableNode",
       };
+    });
 
+    setNodes(aggregatedNodes);
+  }, [tables, tablePositions]);
+
+  const updateNodesPosition = (nodes: Node<TableNodeData>[]) => {
+    nodes.forEach((node) => {
+      const position = { tableId: node.id, position: node.position };
       dispatch(updateTablePosition(position));
     });
   };
@@ -41,6 +60,7 @@ export const CanvasEditor = () => {
         nodeTypes={{
           tableNode: TableNode,
         }}
+        onNodeDragStop={(event, node, nodes) => updateNodesPosition(nodes)}
       >
         <Background />
         <Controls />

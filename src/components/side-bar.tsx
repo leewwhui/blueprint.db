@@ -14,10 +14,10 @@ export const Sidebar = () => {
   const selectedTable = useSelectedTable();
 
   useEffect(() => {
-    if (selectedTable) {
+    if (selectedTable?.id) {
       focusTable(selectedTable.id);
     }
-  }, [selectedTable]);
+  }, [selectedTable?.id]);
 
   const focusTable = (tableId: string) => {
     const { nodeLookup } = store.getState();

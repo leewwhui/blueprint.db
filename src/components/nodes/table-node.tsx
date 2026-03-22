@@ -56,7 +56,7 @@ export const TableNode = (props: NodeProps) => {
       {columns.map((column) => (
         <div
           key={column.id}
-          className="px-2 py-1 flex items-center justify-between bg-accent relative"
+          className="px-2 py-1 flex items-center justify-between bg-accent relative border-t"
         >
           <div>{column.name}</div>
 

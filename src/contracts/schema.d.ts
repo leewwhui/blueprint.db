@@ -13,5 +13,12 @@ export interface ITable {
   id: string;
   name: string;
   columns: IColumn[];
-  // position: { x: number; y: number };
 }
+
+// interface TableNodeData extends Record<string, unknown> {
+//   id: string;
+//   name: string;
+//   columns: IColumn[];
+// }
+
+export type TableNodeData = ITable & Record<string, unknown>;

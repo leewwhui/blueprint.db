@@ -21,17 +21,13 @@ export const NewTableButton = () => {
   const dispatch = useDispatch();
 
   const onTableSaved = (tableName: string, columns: IColumn[]) => {
-    dispatch(
-      addTable({
-        name: tableName,
-        columns,
-        id: nanoid(),
-        position: {
-          x: 0,
-          y: 0,
-        },
-      }),
-    );
+    const table = {
+      name: tableName,
+      columns,
+      id: nanoid(),
+    };
+
+    dispatch(addTable(table));
   };
 
   return (
