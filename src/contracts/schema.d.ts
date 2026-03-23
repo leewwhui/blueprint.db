@@ -24,3 +24,4 @@ export interface ITable {
 }
 
 export type TableNodeData = ITable & Record<string, unknown>;
+export type TableFormValues = Omit<ITable, "id">;

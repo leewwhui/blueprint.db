@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import { FieldType } from "@/lib/field-type";
 import { useDispatch } from "react-redux";
 import { addTable } from "@/store/schema/slice";
-import type { ITable } from "@/contracts/schema";
+import type { TableFormValues } from "@/contracts/schema";
 
 export const NewTable = () => {
   const createDefaultColumn = () => {
@@ -13,14 +13,16 @@ export const NewTable = () => {
       id: nanoid(),
       name: "ID",
       type: FieldType.INT,
-      isPrimary: true,
-      isNullable: false,
-      isUnique: true,
+      constraints: {
+        PRIMARY_KEY: true,
+        NOT_NULL: true,
+        UNIQUE: false,
+      },
     };
   };
   const dispatch = useDispatch();
 
-  const onTableSaved = (data: Omit<ITable, "id">) => {
+  const onTableSaved = (data: TableFormValues) => {
     const table = {
       name: data.name,
       columns: data.columns,

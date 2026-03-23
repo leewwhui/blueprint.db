@@ -3,14 +3,12 @@ import { schemaSlice } from "./schema/slice";
 import { schemaListener } from "./schema/listener";
 import { uiSlice } from "./ui/slice";
 import { historyMiddleware } from "./middlewares/history-middleware";
-import { uiListener } from "./ui/listener";
 import { historySlice } from "./history/slice";
 import { historyListener } from "./history/listener";
 
 const listenerMiddleware = createListenerMiddleware();
 
 schemaListener(listenerMiddleware);
-uiListener(listenerMiddleware);
 historyListener(listenerMiddleware);
 
 export const store = configureStore({

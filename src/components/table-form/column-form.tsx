@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import type { IColumn, ITable } from "@/contracts/schema";
+import type { IColumn, ITable, TableFormValues } from "@/contracts/schema";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { ErrorLabel } from "./error-label";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
@@ -32,8 +32,6 @@ interface ColumnFormProps {
   index: number;
   onColumnDelete: (index: number) => void;
 }
-
-type TableFormValues = Omit<ITable, "id">;
 
 export const ColumnForm: FC<ColumnFormProps> = (props) => {
   const { column, onColumnDelete, index } = props;
