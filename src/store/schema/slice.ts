@@ -6,7 +6,7 @@ import {
   deleteTableAction,
   updateTableAction,
 } from "./reducer";
-import { FieldType } from "@/lib/field-type";
+import { ColumnConstraints, FieldType } from "@/lib/field-type";
 import { nanoid } from "nanoid";
 
 export interface ISchemaState {
@@ -24,9 +24,11 @@ const initialState: ISchemaState = {
           id: nanoid(),
           name: "Id",
           type: FieldType.INT,
-          isPrimary: true,
-          isNullable: false,
-          isUnique: true,
+          constraints: {
+            [ColumnConstraints.PRIMARY_KEY]: true,
+            [ColumnConstraints.NOT_NULL]: false,
+            [ColumnConstraints.UNIQUE]: false,
+          },
         },
       ],
     },

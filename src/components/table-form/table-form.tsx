@@ -8,61 +8,62 @@ import {
 } from "@/components/ui/drawer";
 import { IconPlus } from "@tabler/icons-react";
 import { useState, type FC } from "react";
-import { FieldType } from "@/lib/field-type";
+import { ColumnConstraints, FieldType } from "@/lib/field-type";
 import { nanoid } from "nanoid";
-import { validateTable } from "@/lib/validate";
-import { toast } from "sonner";
 import { ColumnForm } from "./column-form";
-import type { IColumn } from "@/contracts/schema";
+import type { IColumn, ITable } from "@/contracts/schema";
 import { Button } from "@/components/ui/button";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
+import {
+  FormProvider,
+  useFieldArray,
+  useForm,
+  type SubmitHandler,
+} from "react-hook-form";
+import { ErrorLabel } from "./error-label";
 
 interface TableFormProps extends React.PropsWithChildren {
   tableName: string;
   columns: IColumn[];
-  onTableSaved: (tableName: string, columns: IColumn[]) => void;
+  onTableSaved: (table: Omit<ITable, "id">) => void;
 }
 
 export const TableForm: FC<TableFormProps> = (props) => {
-  const { children } = props;
+  const { children, tableName, columns, onTableSaved } = props;
   const [open, setOpen] = useState(false);
-  const [tableName, setTableName] = useState(props.tableName);
-  const [columns, setColumns] = useState<IColumn[]>(props.columns);
 
-  const onColumnChange = (column: IColumn) => {
-    setColumns(columns.map((c) => (c.id === column.id ? column : c)));
-  };
+  const methods = useForm<Omit<ITable, "id">>({
+    defaultValues: {
+      name: tableName,
+      columns: columns,
+    },
+  });
 
-  const onColumnDelete = (columnId: string) => {
-    setColumns(columns.filter((column) => column.id !== columnId));
-  };
+  const errors = methods.formState.errors;
 
-  const onSaveForm = () => {
-    const validationResult = validateTable(tableName, columns);
-
-    if (!validationResult.valid) {
-      return toast.error(validationResult.message);
-    }
-
-    setOpen(false);
-
-    props.onTableSaved(tableName, columns);
-  };
+  const { fields, append, remove } = useFieldArray({
+    control: methods.control,
+    name: "columns",
+  });
 
   const createDefaultColumn = () => {
-    setColumns([
-      ...columns,
-      {
-        id: nanoid(),
-        name: "Default Column",
-        type: FieldType.INT,
-        isPrimary: false,
-        isNullable: false,
-        isUnique: false,
+    append({
+      id: nanoid(),
+      name: "Default",
+      type: FieldType.INT,
+      constraints: {
+        [ColumnConstraints.PRIMARY_KEY]: false,
+        [ColumnConstraints.NOT_NULL]: false,
+        [ColumnConstraints.UNIQUE]: false,
       },
-    ]);
+    });
+  };
+
+  const onSubmit: SubmitHandler<Omit<ITable, "id">> = (data) => {
+    onTableSaved(data);
+    setOpen(false);
   };
 
   return (
@@ -72,39 +73,52 @@ export const TableForm: FC<TableFormProps> = (props) => {
         <DrawerHeader>
           <DrawerTitle>New Table</DrawerTitle>
         </DrawerHeader>
-        <div className="flex flex-col gap-3 px-4">
-          <Field>
-            <FieldLabel className="font-bold">Table Name</FieldLabel>
-            <Input
-              type="text"
-              placeholder="Enter table name"
-              value={tableName}
-              onChange={(e) => setTableName(e.target.value)}
-            />
-          </Field>
+        <FormProvider {...methods}>
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            className="flex flex-col justify-between h-full"
+          >
+            <div className="flex flex-col gap-3 px-4">
+              <Field>
+                <FieldLabel className="font-bold">Table Name</FieldLabel>
+                <Input
+                  {...methods.register("name", {
+                    required: "Table name is required",
+                  })}
+                  type="text"
+                  placeholder="Enter table name"
+                />
+                {errors.name && <ErrorLabel>{errors.name.message}</ErrorLabel>}
+              </Field>
 
-          <Separator />
+              <Separator />
 
-          <FieldLabel className="font-bold">Columns</FieldLabel>
+              <FieldLabel className="font-bold">Columns</FieldLabel>
 
-          {columns.map((column) => (
-            <ColumnForm
-              key={column.id}
-              column={column}
-              onColumnDelete={onColumnDelete}
-              onColumnChange={onColumnChange}
-            />
-          ))}
+              {fields.map((column, index) => (
+                <ColumnForm
+                  key={column.id}
+                  index={index}
+                  column={column}
+                  onColumnDelete={remove}
+                />
+              ))}
 
-          <Button variant="outline" onClick={createDefaultColumn}>
-            <IconPlus />
-            Add Column
-          </Button>
-        </div>
-        <DrawerFooter>
-          <Button variant="outline">Cancel</Button>
-          <Button onClick={onSaveForm}>Save</Button>
-        </DrawerFooter>
+              <Button
+                variant="outline"
+                onClick={createDefaultColumn}
+                type="button"
+              >
+                <IconPlus />
+                Add Column
+              </Button>
+            </div>
+            <DrawerFooter>
+              <Button variant="outline">Cancel</Button>
+              <Button type="submit">Save</Button>
+            </DrawerFooter>
+          </form>
+        </FormProvider>
       </DrawerContent>
     </Drawer>
   );

@@ -3,6 +3,7 @@ import { IconKey } from "@tabler/icons-react";
 import type { FC } from "react";
 import { ColumnHandle } from "./column-handle";
 import { Position, useConnection } from "@xyflow/react";
+import { ColumnConstraints } from "@/lib/field-type";
 
 interface ColumnNodeProps {
   tableId: string;
@@ -14,6 +15,7 @@ export const ColumnNode: FC<ColumnNodeProps> = (props) => {
   const connection = useConnection();
 
   const isTarget = connection.inProgress && connection.fromNode.id !== tableId;
+  const constraints = column.constraints;
 
   return (
     <div
@@ -23,7 +25,7 @@ export const ColumnNode: FC<ColumnNodeProps> = (props) => {
       <p className="truncate line-clamp-1">{column.name}</p>
 
       <div className="flex items-center gap-1">
-        {column.isPrimary && <IconKey size="16" />}
+        {constraints?.[ColumnConstraints.PRIMARY_KEY] && <IconKey size="16" />}
         <div className="text-xs">{column.type}</div>
       </div>
 

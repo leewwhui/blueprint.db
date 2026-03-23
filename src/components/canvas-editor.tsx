@@ -11,23 +11,36 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { NoTable } from "./no-table";
 import type { TableNodeData } from "@/contracts/schema";
-import { updateTablePosition } from "@/store/ui/slice";
 import { addRelation } from "@/store/schema/slice";
 import { nanoid } from "nanoid";
 import { useTableNodes } from "@/hooks/use-table-nodes";
 import { useTableRelations } from "@/hooks/use-table-relations";
+import { updateTablePosition } from "@/store/ui/slice";
+import { useTablePosition } from "@/store/ui/selector";
 
 export const CanvasEditor = () => {
   const { nodes, onNodesChange } = useTableNodes();
   const { edges, onEdgesChange } = useTableRelations();
 
   const dispatch = useDispatch();
+  const positions = useTablePosition();
   const [viewport, setViewport] = useState<Viewport>({ x: 0, y: 0, zoom: 1 });
 
   const updateNodesPosition = (nodes: Node<TableNodeData>[]) => {
     nodes.forEach((node) => {
       const position = { tableId: node.id, position: node.position };
-      dispatch(updateTablePosition(position));
+      const oldPosition = { tableId: node.id, position: positions[node.id] };
+
+      const moveCommand = {
+        ...updateTablePosition({ tableId: node.id, position: node.position }),
+        meta: {
+          isCommand: true,
+          future: position,
+          past: oldPosition,
+        },
+      };
+
+      dispatch(moveCommand);
     });
   };
 

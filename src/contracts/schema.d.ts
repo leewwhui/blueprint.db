@@ -1,12 +1,12 @@
-import type { FieldType } from "@/lib/field-type";
+import type { FieldType, ColumnConstraints } from "@/lib/field-type";
 
 export interface IColumn {
   id: string;
   name: string;
   type: FieldType;
-  isPrimary: boolean;
-  isNullable: boolean;
-  isUnique: boolean;
+  constraints: {
+    [key in ColumnConstraints]: boolean;
+  };
 }
 
 export interface IRelation {

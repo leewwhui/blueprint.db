@@ -4,7 +4,7 @@ import { TableForm } from "../table-form/table-form";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
 import { deleteTable, updateTable } from "@/store/schema/slice";
-import type { IColumn } from "@/contracts/schema";
+import type { IColumn, ITable } from "@/contracts/schema";
 import { ColumnNode } from "./column-node";
 import { useTableColor } from "@/store/ui/selector";
 import { DefaultTableTheme } from "@/lib/colors";
@@ -18,11 +18,11 @@ export const TableNode = (props: NodeProps) => {
   const columns = data.columns as IColumn[];
   const color = tableColors[id] || DefaultTableTheme;
 
-  const onTableSaved = (tableName: string, columns: IColumn[]) => {
+  const onTableSaved = (data: Omit<ITable, "id">) => {
     const table = {
       id,
-      name: tableName,
-      columns,
+      name: data.name,
+      columns: data.columns,
     };
 
     dispatch(updateTable(table));

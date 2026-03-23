@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 import { FieldType } from "@/lib/field-type";
 import { useDispatch } from "react-redux";
 import { addTable } from "@/store/schema/slice";
-import type { IColumn } from "@/contracts/schema";
+import type { ITable } from "@/contracts/schema";
 
 export const NewTable = () => {
   const createDefaultColumn = () => {
@@ -20,10 +20,10 @@ export const NewTable = () => {
   };
   const dispatch = useDispatch();
 
-  const onTableSaved = (tableName: string, columns: IColumn[]) => {
+  const onTableSaved = (data: Omit<ITable, "id">) => {
     const table = {
-      name: tableName,
-      columns,
+      name: data.name,
+      columns: data.columns,
       id: nanoid(),
     };
 
