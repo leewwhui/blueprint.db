@@ -4,11 +4,10 @@ import { TableForm } from "../table-form/table-form";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
 import { deleteTable, updateTable } from "@/store/schema/slice";
-import type { IColumn, ITable, TableFormValues } from "@/contracts/schema";
+import type { IColumn, TableFormValues } from "@/contracts/schema";
 import { ColumnNode } from "./column-node";
 import { useTableColor } from "@/store/ui/selector";
 import { DefaultTableTheme } from "@/lib/colors";
-import React from "react";
 
 export const TableNode = (props: NodeProps) => {
   const dispatch = useDispatch();

@@ -26,6 +26,7 @@ import type { IColumn, ITable, TableFormValues } from "@/contracts/schema";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { ErrorLabel } from "./error-label";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { Separator } from "../ui/separator";
 
 interface ColumnFormProps {
   column: IColumn;
@@ -103,68 +104,66 @@ export const ColumnForm: FC<ColumnFormProps> = (props) => {
         {error?.name && <ErrorLabel>{error.name.message}</ErrorLabel>}
       </div>
 
-      <CollapsibleContent className="border-b p-3">
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-row items-center gap-3">
-            <span>Type</span>
+      <CollapsibleContent className="flex flex-col gap-3 p-3 border-b">
+        <div className="flex flex-row items-center gap-3">
+          <span>Type</span>
 
-            <Controller
-              control={control}
-              name={`columns.${index}.type` as const}
-              render={({ field }) => (
-                <Select
-                  onValueChange={(value) => field.onChange(value)}
-                  value={field.value}
-                >
-                  <SelectTrigger className="flex-1" size="sm">
-                    <SelectValue placeholder="Type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {Object.values(FieldType).map((fieldType) => (
-                        <SelectItem key={fieldType} value={fieldType}>
-                          {fieldType}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              )}
-            />
-          </div>
+          <Controller
+            control={control}
+            name={`columns.${index}.type` as const}
+            render={({ field }) => (
+              <Select
+                onValueChange={(value) => field.onChange(value)}
+                value={field.value}
+              >
+                <SelectTrigger className="flex-1" size="sm">
+                  <SelectValue placeholder="Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {Object.values(FieldType).map((fieldType) => (
+                      <SelectItem key={fieldType} value={fieldType}>
+                        {fieldType}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            )}
+          />
+        </div>
 
-          <div className="flex gap-3 items-center">
-            {Object.values(ColumnConstraints).map((constraint) => {
-              const disable =
-                isPrimary && constraint === ColumnConstraints.NOT_NULL;
+        <div className="flex gap-3 items-center">
+          {Object.values(ColumnConstraints).map((constraint) => {
+            const disable =
+              isPrimary && constraint === ColumnConstraints.NOT_NULL;
 
-              return (
-                <Controller
-                  key={constraint}
-                  control={control}
-                  name={`columns.${index}.constraints.${constraint}` as const}
-                  render={({ field }) => (
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          type="button"
-                          disabled={disable}
-                          onClick={() => field.onChange(!field.value)}
-                          variant={field.value ? "default" : "outline"}
-                          size="icon"
-                        >
-                          {constraintIcons[constraint]}
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>{constraintNames[constraint]}</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  )}
-                />
-              );
-            })}
-          </div>
+            return (
+              <Controller
+                key={constraint}
+                control={control}
+                name={`columns.${index}.constraints.${constraint}` as const}
+                render={({ field }) => (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        type="button"
+                        disabled={disable}
+                        onClick={() => field.onChange(!field.value)}
+                        variant={field.value ? "default" : "outline"}
+                        size="icon"
+                      >
+                        {constraintIcons[constraint]}
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>{constraintNames[constraint]}</p>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
+              />
+            );
+          })}
         </div>
       </CollapsibleContent>
     </Collapsible>

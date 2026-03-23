@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ColumnConstraints, FieldType } from "./field-type";
+import { ColumnConstraints, FieldType } from "../../lib/field-type";
 
 const constraintsSchema = z.object({
   [ColumnConstraints.PRIMARY_KEY]: z.boolean(),

@@ -23,7 +23,7 @@ import {
   type SubmitHandler,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { tableFormSchema } from "@/lib/table-validation";
+import { tableFormSchema } from "@/components/table-form/table-validation";
 import { ErrorLabel } from "./error-label";
 
 interface TableFormProps extends React.PropsWithChildren {

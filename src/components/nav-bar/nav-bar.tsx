@@ -15,12 +15,13 @@ import { Separator } from "../ui/separator";
 import { NewTable } from "../new-table";
 import { useDispatch } from "react-redux";
 import { undo } from "@/store/history/slice";
+import { Search } from "./search";
 
 export const Navbar = () => {
   const dispatch = useDispatch();
 
   return (
-    <header className="h-(--nav-height) border-b shadow flex items-center px-10 justify-between">
+    <header className="h-(--nav-height) border-b shadow flex items-center px-10 justify-between w-full">
       <div className="flex gap-2">
         <NewTable />
 
@@ -41,6 +42,8 @@ export const Navbar = () => {
           <IconArrowForwardUp />
         </Button>
       </div>
+
+      <Search />
 
       <div>
         <Avatar>

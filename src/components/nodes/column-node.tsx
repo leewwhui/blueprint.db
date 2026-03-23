@@ -31,7 +31,7 @@ export const ColumnNode: FC<ColumnNodeProps> = (props) => {
 
       {!connection.inProgress && (
         <ColumnHandle
-          id={`${column.id}-source`}
+          id={`${column.id}`}
           column={column}
           type="source"
           position={Position.Right}
@@ -40,7 +40,7 @@ export const ColumnNode: FC<ColumnNodeProps> = (props) => {
 
       {(!connection.inProgress || isTarget) && (
         <ColumnHandle
-          id={`${column.id}-target`}
+          id={`${column.id}`}
           column={column}
           type="target"
           position={Position.Left}

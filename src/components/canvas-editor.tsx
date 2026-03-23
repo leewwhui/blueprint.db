@@ -17,13 +17,18 @@ import { useTableNodes } from "@/hooks/use-table-nodes";
 import { useTableRelations } from "@/hooks/use-table-relations";
 import { updateTablePosition } from "@/store/ui/slice";
 import { useTablePosition } from "@/store/ui/selector";
+import { toast } from "sonner";
+import { useRelationValidate } from "@/hooks/use-relation-validate";
 
 export const CanvasEditor = () => {
   const { nodes, onNodesChange } = useTableNodes();
   const { edges, onEdgesChange } = useTableRelations();
 
+  const validateRelation = useRelationValidate();
+
   const dispatch = useDispatch();
   const positions = useTablePosition();
+
   const [viewport, setViewport] = useState<Viewport>({ x: 0, y: 0, zoom: 1 });
 
   const updateNodesPosition = (nodes: Node<TableNodeData>[]) => {
@@ -54,6 +59,19 @@ export const CanvasEditor = () => {
       targetTableId: connection.target,
       targetColumnId: connection.targetHandle,
     };
+
+    const validation = validateRelation(
+      relation.sourceTableId,
+      relation.sourceColumnId,
+      relation.targetTableId,
+      relation.targetColumnId,
+    );
+
+    if (!validation.valid) {
+      return toast.error(validation.message, {
+        position: "top-center",
+      });
+    }
 
     dispatch(addRelation(relation));
   };
