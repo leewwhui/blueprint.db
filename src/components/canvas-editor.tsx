@@ -2,12 +2,10 @@ import {
   ReactFlow,
   Background,
   Controls,
-  type Viewport,
   type Node,
   type Connection,
 } from "@xyflow/react";
 import { TableNode } from "./nodes/table-node";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { NoTable } from "./no-table";
 import type { TableNodeData } from "@/contracts/schema";
@@ -16,20 +14,27 @@ import { nanoid } from "nanoid";
 import { useTableNodes } from "@/hooks/use-table-nodes";
 import { useTableRelations } from "@/hooks/use-table-relations";
 import { updateTablePosition } from "@/store/ui/slice";
-import { useTablePosition } from "@/store/ui/selector";
+import { useSelectedTable, useTablePosition } from "@/store/ui/selector";
 import { toast } from "sonner";
 import { useRelationValidate } from "@/hooks/use-relation-validate";
+import { useFocusTable } from "@/hooks/use-focus-table";
+import { useEffect } from "react";
 
 export const CanvasEditor = () => {
   const { nodes, onNodesChange } = useTableNodes();
   const { edges, onEdgesChange } = useTableRelations();
 
   const validateRelation = useRelationValidate();
+  const { focusTable } = useFocusTable();
 
   const dispatch = useDispatch();
   const positions = useTablePosition();
+  const selectedTable = useSelectedTable();
 
-  const [viewport, setViewport] = useState<Viewport>({ x: 0, y: 0, zoom: 1 });
+  useEffect(() => {
+    if (!selectedTable?.id) return;
+    focusTable(selectedTable.id);
+  }, [selectedTable?.id, focusTable]);
 
   const updateNodesPosition = (nodes: Node<TableNodeData>[]) => {
     nodes.forEach((node) => {
@@ -80,8 +85,6 @@ export const CanvasEditor = () => {
     <div className="relative flex-1">
       <ReactFlow
         nodes={nodes}
-        viewport={viewport}
-        onViewportChange={setViewport}
         onNodesChange={onNodesChange}
         edges={edges}
         onEdgesChange={onEdgesChange}
@@ -89,7 +92,7 @@ export const CanvasEditor = () => {
           tableNode: TableNode,
         }}
         onConnect={onConnect}
-        onNodeDragStop={(event, node, nodes) => updateNodesPosition(nodes)}
+        onNodeDragStop={(_, __, nodes) => updateNodesPosition(nodes)}
       >
         <Background />
         <Controls />

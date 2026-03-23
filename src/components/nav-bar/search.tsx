@@ -7,15 +7,35 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "../ui/button";
 import { IconSearch } from "@tabler/icons-react";
 import { Kbd, KbdGroup } from "../ui/kbd";
 import { useHotkeys } from "react-hotkeys-hook";
+import { useTables } from "@/store/schema/selector";
+import { useDispatch } from "react-redux";
+import { selectTable } from "@/store/ui/slice";
 
 export const Search = () => {
   const [open, setOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const tables = useTables();
+  const dispatch = useDispatch();
+
   useHotkeys("mod+k", () => setOpen(true), []);
+
+  const matchedTables = useMemo(() => {
+    const keyword = searchTerm.trim().toLowerCase();
+
+    if (!keyword) return tables;
+
+    return tables.filter((table) => table.name.toLowerCase().includes(keyword));
+  }, [searchTerm, tables]);
+
+  const onSelectTable = (tableId: string) => {
+    dispatch(selectTable(tableId));
+    setOpen(false);
+  };
 
   return (
     <div>
@@ -36,13 +56,23 @@ export const Search = () => {
 
       <CommandDialog open={open} onOpenChange={setOpen}>
         <Command>
-          <CommandInput placeholder="Type a command or search..." />
+          <CommandInput
+            placeholder="Type a command or search..."
+            onValueChange={setSearchTerm}
+          />
           <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup heading="Suggestions">
-              <CommandItem>Calendar</CommandItem>
-              <CommandItem>Search Emoji</CommandItem>
-              <CommandItem>Calculator</CommandItem>
+            <CommandEmpty>No results found for {searchTerm}</CommandEmpty>
+            <CommandGroup heading="Tables">
+              {matchedTables.map((table) => (
+                <CommandItem
+                  key={table.id}
+                  onSelect={() => {
+                    onSelectTable(table.id);
+                  }}
+                >
+                  {table.name}
+                </CommandItem>
+              ))}
             </CommandGroup>
           </CommandList>
         </Command>
