@@ -18,7 +18,6 @@ import {
 } from "../ui/select";
 import type { IColumn, TableFormValues } from "@/contracts/schema";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
-import { ErrorLabel } from "./error-label";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { CONSTRAINT_ICONS, CONSTRAINT_NAMES } from "@/lib/columns";
 
@@ -83,7 +82,9 @@ export const ColumnForm: FC<ColumnFormProps> = (props) => {
           </CollapsibleTrigger>
         </div>
 
-        {error?.name && <ErrorLabel>{error.name.message}</ErrorLabel>}
+        {error?.name && (
+          <p className="text-destructive">{error.name.message}</p>
+        )}
       </div>
 
       <CollapsibleContent className="flex flex-col gap-3 p-3 border-b">

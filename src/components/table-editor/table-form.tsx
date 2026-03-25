@@ -24,7 +24,6 @@ import {
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { tableFormSchema } from "@/components/table-editor/table-validation";
-import { ErrorLabel } from "./error-label";
 
 interface TableFormProps extends React.PropsWithChildren {
   tableName: string;
@@ -106,15 +105,24 @@ export const TableForm: FC<TableFormProps> = (props) => {
                   type="text"
                   placeholder="Enter table name"
                 />
-                {errors.name && <ErrorLabel>{errors.name.message}</ErrorLabel>}
+                {errors.name && (
+                  <p className="text-destructive">{errors.name.message}</p>
+                )}
                 {errors.columns?.root && (
-                  <ErrorLabel>{errors.columns.root.message}</ErrorLabel>
+                  <p className="text-destructive">
+                    {errors.columns.root.message}
+                  </p>
                 )}
               </Field>
 
               <Separator />
 
               <FieldLabel className="font-bold">Columns</FieldLabel>
+              {errors.columns?.root && (
+                <p className="text-destructive">
+                  {errors.columns.root.message}
+                </p>
+              )}
 
               {fields.map((column, index) => (
                 <ColumnForm
