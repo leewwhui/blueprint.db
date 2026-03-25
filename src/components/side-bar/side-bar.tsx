@@ -1,5 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TableList } from "./table-list";
+import { TableList } from "./table/table-list";
+import { RelationshipList } from "./relationship/relationships";
 
 export const Sidebar = () => {
   return (
@@ -13,7 +14,7 @@ export const Sidebar = () => {
           <TableList />
         </TabsContent>
         <TabsContent value="relationships">
-          Manage your relationships here.
+          <RelationshipList />
         </TabsContent>
       </Tabs>
     </aside>

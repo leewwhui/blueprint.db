@@ -11,6 +11,7 @@ export interface IColumn {
 
 export interface IRelation {
   id: string;
+  name: string;
   sourceTableId: string;
   sourceColumnId: string;
   targetTableId: string;

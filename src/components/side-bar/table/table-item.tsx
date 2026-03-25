@@ -5,14 +5,14 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { TableForm } from "../table-editor/table-form";
+import { TableForm } from "../../table-editor/table-form";
 import { DefaultTableTheme } from "@/lib/colors";
 import { updateTable } from "@/store/schema/slice";
 import { useTables } from "@/store/schema/selector";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { TableNameEditing } from "./table-name-editing";
-import { TableItemButton } from "./table-item-button";
+import { TableItemHeader } from "./table-item-header";
 
 interface TableItemProps {
   table: ITable;
@@ -66,7 +66,7 @@ export const TableItem: FC<TableItemProps> = (props) => {
               onSave={onTableNameSave}
             />
           ) : (
-            <TableItemButton table={table} onEditingTableName={onEditTableName} />
+            <TableItemHeader table={table} onEditingTableName={onEditTableName} />
           )}
         </div>
       </CollapsibleTrigger>

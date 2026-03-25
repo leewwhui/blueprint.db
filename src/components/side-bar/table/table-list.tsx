@@ -1,7 +1,7 @@
 import { useTables } from "@/store/schema/selector";
 import { TableItem } from "./table-item";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Input } from "../../ui/input";
+import { Button } from "../../ui/button";
 import { IconPlus } from "@tabler/icons-react";
 import type { ITable } from "@/contracts/schema";
 import { nanoid } from "nanoid";
@@ -41,7 +41,7 @@ export const TableList = () => {
     <div className="flex flex-col gap-3">
       <div className="flex gap-2">
         <Input placeholder="Search tables..." />
-        <Button variant="secondary" onClick={onAddTable}>
+        <Button variant="secondary" onClick={onAddTable} className="text-xs">
           <IconPlus />
           Add Table
         </Button>

@@ -236,6 +236,7 @@ const parseAlterTableAstToRelations = (
         sourceColumnId: sourceColumn.id,
         targetTableId: targetTable.id,
         targetColumnId: targetColumn.id,
+        name: "",
       } satisfies IRelation;
     })
     .filter((relation): relation is IRelation => Boolean(relation));

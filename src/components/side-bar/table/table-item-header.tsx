@@ -1,16 +1,16 @@
 import { IconFocus2, IconPencil } from "@tabler/icons-react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import { Fragment } from "react/jsx-runtime";
 import type { ITable } from "@/contracts/schema";
 import type { FC } from "react";
 import { useFocusTable } from "@/hooks/use-focus-table";
 
-interface TableItemButtonProps {
+interface TableItemHeaderProps {
   table: ITable;
   onEditingTableName: (e: React.MouseEvent) => void;
 }
 
-export const TableItemButton: FC<TableItemButtonProps> = (props) => {
+export const TableItemHeader: FC<TableItemHeaderProps> = (props) => {
   const { table, onEditingTableName } = props;
   const { focusTable } = useFocusTable();
 
