@@ -14,8 +14,11 @@ import { ExportSQL } from "./export-sql";
 import { Separator } from "../ui/separator";
 import { NewTable } from "../new-table";
 import { Search } from "./search";
+import { useHistory } from "@/hooks/use-history";
 
 export const Navbar = () => {
+  const history = useHistory();
+
   return (
     <header className="h-(--nav-height) border-b shadow flex items-center px-10 justify-between w-full">
       <div className="flex gap-2">
@@ -30,11 +33,21 @@ export const Navbar = () => {
 
         <Separator orientation="vertical"></Separator>
 
-        <Button size="icon" variant="ghost">
+        <Button
+          size="icon"
+          variant="ghost"
+          onClick={history.undo}
+          disabled={!history.canUndo}
+        >
           <IconArrowBackUp />
         </Button>
 
-        <Button size="icon" variant="ghost">
+        <Button
+          size="icon"
+          variant="ghost"
+          onClick={history.redo}
+          disabled={!history.canRedo}
+        >
           <IconArrowForwardUp />
         </Button>
       </div>
