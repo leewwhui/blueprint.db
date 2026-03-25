@@ -1,7 +1,6 @@
 import { ColumnConstraints, ColumnType } from "@/contracts/columns";
+import { DatabaseDialect } from "@/contracts/database";
 import type { IColumn, IRelation, ITable } from "@/contracts/schema";
-
-export type DatabaseDialect = "mysql" | "postgresql" | "sqlite";
 
 export abstract class DatabaseAdapter {
 	public abstract readonly dialect: DatabaseDialect;
