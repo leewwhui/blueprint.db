@@ -6,16 +6,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { generateMySQL } from "@/lib/generate-mysql";
-import { useTables } from "@/store/schema/selector";
+import { useRelations, useTables } from "@/store/schema/selector";
 import { IconBrandMysql, IconDatabaseExport } from "@tabler/icons-react";
 import { saveAs } from "file-saver";
 
 export const ExportSQL = () => {
   const tables = useTables();
+  const relations = useRelations();
 
   const onExportMySQL = () => {
-    const sql = generateMySQL(tables);
-    saveAs(new Blob([sql], { type: "text/sql" }), "schema.sql");
+    const sql = generateMySQL(tables, relations);
+    // saveAs(new Blob([sql], { type: "text/sql" }), "schema.sql");
   };
 
   return (

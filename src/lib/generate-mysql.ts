@@ -1,6 +1,5 @@
-import type { ITable } from "@/contracts/schema";
+import type { IRelation, ITable } from "@/contracts/schema";
 
-export const generateMySQL = (tables: ITable[]) => {
-  const sqlStatements: string[] = [];
-  return sqlStatements.join("\n\n");
+export const generateMySQL = (tables: ITable[], relations: IRelation[] = []) => {
+  // return generateSchemaSql("mysql", { tables, relations });
 };

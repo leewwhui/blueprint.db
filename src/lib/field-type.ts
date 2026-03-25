@@ -1,12 +1,20 @@
 export enum FieldType {
   INT = "INT",
+  BIGINT = "BIGINT",
+  DECIMAL = "DECIMAL",
   VARCHAR = "VARCHAR",
+  TEXT = "TEXT",
+  DATE = "DATE",
   DATETIME = "DATETIME",
+  TIMESTAMP = "TIMESTAMP",
   BOOLEAN = "BOOLEAN",
+  JSON = "JSON",
+  UUID = "UUID",
 }
 
 export enum ColumnConstraints {
   PRIMARY_KEY = "PRIMARY_KEY",
   NOT_NULL = "NOT_NULL",
   UNIQUE = "UNIQUE",
+  AUTO_INCREMENT = "AUTO_INCREMENT",
 }

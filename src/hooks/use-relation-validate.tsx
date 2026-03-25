@@ -1,10 +1,11 @@
-import { ColumnConstraints } from "@/lib/field-type";
-import { useTables } from "@/store/schema/selector";
+import { relationValidate } from "@/lib/relation-validate";
+import { useRelations, useTables } from "@/store/schema/selector";
 
 export const useRelationValidate = () => {
   const tables = useTables();
+  const relations = useRelations();
 
-  const validateRelation = (
+  return (
     sourceTableId: string,
     sourceColumnId: string,
     targetTableId: string,
@@ -27,51 +28,14 @@ export const useRelationValidate = () => {
       };
     }
 
-    const sourceColumn = sourceTable.columns.find(
-      (col) => col.id === sourceColumnId,
+    return relationValidate(
+      sourceTable,
+      targetTable,
+      sourceColumnId,
+      targetColumnId,
+      sourceTableId,
+      targetTableId,
+      relations,
     );
-    const targetColumn = targetTable.columns.find(
-      (col) => col.id === targetColumnId,
-    );
-
-    if (!sourceColumn) {
-      return {
-        valid: false,
-        message: "Source column not found",
-      };
-    }
-
-    if (!targetColumn) {
-      return {
-        valid: false,
-        message: "Target column not found",
-      };
-    }
-
-    if (sourceColumn.type !== targetColumn.type) {
-      return {
-        valid: false,
-        message: "Type mismatch: Source and Target must have the same type",
-      };
-    }
-
-    const isTargetUnique =
-      targetColumn.constraints[ColumnConstraints.PRIMARY_KEY] ||
-      targetColumn.constraints[ColumnConstraints.UNIQUE];
-
-    if (!isTargetUnique) {
-      return {
-        valid: false,
-        message:
-          "Invalid Relation: Target column must be a Primary Key or Unique",
-      };
-    }
-
-    return {
-      valid: true,
-      message: "Relation is valid",
-    };
   };
-
-  return validateRelation;
 };

@@ -1,4 +1,5 @@
 import {
+  IconPlus,
   IconKey,
   IconNumber1Small,
   IconQuestionMark,
@@ -49,12 +50,14 @@ export const ColumnForm: FC<ColumnFormProps> = (props) => {
     [ColumnConstraints.PRIMARY_KEY]: "Primary Key",
     [ColumnConstraints.NOT_NULL]: "Not Null",
     [ColumnConstraints.UNIQUE]: "Unique",
+    [ColumnConstraints.AUTO_INCREMENT]: "Auto Increment",
   };
 
   const constraintIcons = {
     [ColumnConstraints.PRIMARY_KEY]: <IconKey />,
     [ColumnConstraints.NOT_NULL]: <IconQuestionMark />,
     [ColumnConstraints.UNIQUE]: <IconNumber1Small />,
+    [ColumnConstraints.AUTO_INCREMENT]: <IconPlus />,
   };
 
   const isPrimary = useWatch({

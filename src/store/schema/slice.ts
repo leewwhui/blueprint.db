@@ -29,6 +29,7 @@ const initialState: ISchemaState = {
             [ColumnConstraints.PRIMARY_KEY]: true,
             [ColumnConstraints.NOT_NULL]: false,
             [ColumnConstraints.UNIQUE]: false,
+            [ColumnConstraints.AUTO_INCREMENT]: false,
           },
         },
       ],

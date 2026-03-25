@@ -5,17 +5,13 @@ const constraintsSchema = z.object({
   [ColumnConstraints.PRIMARY_KEY]: z.boolean(),
   [ColumnConstraints.NOT_NULL]: z.boolean(),
   [ColumnConstraints.UNIQUE]: z.boolean(),
+  [ColumnConstraints.AUTO_INCREMENT]: z.boolean(),
 });
 
 const columnSchema = z.object({
   id: z.string().min(1, "Column ID is required"),
   name: z.string().min(1, "Column name is required"),
-  type: z.enum([
-    FieldType.INT,
-    FieldType.VARCHAR,
-    FieldType.DATETIME,
-    FieldType.BOOLEAN,
-  ]),
+  type: z.nativeEnum(FieldType),
   constraints: constraintsSchema,
 });
 
@@ -29,8 +25,7 @@ export const tableFormSchema = z
       const primaryKeyCount = data.columns.filter(
         (col) => col.constraints[ColumnConstraints.PRIMARY_KEY],
       ).length;
-      console.log(primaryKeyCount);
-      
+
       return primaryKeyCount === 1;
     },
     {

@@ -68,6 +68,7 @@ export const TableForm: FC<TableFormProps> = (props) => {
         [ColumnConstraints.PRIMARY_KEY]: false,
         [ColumnConstraints.NOT_NULL]: false,
         [ColumnConstraints.UNIQUE]: false,
+        [ColumnConstraints.AUTO_INCREMENT]: false,
       },
     });
   };
