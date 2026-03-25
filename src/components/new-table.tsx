@@ -1,5 +1,5 @@
 import { IconPlus } from "@tabler/icons-react";
-import { TableForm } from "./table-form/table-form";
+import { TableForm } from "./table-editor/table-form";
 import { Button } from "./ui/button";
 import { nanoid } from "nanoid";
 import { ColumnConstraints, FieldType } from "@/lib/field-type";

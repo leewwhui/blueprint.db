@@ -24,7 +24,7 @@ export const Sidebar = () => {
       </div>
 
       <div className="flex flex-col gap-1">
-        <FieldLabel className="font-bold">Table Name</FieldLabel>
+        <FieldLabel className="font-bold">Tables</FieldLabel>
 
         {tables.map((table) => (
           <Button

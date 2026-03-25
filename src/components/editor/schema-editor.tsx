@@ -5,9 +5,9 @@ import {
   type Node,
   type Connection,
 } from "@xyflow/react";
-import { TableNode } from "./nodes/table-node";
+import { TableNode } from "../nodes/table-node";
 import { useDispatch } from "react-redux";
-import { NoTable } from "./no-table";
+import { NoTable } from "../no-table";
 import type { TableNodeData } from "@/contracts/schema";
 import { addRelation } from "@/store/schema/slice";
 import { nanoid } from "nanoid";

@@ -1,6 +1,6 @@
 import { IconPencil, IconX } from "@tabler/icons-react";
 import type { NodeProps } from "@xyflow/react";
-import { TableForm } from "../table-form/table-form";
+import { TableForm } from "../table-editor/table-form";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
 import { deleteTable, updateTable } from "@/store/schema/slice";
