@@ -1,44 +1,24 @@
-import { useTables } from "@/store/schema/selector";
-import { useSelectedTable } from "@/store/ui/selector";
-import { useDispatch } from "react-redux";
-import { selectTable } from "@/store/ui/slice";
-import { Button } from "@/components/ui/button";
-import { useFocusTable } from "@/hooks/use-focus-table";
-import { Input } from "../ui/input";
-import { FieldLabel } from "../ui/field";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from "react";
+import { TableList } from "./table-list";
 
 export const Sidebar = () => {
-  const tables = useTables();
-  const dispatch = useDispatch();
-  const { focusTable } = useFocusTable();
-  const selectedTable = useSelectedTable();
-
-  const onSelectTable = (tableId: string) => {
-    dispatch(selectTable(tableId));
-  };
+  const [] = useState<"tables" | "relationships">("tables");
 
   return (
     <aside className="w-(--side-width) border-r shadow p-3 flex flex-col gap-3">
-      <div>
-        <Input placeholder="Search"></Input>
-      </div>
-
-      <div className="flex flex-col gap-1">
-        <FieldLabel className="font-bold">Tables</FieldLabel>
-
-        {tables.map((table) => (
-          <Button
-            key={table.id}
-            className="w-full border-l-4 tuncate line-clamp-1 text-start"
-            variant={selectedTable?.id === table.id ? "default" : "ghost"}
-            size="lg"
-            onClick={() => onSelectTable(table.id)}
-            onDoubleClick={() => focusTable(table.id)}
-          >
-            {table.name}
-          </Button>
-        ))}
-      </div>
+      <Tabs defaultValue="tables">
+        <TabsList className="w-full">
+          <TabsTrigger value="tables">Tables</TabsTrigger>
+          <TabsTrigger value="relationships">Relationships</TabsTrigger>
+        </TabsList>
+        <TabsContent value="tables">
+          <TableList />
+        </TabsContent>
+        <TabsContent value="relationships">
+          Manage your relationships here.
+        </TabsContent>
+      </Tabs>
     </aside>
   );
 };

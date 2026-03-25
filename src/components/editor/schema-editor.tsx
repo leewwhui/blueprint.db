@@ -88,7 +88,7 @@ export const SchemaEditor = () => {
         <Controls />
       </ReactFlow>
 
-      {nodes.length === 0 && <NoTable></NoTable>}
+      {nodes.length === 0 && <NoTable />}
     </div>
   );
 };
