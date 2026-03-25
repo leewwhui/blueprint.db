@@ -2,6 +2,14 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import type { ISchemaState } from "./slice";
 import type { IRelation, ITable } from "@/contracts/schema";
 
+export const importSchemaAction = (
+  state: ISchemaState,
+  action: PayloadAction<{ tables: ITable[]; relations: IRelation[] }>,
+) => {
+  state.tables = action.payload.tables;
+  state.relations = action.payload.relations;
+};
+
 export const addTableAction = (
   state: ISchemaState,
   action: PayloadAction<ITable>,

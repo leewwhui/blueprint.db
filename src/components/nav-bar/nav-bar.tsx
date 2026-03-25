@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import {
   IconArrowBackUp,
   IconArrowForwardUp,
-  IconDatabaseImport,
   IconGitFork,
 } from "@tabler/icons-react";
 import {
@@ -12,6 +11,7 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar";
 import { ExportSQL } from "./export-sql";
+import { ImportSQL } from "./import-sql";
 import { Separator } from "../ui/separator";
 import { NewTable } from "../side-bar/new-table";
 import { useHistory } from "@/hooks/use-history";
@@ -24,10 +24,7 @@ export const Navbar = () => {
       <div className="flex gap-2">
         <NewTable />
 
-        <Button variant="outline">
-          <IconDatabaseImport />
-          Import
-        </Button>
+        <ImportSQL />
 
         <ExportSQL />
 
@@ -58,15 +55,11 @@ export const Navbar = () => {
         </Button>
       </div>
 
-      {/* <Search /> */}
-
-      <div>
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback>CN</AvatarFallback>
-          <AvatarBadge className="bg-green-600 dark:bg-green-800" />
-        </Avatar>
-      </div>
+      <Avatar>
+        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarFallback>CN</AvatarFallback>
+        <AvatarBadge className="bg-green-600 dark:bg-green-800" />
+      </Avatar>
     </header>
   );
 };

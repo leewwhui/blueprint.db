@@ -5,6 +5,7 @@ import {
   addTableAction,
   deleteReationsAction,
   deleteTableAction,
+  importSchemaAction,
   updateTableAction,
 } from "./reducer";
 import { nanoid } from "nanoid";
@@ -42,6 +43,7 @@ export const schemaSlice = createSlice({
   name: "schema",
   initialState,
   reducers: {
+    importSchema: importSchemaAction,
     addTable: addTableAction,
     updateTable: updateTableAction,
     deleteTable: deleteTableAction,
@@ -51,6 +53,7 @@ export const schemaSlice = createSlice({
 });
 
 export const {
+  importSchema,
   addTable,
   updateTable,
   deleteTable,
