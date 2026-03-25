@@ -3,6 +3,7 @@ import {
   IconArrowBackUp,
   IconArrowForwardUp,
   IconDatabaseImport,
+  IconGitFork,
 } from "@tabler/icons-react";
 import {
   Avatar,
@@ -31,7 +32,7 @@ export const Navbar = () => {
 
         <ExportSQL />
 
-        <Separator orientation="vertical"></Separator>
+        <Separator orientation="vertical" />
 
         <Button
           size="icon"
@@ -50,9 +51,15 @@ export const Navbar = () => {
         >
           <IconArrowForwardUp />
         </Button>
+
+        <Separator orientation="vertical" />
+
+        <Button size="icon" variant="ghost">
+          <IconGitFork />
+        </Button>
       </div>
 
-      <Search />
+      {/* <Search /> */}
 
       <div>
         <Avatar>

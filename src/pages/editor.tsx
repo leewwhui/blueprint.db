@@ -1,4 +1,4 @@
-import { Sidebar } from "@/components/side-bar";
+import { Sidebar } from "@/components/side-bar/side-bar";
 import { Navbar } from "@/components/nav-bar/nav-bar";
 import { CanvasEditor } from "@/components/canvas-editor";
 import { ReactFlowProvider } from "@xyflow/react";
