@@ -1,13 +1,18 @@
 import { IconPlus } from "@tabler/icons-react";
-import { TableForm } from "./table-editor/table-form";
-import { Button } from "./ui/button";
+import { TableForm } from "../table-editor/table-form";
+import { Button } from "../ui/button";
 import { nanoid } from "nanoid";
 import { ColumnConstraints, FieldType } from "@/lib/field-type";
 import { useDispatch } from "react-redux";
 import { addTable } from "@/store/schema/slice";
 import type { TableFormValues } from "@/contracts/schema";
+import { useTables } from "@/store/schema/selector";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
 export const NewTable = () => {
+  const tables = useTables();
+
   const createDefaultColumn = () => {
     return {
       id: nanoid(),
@@ -18,7 +23,6 @@ export const NewTable = () => {
         [ColumnConstraints.NOT_NULL]: true,
         [ColumnConstraints.UNIQUE]: false,
         [ColumnConstraints.AUTO_INCREMENT]: true,
-        
       },
     };
   };
@@ -31,7 +35,13 @@ export const NewTable = () => {
       id: nanoid(),
     };
 
+    if (tables.some((t) => t.name === table.name)) {
+      toast.error("Table name must be unique");
+      return false;
+    }
+
     dispatch(addTable(table));
+    return true;
   };
 
   return (

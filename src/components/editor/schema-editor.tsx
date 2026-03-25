@@ -14,10 +14,10 @@ import { nanoid } from "nanoid";
 import { useTableNodes } from "@/hooks/use-table-nodes";
 import { useTableRelations } from "@/hooks/use-table-relations";
 import { useTablePosition } from "@/store/ui/selector";
-import { toast } from "sonner";
 import { useRelationValidate } from "@/hooks/use-relation-validate";
 import { MoveTableCommand } from "@/commands/MoveTableCommand";
 import { useHistory } from "@/hooks/use-history";
+import toast from "react-hot-toast";
 
 export const SchemaEditor = () => {
   const { nodes, onNodesChange } = useTableNodes();
@@ -65,9 +65,7 @@ export const SchemaEditor = () => {
     );
 
     if (!validation.valid) {
-      return toast.error(validation.message, {
-        position: "top-center",
-      });
+      return toast.error(validation.message);
     }
 
     dispatch(addRelation(relation));

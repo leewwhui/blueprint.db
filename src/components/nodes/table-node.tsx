@@ -8,9 +8,12 @@ import type { IColumn, TableFormValues } from "@/contracts/schema";
 import { ColumnNode } from "./column-node";
 import { useTableColor } from "@/store/ui/selector";
 import { DefaultTableTheme } from "@/lib/colors";
+import { useTables } from "@/store/schema/selector";
+import toast from "react-hot-toast";
 
 export const TableNode = (props: NodeProps) => {
   const dispatch = useDispatch();
+  const tables = useTables();
   const tableColors = useTableColor();
 
   const { id, data } = props;
@@ -25,7 +28,13 @@ export const TableNode = (props: NodeProps) => {
       columns: data.columns,
     };
 
+    if (tables.some((t) => t.name === table.name && t.id !== id)) {
+      toast.error("Table name must be unique");
+      return false;
+    }
+
     dispatch(updateTable(table));
+    return true;
   };
 
   const onDeleteTable = () => {

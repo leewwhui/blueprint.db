@@ -1,4 +1,4 @@
-import { NewTable } from "./new-table";
+import { NewTable } from "./side-bar/new-table";
 
 export const NoTable = () => {
   return (

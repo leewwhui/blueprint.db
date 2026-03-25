@@ -1,9 +1,9 @@
 import type { ListenerMiddlewareInstance } from "@reduxjs/toolkit";
 import { addTable, deleteRelations, deleteTable } from "./slice";
-import { toast } from "sonner";
 import { updateTableColor, updateTablePosition } from "../ui/slice";
 import { DefaultTableTheme } from "@/lib/colors";
 import type { RootState } from "../store";
+import toast from "react-hot-toast";
 
 export const schemaListener = (listener: ListenerMiddlewareInstance) => {
   listener.startListening({
@@ -20,14 +20,14 @@ export const schemaListener = (listener: ListenerMiddlewareInstance) => {
         deleteRelations({ relationIds: relations.map((r) => r.id) }),
       );
 
-      toast.success("Table deleted successfully", { position: "top-center" });
+      toast.success("Table deleted successfully");
     },
   });
 
   listener.startListening({
     actionCreator: addTable,
     effect: async (action, listenerApi) => {
-      toast.success("Table added successfully", { position: "top-center" });
+      toast.success("Table added successfully");
       const tableId = action.payload.id;
 
       listenerApi.dispatch(

@@ -29,11 +29,12 @@ import { ErrorLabel } from "./error-label";
 interface TableFormProps extends React.PropsWithChildren {
   tableName: string;
   columns: IColumn[];
-  onTableSaved: (table: TableFormValues) => void;
+  onTableSaved: (table: TableFormValues) => boolean;
 }
 
 export const TableForm: FC<TableFormProps> = (props) => {
   const { children, tableName, columns, onTableSaved } = props;
+
   const [open, setOpen] = useState(false);
 
   const initialValues = useMemo<TableFormValues>(
@@ -74,9 +75,10 @@ export const TableForm: FC<TableFormProps> = (props) => {
   };
 
   const onSubmit: SubmitHandler<TableFormValues> = (data) => {
-    onTableSaved(data);
-    setOpen(false);
-    methods.reset(initialValues);
+    if (onTableSaved(data)) {
+      setOpen(false);
+      methods.reset(initialValues);
+    }
   };
 
   const onOpenChange = (isOpen: boolean) => {
@@ -133,11 +135,7 @@ export const TableForm: FC<TableFormProps> = (props) => {
               </Button>
             </div>
             <DrawerFooter>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => onOpenChange(false)}
-              >
+              <Button type="button" variant="outline">
                 Cancel
               </Button>
               <Button type="submit">Save</Button>
