@@ -20,6 +20,37 @@ export const tableFormSchema = z
     name: z.string().min(1, "Table name is required"),
     columns: z.array(columnSchema).min(1, "At least one column is required"),
   })
+  .superRefine((data, ctx) => {
+    const seenNames = new Map<string, number>();
+
+    data.columns.forEach((column, index) => {
+      const normalizedName = column.name.trim().toLowerCase();
+
+      if (!normalizedName) {
+        return;
+      }
+
+      const duplicatedIndex = seenNames.get(normalizedName);
+
+      if (duplicatedIndex !== undefined) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Column names must be unique",
+          path: ["columns", index, "name"],
+        });
+
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Column names must be unique",
+          path: ["columns", duplicatedIndex, "name"],
+        });
+
+        return;
+      }
+
+      seenNames.set(normalizedName, index);
+    });
+  })
   .refine(
     (data) => {
       const primaryKeyCount = data.columns.filter(
