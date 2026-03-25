@@ -1,6 +1,6 @@
 import { Sidebar } from "@/components/side-bar/side-bar";
 import { Navbar } from "@/components/nav-bar/nav-bar";
-import { CanvasEditor } from "@/components/canvas-editor";
+import { SchemaEditor } from "@/components/schema-editor";
 import { ReactFlowProvider } from "@xyflow/react";
 
 export const Editor = () => {
@@ -11,7 +11,7 @@ export const Editor = () => {
 
         <div className="flex flex-1">
           <Sidebar />
-          <CanvasEditor />
+          <SchemaEditor />
         </div>
       </div>
     </ReactFlowProvider>

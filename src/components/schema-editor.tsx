@@ -19,7 +19,7 @@ import { useRelationValidate } from "@/hooks/use-relation-validate";
 import { MoveTableCommand } from "@/commands/MoveTableCommand";
 import { useHistory } from "@/hooks/use-history";
 
-export const CanvasEditor = () => {
+export const SchemaEditor = () => {
   const { nodes, onNodesChange } = useTableNodes();
   const { edges, onEdgesChange } = useTableRelations();
 
