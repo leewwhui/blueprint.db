@@ -13,6 +13,7 @@ export const useTableRelations = () => {
       sourceHandle: relation.sourceColumnId,
       target: relation.targetTableId,
       targetHandle: relation.targetColumnId,
+      type: "fkEdge",
     }));
 
     setEdges(formattedEdges);

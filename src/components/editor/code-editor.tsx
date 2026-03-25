@@ -10,10 +10,10 @@ export const CodeEditor: FC<CodeEditorProps> = (props) => {
 
   return (
     <Editor
+      className="border"
       height="100%"
       defaultLanguage="sql"
       value={code}
-      theme="vs-dark"
       options={{
         minimap: { enabled: false },
         readOnly: true,

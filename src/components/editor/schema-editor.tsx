@@ -18,6 +18,7 @@ import { useRelationValidate } from "@/hooks/use-relation-validate";
 import { MoveTableCommand } from "@/commands/MoveTableCommand";
 import { useHistory } from "@/hooks/use-history";
 import toast from "react-hot-toast";
+import { FKEdge } from "../nodes/fk-edge";
 
 export const SchemaEditor = () => {
   const { nodes, onNodesChange } = useTableNodes();
@@ -81,6 +82,9 @@ export const SchemaEditor = () => {
         onPaneContextMenu={(e) => e.preventDefault()}
         nodeTypes={{
           tableNode: TableNode,
+        }}
+        edgeTypes={{
+          fkEdge: FKEdge,
         }}
         onConnect={onConnect}
         onNodeDragStop={(_, __, nodes) => updateNodesPosition(nodes)}
