@@ -13,11 +13,9 @@ import { addRelation } from "@/store/schema/slice";
 import { nanoid } from "nanoid";
 import { useTableNodes } from "@/hooks/use-table-nodes";
 import { useTableRelations } from "@/hooks/use-table-relations";
-import { useSelectedTable, useTablePosition } from "@/store/ui/selector";
+import { useTablePosition } from "@/store/ui/selector";
 import { toast } from "sonner";
 import { useRelationValidate } from "@/hooks/use-relation-validate";
-import { useFocusTable } from "@/hooks/use-focus-table";
-import { useEffect } from "react";
 import { MoveTableCommand } from "@/commands/MoveTableCommand";
 import { useHistory } from "@/hooks/use-history";
 
