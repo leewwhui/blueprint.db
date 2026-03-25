@@ -69,7 +69,7 @@ export const ExportSQL = () => {
             <DialogTitle>SQL Preview</DialogTitle>
           </DialogHeader>
 
-          <div className="overflow-hidden">
+          <div className="overflow-hidden rounded">
             {code && <CodeEditor code={code} />}
           </div>
 
