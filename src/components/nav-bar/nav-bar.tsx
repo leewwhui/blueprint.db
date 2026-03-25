@@ -13,7 +13,6 @@ import {
 import { ExportSQL } from "./export-sql";
 import { ImportSQL } from "./import-sql";
 import { Separator } from "../ui/separator";
-import { NewTable } from "../side-bar/new-table";
 import { useHistory } from "@/hooks/use-history";
 
 export const Navbar = () => {
@@ -22,8 +21,6 @@ export const Navbar = () => {
   return (
     <header className="h-(--nav-height) border-b shadow flex items-center px-10 justify-between w-full">
       <div className="flex gap-2">
-        <NewTable />
-
         <ImportSQL />
 
         <ExportSQL />

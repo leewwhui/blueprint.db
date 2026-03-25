@@ -1,21 +1,11 @@
-import {
-  Drawer,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
 import { IconPlus } from "@tabler/icons-react";
-import { useMemo, useState, type FC } from "react";
+import { useMemo, type FC } from "react";
 import { ColumnConstraints, ColumnType } from "@/contracts/columns";
 import { nanoid } from "nanoid";
 import { ColumnForm } from "./column-form";
 import type { IColumn, TableFormValues } from "@/contracts/schema";
 import { Button } from "@/components/ui/button";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
+import { FieldLabel } from "@/components/ui/field";
 import {
   FormProvider,
   useFieldArray,
@@ -32,9 +22,7 @@ interface TableFormProps extends React.PropsWithChildren {
 }
 
 export const TableForm: FC<TableFormProps> = (props) => {
-  const { children, tableName, columns, onTableSaved } = props;
-
-  const [open, setOpen] = useState(false);
+  const { tableName, columns, onTableSaved } = props;
 
   const initialValues = useMemo<TableFormValues>(
     () => ({
@@ -62,7 +50,7 @@ export const TableForm: FC<TableFormProps> = (props) => {
   const createDefaultColumn = () => {
     append({
       id: nanoid(),
-      name: "Default",
+      name: "",
       type: ColumnType.INT,
       constraints: {
         [ColumnConstraints.PRIMARY_KEY]: false,
@@ -75,82 +63,37 @@ export const TableForm: FC<TableFormProps> = (props) => {
 
   const onSubmit: SubmitHandler<TableFormValues> = (data) => {
     if (onTableSaved(data)) {
-      setOpen(false);
-      methods.reset(initialValues);
+      // methods.reset(initialValues);
     }
   };
 
-  const onOpenChange = (isOpen: boolean) => {
-    setOpen(isOpen);
-    methods.reset(initialValues);
-  };
-
   return (
-    <Drawer direction="right" open={open} onOpenChange={onOpenChange}>
-      <DrawerTrigger asChild>{children}</DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>New Table</DrawerTitle>
-        </DrawerHeader>
-        <FormProvider {...methods}>
-          <form
-            onSubmit={methods.handleSubmit(onSubmit)}
-            className="flex flex-col justify-between h-full"
-          >
-            <div className="flex flex-col gap-3 px-4">
-              <Field>
-                <FieldLabel className="font-bold">Table Name</FieldLabel>
-                <Input
-                  {...methods.register("name")}
-                  type="text"
-                  placeholder="Enter table name"
-                />
-                {errors.name && (
-                  <p className="text-destructive">{errors.name.message}</p>
-                )}
-                {errors.columns?.root && (
-                  <p className="text-destructive">
-                    {errors.columns.root.message}
-                  </p>
-                )}
-              </Field>
+    <FormProvider {...methods}>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="flex flex-col justify-between h-full gap-3 p-2"
+      >
+        <FieldLabel className="font-bold text-xs">Columns</FieldLabel>
+        {errors.columns?.root && (
+          <p className="text-destructive">{errors.columns.root.message}</p>
+        )}
 
-              <Separator />
+        {fields.map((column, index) => (
+          <ColumnForm
+            key={column.id}
+            index={index}
+            column={column}
+            onColumnDelete={remove}
+          />
+        ))}
 
-              <FieldLabel className="font-bold">Columns</FieldLabel>
-              {errors.columns?.root && (
-                <p className="text-destructive">
-                  {errors.columns.root.message}
-                </p>
-              )}
+        <Button variant="outline" onClick={createDefaultColumn} type="button">
+          <IconPlus />
+          Add Column
+        </Button>
 
-              {fields.map((column, index) => (
-                <ColumnForm
-                  key={column.id}
-                  index={index}
-                  column={column}
-                  onColumnDelete={remove}
-                />
-              ))}
-
-              <Button
-                variant="outline"
-                onClick={createDefaultColumn}
-                type="button"
-              >
-                <IconPlus />
-                Add Column
-              </Button>
-            </div>
-            <DrawerFooter>
-              <Button type="button" variant="outline">
-                Cancel
-              </Button>
-              <Button type="submit">Save</Button>
-            </DrawerFooter>
-          </form>
-        </FormProvider>
-      </DrawerContent>
-    </Drawer>
+        <Button type="submit">Save Table</Button>
+      </form>
+    </FormProvider>
   );
 };

@@ -78,6 +78,7 @@ export const SchemaEditor = () => {
         onNodesChange={onNodesChange}
         edges={edges}
         onEdgesChange={onEdgesChange}
+        onPaneContextMenu={(e) => e.preventDefault()}
         nodeTypes={{
           tableNode: TableNode,
         }}

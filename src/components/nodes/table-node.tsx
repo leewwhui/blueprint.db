@@ -47,7 +47,7 @@ export const TableNode = (props: NodeProps) => {
         <p className="truncate">{name}</p>
 
         <div className="flex">
-          <TableForm
+          {/* <TableForm
             tableName={name}
             columns={columns}
             onTableSaved={onTableSaved}
@@ -55,7 +55,7 @@ export const TableNode = (props: NodeProps) => {
             <Button variant="ghost" size="icon-sm">
               <IconPencil />
             </Button>
-          </TableForm>
+          </TableForm> */}
 
           <Button variant="ghost" size="icon-sm" onClick={onDeleteTable}>
             <IconX />

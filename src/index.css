@@ -14,7 +14,7 @@ body {
 
 @theme inline {
   --nav-height: 50px;
-  --side-width: 300px;
+  --side-width: 450px;
   --node-width: 240px;
 
   --font-heading: var(--font-sans);
