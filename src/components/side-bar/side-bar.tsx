@@ -29,8 +29,8 @@ export const Sidebar = () => {
         {tables.map((table) => (
           <Button
             key={table.id}
-            className="w-full border-l-4 rounded truncate line-clamp-1 text-start"
-            variant={selectedTable?.id === table.id ? "secondary" : "ghost"}
+            className="w-full border-l-4 tuncate line-clamp-1 text-start"
+            variant={selectedTable?.id === table.id ? "default" : "ghost"}
             size="lg"
             onClick={() => onSelectTable(table.id)}
             onDoubleClick={() => focusTable(table.id)}
