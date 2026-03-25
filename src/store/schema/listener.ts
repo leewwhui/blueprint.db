@@ -1,7 +1,6 @@
 import type { ListenerMiddlewareInstance } from "@reduxjs/toolkit";
 import { addTable, deleteRelations, deleteTable } from "./slice";
-import { updateTableColor, updateTablePosition } from "../ui/slice";
-import { DefaultTableTheme } from "@/lib/colors";
+import { updateTablePosition } from "../ui/slice";
 import type { RootState } from "../store";
 import toast from "react-hot-toast";
 
@@ -37,13 +36,6 @@ export const schemaListener = (listener: ListenerMiddlewareInstance) => {
             position: { x: 0, y: 0 },
           },
         ]),
-      );
-
-      listenerApi.dispatch(
-        updateTableColor({
-          tableId,
-          color: DefaultTableTheme,
-        }),
       );
     },
   });

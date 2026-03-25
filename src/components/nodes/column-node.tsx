@@ -30,7 +30,7 @@ export const ColumnNode: FC<ColumnNodeProps> = (props) => {
           const value = constraints[key as ColumnConstraints];
           if (!value) return null;
           const Icon = CONSTRAINT_ICONS[key as ColumnConstraints];
-          return createElement(Icon, { size: 16 });
+          return createElement(Icon, { key, size: 16 });
         })}
 
         <div className="text-xs">{column.type}</div>

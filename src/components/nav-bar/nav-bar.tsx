@@ -14,7 +14,6 @@ import {
 import { ExportSQL } from "./export-sql";
 import { Separator } from "../ui/separator";
 import { NewTable } from "../side-bar/new-table";
-import { Search } from "./search";
 import { useHistory } from "@/hooks/use-history";
 
 export const Navbar = () => {

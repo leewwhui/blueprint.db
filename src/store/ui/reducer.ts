@@ -22,14 +22,3 @@ export const updateTablePositionAction = (
     state.tablePositions[tableId] = position;
   });
 };
-
-export const updateTableColorAction = (
-  state: IUIState,
-  action: PayloadAction<{
-    tableId: string;
-    color: string;
-  }>,
-) => {
-  const { tableId, color } = action.payload;
-  state.tableColors[tableId] = color;
-};

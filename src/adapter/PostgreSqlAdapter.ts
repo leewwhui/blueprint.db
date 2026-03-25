@@ -1,8 +1,9 @@
 import { ColumnType } from "@/contracts/columns";
 import { DatabaseAdapter } from "./DatabaseAdapter";
+import { DatabaseDialect } from "@/contracts/database";
 
 export class PostgreSqlAdapter extends DatabaseAdapter {
-  public readonly dialect = "postgresql" as const;
+  public readonly dialect = DatabaseDialect.POSTGRESQL;
 
   protected readonly typeMap: Record<ColumnType, string> = {
     [ColumnType.INT]: "INTEGER",

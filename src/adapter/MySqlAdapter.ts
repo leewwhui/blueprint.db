@@ -1,8 +1,9 @@
 import { ColumnType } from "@/contracts/columns";
 import { DatabaseAdapter } from "./DatabaseAdapter";
+import { DatabaseDialect } from "@/contracts/database";
 
 export class MySqlAdapter extends DatabaseAdapter {
-  public readonly dialect = "mysql" as const;
+  public readonly dialect = DatabaseDialect.MYSQL;
 
   protected readonly typeMap: Record<ColumnType, string> = {
     [ColumnType.INT]: "INT",

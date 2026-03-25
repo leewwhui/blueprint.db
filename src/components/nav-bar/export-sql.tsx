@@ -5,15 +5,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { generateMySQL } from "@/lib/generate-mysql";
-import { useRelations, useTables } from "@/store/schema/selector";
+import { DatabaseDialect } from "@/contracts/database";
+import { useGenerateSQL } from "@/hooks/use-generate-sql";
 import { IconBrandMysql, IconDatabaseExport } from "@tabler/icons-react";
 
 export const ExportSQL = () => {
-  const tables = useTables();
-  const relations = useRelations();
+  const generateSql = useGenerateSQL();
 
-  const onExportMySQL = () => {};
+  const onExportMySQL = () => {
+    const sql = generateSql(DatabaseDialect.MYSQL);
+    console.log(sql);
+  };
 
   return (
     <DropdownMenu>

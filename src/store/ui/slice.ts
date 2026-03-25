@@ -1,9 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  selectTableAction,
-  updateTableColorAction,
-  updateTablePositionAction,
-} from "./reducer";
+import { selectTableAction, updateTablePositionAction } from "./reducer";
 import type { IVector2 } from "@/contracts/math";
 
 export interface IUIState {

@@ -1,8 +1,9 @@
 import { ColumnType } from "@/contracts/columns";
 import { DatabaseAdapter } from "./DatabaseAdapter";
+import { DatabaseDialect } from "@/contracts/database";
 
 export class SqliteAdapter extends DatabaseAdapter {
-  public readonly dialect = "sqlite" as const;
+  public readonly dialect = DatabaseDialect.SQLITE;
 
   protected readonly typeMap: Record<ColumnType, string> = {
     [ColumnType.INT]: "INTEGER",
