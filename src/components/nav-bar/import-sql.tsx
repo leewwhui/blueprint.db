@@ -12,7 +12,6 @@ import { useDispatch } from "react-redux";
 import { importSchema } from "@/store/schema/slice";
 import { parseSqlToSchema } from "@/lib/parse-sql";
 import toast from "react-hot-toast";
-import { CodeEditor } from "../editor/code-editor";
 
 export const ImportSQL = () => {
   const dispatch = useDispatch();
