@@ -62,9 +62,7 @@ export const TableForm: FC<TableFormProps> = (props) => {
   };
 
   const onSubmit: SubmitHandler<TableFormValues> = (data) => {
-    if (onTableSaved(data)) {
-      // methods.reset(initialValues);
-    }
+    onTableSaved(data);
   };
 
   return (

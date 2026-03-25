@@ -53,11 +53,16 @@ export const TableItem: FC<TableItemProps> = (props) => {
       style={{ borderColor: DefaultTableTheme }}
     >
       <CollapsibleTrigger asChild>
-        <div className="w-full truncate line-clamp-1 text-start p-3 hover:bg-accent flex items-center justify-between cursor-pointer">
+        <div className="w-full truncate line-clamp-1 text-start p-2 hover:bg-accent flex items-center justify-between cursor-pointer">
           {table.name}
 
           <div>
-            <Button size="icon-sm" variant="ghost" onClick={onClickFocusButton}>
+            <Button
+              size="icon-sm"
+              variant="ghost"
+              className="hover:bg-card"
+              onClick={onClickFocusButton}
+            >
               <IconFocus2 />
             </Button>
           </div>
