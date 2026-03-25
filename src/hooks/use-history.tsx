@@ -2,7 +2,7 @@ import { historyStack } from "@/commands/HistoryStack";
 import { useSyncExternalStore, useRef } from "react";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/store/store";
-import type { ICommand } from "@/commands/Command ";
+import type { ICommand } from "@/commands/Command";
 
 export const useHistory = () => {
   const history = useRef(historyStack);

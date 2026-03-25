@@ -1,5 +1,5 @@
 import type { UnknownAction } from "redux";
-import type { ICommand } from "./Command ";
+import type { ICommand } from "./Command";
 
 export type HistorySnapshot = {
   canUndo: boolean;

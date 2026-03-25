@@ -1,7 +1,7 @@
 import type { IVector2 } from "@/contracts/math";
 import { updateTablePosition } from "@/store/ui/slice";
 import type { UnknownAction } from "redux";
-import type { ICommand } from "./Command ";
+import type { ICommand } from "./Command";
 
 export class MoveTableCommand implements ICommand {
   constructor(
