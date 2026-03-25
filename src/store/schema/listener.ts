@@ -31,10 +31,12 @@ export const schemaListener = (listener: ListenerMiddlewareInstance) => {
       const tableId = action.payload.id;
 
       listenerApi.dispatch(
-        updateTablePosition({
-          tableId,
-          position: { x: 0, y: 0 },
-        }),
+        updateTablePosition([
+          {
+            tableId,
+            position: { x: 0, y: 0 },
+          },
+        ]),
       );
 
       listenerApi.dispatch(

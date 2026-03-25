@@ -31,18 +31,19 @@ export const CanvasEditor = () => {
   const history = useHistory();
 
   const updateNodesPosition = (nodes: Node<TableNodeData>[]) => {
-    nodes.forEach((node) => {
-      const position = { tableId: node.id, position: node.position };
-      const oldPosition = { tableId: node.id, position: positions[node.id] };
+    const toPositions = nodes.map((node) => ({
+      tableId: node.id,
+      position: node.position,
+    }));
 
-      const moveTableCommand = new MoveTableCommand(
-        node.id,
-        oldPosition.position || { x: 0, y: 0 },
-        position.position,
-      );
+    const fromPositions = nodes.map((node) => ({
+      tableId: node.id,
+      position: positions[node.id] || { x: 0, y: 0 },
+    }));
 
-      history.executeCommand(moveTableCommand);
-    });
+    const moveTableCommand = new MoveTableCommand(fromPositions, toPositions);
+
+    history.executeCommand(moveTableCommand);
   };
 
   const onConnect = (connection: Connection) => {

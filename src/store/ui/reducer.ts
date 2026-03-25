@@ -2,6 +2,11 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import type { IUIState } from "./slice";
 import type { IVector2 } from "@/contracts/math";
 
+export type TablePositionUpdate = {
+  tableId: string;
+  position: IVector2;
+};
+
 export const selectTableAction = (
   state: IUIState,
   action: PayloadAction<string>,
@@ -11,13 +16,11 @@ export const selectTableAction = (
 
 export const updateTablePositionAction = (
   state: IUIState,
-  action: PayloadAction<{
-    tableId: string;
-    position: IVector2;
-  }>,
+  action: PayloadAction<TablePositionUpdate[]>,
 ) => {
-  const { tableId, position } = action.payload;
-  state.tablePositions[tableId] = position;
+  action.payload.forEach(({ tableId, position }) => {
+    state.tablePositions[tableId] = position;
+  });
 };
 
 export const updateTableColorAction = (

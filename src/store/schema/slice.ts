@@ -4,7 +4,6 @@ import {
   addRelationAction,
   addTableAction,
   deleteReationsAction,
-  deleteRelationAction,
   deleteTableAction,
   updateTableAction,
 } from "./reducer";
@@ -46,7 +45,6 @@ export const schemaSlice = createSlice({
     updateTable: updateTableAction,
     deleteTable: deleteTableAction,
     addRelation: addRelationAction,
-    deleteRelation: deleteRelationAction,
     deleteRelations: deleteReationsAction,
   },
 });
@@ -56,6 +54,5 @@ export const {
   updateTable,
   deleteTable,
   addRelation,
-  deleteRelation,
   deleteRelations,
 } = schemaSlice.actions;

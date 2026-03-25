@@ -1,33 +1,23 @@
-import type { IVector2 } from "@/contracts/math";
 import { updateTablePosition } from "@/store/ui/slice";
 import type { UnknownAction } from "redux";
 import type { ICommand } from "./Command";
+import type { TablePositionUpdate } from "@/store/ui/reducer";
 
 export class MoveTableCommand implements ICommand {
   constructor(
-    private readonly tableId: string,
-    private readonly fromPosition: IVector2,
-    private readonly toPosition: IVector2,
+    private fromMovePositionPayload: TablePositionUpdate[],
+    private toMovePositionPayload: TablePositionUpdate[],
   ) {}
 
   public execute(): UnknownAction {
-    return updateTablePosition({
-      tableId: this.tableId,
-      position: { ...this.toPosition },
-    });
+    return updateTablePosition(this.toMovePositionPayload);
   }
 
   public undo(): UnknownAction {
-    return updateTablePosition({
-      tableId: this.tableId,
-      position: { ...this.fromPosition },
-    });
+    return updateTablePosition(this.fromMovePositionPayload);
   }
 
   public redo(): UnknownAction {
-    return updateTablePosition({
-      tableId: this.tableId,
-      position: { ...this.toPosition },
-    });
+    return updateTablePosition(this.toMovePositionPayload);
   }
 }
