@@ -1,9 +1,10 @@
 import type { IColumn } from "@/contracts/schema";
 import { IconKey } from "@tabler/icons-react";
-import type { FC } from "react";
+import { createElement, type FC } from "react";
 import { ColumnHandle } from "./column-handle";
 import { Position, useConnection } from "@xyflow/react";
 import { ColumnConstraints } from "@/contracts/columns";
+import { CONSTRAINT_ICONS } from "@/lib/columns";
 
 interface ColumnNodeProps {
   tableId: string;
@@ -25,7 +26,14 @@ export const ColumnNode: FC<ColumnNodeProps> = (props) => {
       <p className="truncate line-clamp-1">{column.name}</p>
 
       <div className="flex items-center gap-1">
-        {constraints?.[ColumnConstraints.PRIMARY_KEY] && <IconKey size="16" />}
+
+        {Object.keys(constraints).map((key) => {
+          const value = constraints[key as ColumnConstraints];
+          if (!value) return null;
+          const Icon = CONSTRAINT_ICONS[key as ColumnConstraints];
+          return createElement(Icon, { size: 16 });
+        })}
+
         <div className="text-xs">{column.type}</div>
       </div>
 
