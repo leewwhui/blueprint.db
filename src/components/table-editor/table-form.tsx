@@ -1,5 +1,5 @@
 import { IconPlus } from "@tabler/icons-react";
-import { useMemo, type FC } from "react";
+import { type FC } from "react";
 import { ColumnConstraints, ColumnType } from "@/contracts/columns";
 import { nanoid } from "nanoid";
 import { ColumnForm } from "./column-form";
@@ -14,6 +14,7 @@ import {
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { tableFormSchema } from "@/components/table-editor/table-validation";
+import { cloneDeep } from "lodash";
 
 interface TableFormProps extends React.PropsWithChildren {
   tableName: string;
@@ -24,20 +25,12 @@ interface TableFormProps extends React.PropsWithChildren {
 export const TableForm: FC<TableFormProps> = (props) => {
   const { tableName, columns, onTableSaved } = props;
 
-  const initialValues = useMemo<TableFormValues>(
-    () => ({
-      name: tableName,
-      columns: columns.map((column) => ({
-        ...column,
-        constraints: { ...column.constraints },
-      })),
-    }),
-    [columns, tableName],
-  );
-
   const methods = useForm<TableFormValues>({
     resolver: zodResolver(tableFormSchema),
-    defaultValues: initialValues,
+    defaultValues: {
+      name: tableName,
+      columns: cloneDeep(columns),
+    },
   });
 
   const errors = methods.formState.errors;
@@ -85,12 +78,20 @@ export const TableForm: FC<TableFormProps> = (props) => {
           />
         ))}
 
-        <Button variant="outline" onClick={createDefaultColumn} type="button">
+        <Button
+          variant="ghost"
+          onClick={createDefaultColumn}
+          type="button"
+          className="w-fit"
+          size="sm"
+        >
           <IconPlus />
           Add Column
         </Button>
 
-        <Button type="submit">Save Table</Button>
+        <Button variant="outline" type="submit" size="sm">
+          Save Table
+        </Button>
       </form>
     </FormProvider>
   );
