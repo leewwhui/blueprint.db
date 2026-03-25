@@ -1,12 +1,12 @@
 import { describe, expect, it } from "vitest";
 import type { IRelation, ITable } from "@/contracts/schema";
 import { relationValidate } from "../lib/relation-validate";
-import { ColumnConstraints, FieldType } from "../lib/field-type";
+import { ColumnConstraints, ColumnType } from "../contracts/columns";
 
 const makeTable = (
   tableId: string,
   colId: string,
-  type: FieldType,
+  type: ColumnType,
   constraints: Partial<Record<ColumnConstraints, boolean>> = {},
 ): ITable => ({
   id: tableId,
@@ -47,8 +47,8 @@ const validate = (
 
 describe("relationValidate", () => {
   it("returns invalid when source column is missing", () => {
-    const source = makeTable("source", "s1", FieldType.INT);
-    const target = makeTable("target", "t1", FieldType.INT, {
+    const source = makeTable("source", "s1", ColumnType.INT);
+    const target = makeTable("target", "t1", ColumnType.INT, {
       [ColumnConstraints.PRIMARY_KEY]: true,
     });
 
@@ -61,8 +61,8 @@ describe("relationValidate", () => {
   });
 
   it("returns invalid when target column is missing", () => {
-    const source = makeTable("source", "s1", FieldType.INT);
-    const target = makeTable("target", "t1", FieldType.INT, {
+    const source = makeTable("source", "s1", ColumnType.INT);
+    const target = makeTable("target", "t1", ColumnType.INT, {
       [ColumnConstraints.PRIMARY_KEY]: true,
     });
 
@@ -75,8 +75,8 @@ describe("relationValidate", () => {
   });
 
   it("returns invalid when source/target types do not match", () => {
-    const source = makeTable("source", "s1", FieldType.INT);
-    const target = makeTable("target", "t1", FieldType.VARCHAR, {
+    const source = makeTable("source", "s1", ColumnType.INT);
+    const target = makeTable("target", "t1", ColumnType.VARCHAR, {
       [ColumnConstraints.PRIMARY_KEY]: true,
     });
 
@@ -89,8 +89,8 @@ describe("relationValidate", () => {
   });
 
   it("returns invalid when target column is neither PK nor unique", () => {
-    const source = makeTable("source", "s1", FieldType.INT);
-    const target = makeTable("target", "t1", FieldType.INT);
+    const source = makeTable("source", "s1", ColumnType.INT);
+    const target = makeTable("target", "t1", ColumnType.INT);
 
     const result = validate(source, target, "s1", "t1");
 
@@ -101,8 +101,8 @@ describe("relationValidate", () => {
   });
 
   it("returns valid when types match and target is unique", () => {
-    const source = makeTable("source", "s1", FieldType.INT);
-    const target = makeTable("target", "t1", FieldType.INT, {
+    const source = makeTable("source", "s1", ColumnType.INT);
+    const target = makeTable("target", "t1", ColumnType.INT, {
       [ColumnConstraints.UNIQUE]: true,
     });
 
@@ -115,7 +115,7 @@ describe("relationValidate", () => {
   });
 
   it("returns invalid when source and target are the same column", () => {
-    const source = makeTable("users", "id", FieldType.INT, {
+    const source = makeTable("users", "id", ColumnType.INT, {
       [ColumnConstraints.PRIMARY_KEY]: true,
     });
 
@@ -128,8 +128,8 @@ describe("relationValidate", () => {
   });
 
   it("returns invalid when identical relation already exists", () => {
-    const source = makeTable("orders", "user_id", FieldType.INT);
-    const target = makeTable("users", "id", FieldType.INT, {
+    const source = makeTable("orders", "user_id", ColumnType.INT);
+    const target = makeTable("users", "id", ColumnType.INT, {
       [ColumnConstraints.PRIMARY_KEY]: true,
     });
 
@@ -152,8 +152,8 @@ describe("relationValidate", () => {
   });
 
   it("returns invalid when source column already has a foreign key", () => {
-    const source = makeTable("orders", "owner_id", FieldType.INT);
-    const target = makeTable("users", "id", FieldType.INT, {
+    const source = makeTable("orders", "owner_id", ColumnType.INT);
+    const target = makeTable("users", "id", ColumnType.INT, {
       [ColumnConstraints.PRIMARY_KEY]: true,
     });
 

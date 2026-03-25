@@ -1,4 +1,4 @@
-export enum FieldType {
+export enum ColumnType {
   INT = "INT",
   BIGINT = "BIGINT",
   DECIMAL = "DECIMAL",

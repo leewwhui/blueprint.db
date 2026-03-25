@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/drawer";
 import { IconPlus } from "@tabler/icons-react";
 import { useMemo, useState, type FC } from "react";
-import { ColumnConstraints, FieldType } from "@/lib/field-type";
+import { ColumnConstraints, ColumnType } from "@/contracts/columns";
 import { nanoid } from "nanoid";
 import { ColumnForm } from "./column-form";
 import type { IColumn, TableFormValues } from "@/contracts/schema";
@@ -64,7 +64,7 @@ export const TableForm: FC<TableFormProps> = (props) => {
     append({
       id: nanoid(),
       name: "Default",
-      type: FieldType.INT,
+      type: ColumnType.INT,
       constraints: {
         [ColumnConstraints.PRIMARY_KEY]: false,
         [ColumnConstraints.NOT_NULL]: false,

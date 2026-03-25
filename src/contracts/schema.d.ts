@@ -1,9 +1,9 @@
-import type { FieldType, ColumnConstraints } from "@/lib/field-type";
+import type { ColumnType, ColumnConstraints } from "@/contracts/columns";
 
 export interface IColumn {
   id: string;
   name: string;
-  type: FieldType;
+  type: ColumnType;
   constraints: {
     [key in ColumnConstraints]: boolean;
   };

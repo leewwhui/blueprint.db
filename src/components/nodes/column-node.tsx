@@ -3,7 +3,7 @@ import { IconKey } from "@tabler/icons-react";
 import type { FC } from "react";
 import { ColumnHandle } from "./column-handle";
 import { Position, useConnection } from "@xyflow/react";
-import { ColumnConstraints } from "@/lib/field-type";
+import { ColumnConstraints } from "@/contracts/columns";
 
 interface ColumnNodeProps {
   tableId: string;

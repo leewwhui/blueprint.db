@@ -1,11 +1,4 @@
-import {
-  IconPlus,
-  IconKey,
-  IconNumber1Small,
-  IconQuestionMark,
-  IconSelector,
-  IconX,
-} from "@tabler/icons-react";
+import { IconSelector, IconX } from "@tabler/icons-react";
 import { Button } from "../ui/button";
 import {
   Collapsible,
@@ -13,8 +6,8 @@ import {
   CollapsibleTrigger,
 } from "../ui/collapsible";
 import { Input } from "../ui/input";
-import { useEffect, type FC } from "react";
-import { ColumnConstraints, FieldType } from "@/lib/field-type";
+import { createElement, useEffect, type FC } from "react";
+import { ColumnConstraints, ColumnType } from "@/contracts/columns";
 import {
   Select,
   SelectContent,
@@ -27,6 +20,7 @@ import type { IColumn, TableFormValues } from "@/contracts/schema";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { ErrorLabel } from "./error-label";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { CONSTRAINT_ICONS, CONSTRAINT_NAMES } from "@/lib/columns";
 
 interface ColumnFormProps {
   column: IColumn;
@@ -45,20 +39,6 @@ export const ColumnForm: FC<ColumnFormProps> = (props) => {
   } = useFormContext<TableFormValues>();
 
   const error = errors.columns?.[index];
-
-  const constraintNames = {
-    [ColumnConstraints.PRIMARY_KEY]: "Primary Key",
-    [ColumnConstraints.NOT_NULL]: "Not Null",
-    [ColumnConstraints.UNIQUE]: "Unique",
-    [ColumnConstraints.AUTO_INCREMENT]: "Auto Increment",
-  };
-
-  const constraintIcons = {
-    [ColumnConstraints.PRIMARY_KEY]: <IconKey />,
-    [ColumnConstraints.NOT_NULL]: <IconQuestionMark />,
-    [ColumnConstraints.UNIQUE]: <IconNumber1Small />,
-    [ColumnConstraints.AUTO_INCREMENT]: <IconPlus />,
-  };
 
   const isPrimary = useWatch({
     control,
@@ -123,9 +103,9 @@ export const ColumnForm: FC<ColumnFormProps> = (props) => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    {Object.values(FieldType).map((fieldType) => (
-                      <SelectItem key={fieldType} value={fieldType}>
-                        {fieldType}
+                    {Object.values(ColumnType).map((columnType) => (
+                      <SelectItem key={columnType} value={columnType}>
+                        {columnType}
                       </SelectItem>
                     ))}
                   </SelectGroup>
@@ -155,11 +135,11 @@ export const ColumnForm: FC<ColumnFormProps> = (props) => {
                         variant={field.value ? "default" : "outline"}
                         size="icon"
                       >
-                        {constraintIcons[constraint]}
+                        {createElement(CONSTRAINT_ICONS[constraint])}
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>{constraintNames[constraint]}</p>
+                      <p>{CONSTRAINT_NAMES[constraint]}</p>
                     </TooltipContent>
                   </Tooltip>
                 )}

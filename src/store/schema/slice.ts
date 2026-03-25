@@ -7,8 +7,8 @@ import {
   deleteTableAction,
   updateTableAction,
 } from "./reducer";
-import { ColumnConstraints, FieldType } from "@/lib/field-type";
 import { nanoid } from "nanoid";
+import { ColumnConstraints, ColumnType } from "@/contracts/columns";
 
 export interface ISchemaState {
   tables: ITable[];
@@ -24,7 +24,7 @@ const initialState: ISchemaState = {
         {
           id: nanoid(),
           name: "Id",
-          type: FieldType.INT,
+          type: ColumnType.INT,
           constraints: {
             [ColumnConstraints.PRIMARY_KEY]: true,
             [ColumnConstraints.NOT_NULL]: false,

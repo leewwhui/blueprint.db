@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ColumnConstraints, FieldType } from "@/lib/field-type";
+import { ColumnConstraints, ColumnType } from "@/contracts/columns";
 
 const constraintsSchema = z.object({
   [ColumnConstraints.PRIMARY_KEY]: z.boolean(),
@@ -11,7 +11,7 @@ const constraintsSchema = z.object({
 const columnSchema = z.object({
   id: z.string().min(1, "Column ID is required"),
   name: z.string().min(1, "Column name is required"),
-  type: z.nativeEnum(FieldType),
+  type: z.nativeEnum(ColumnType),
   constraints: constraintsSchema,
 });
 

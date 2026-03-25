@@ -2,13 +2,12 @@ import { IconPlus } from "@tabler/icons-react";
 import { TableForm } from "../table-editor/table-form";
 import { Button } from "../ui/button";
 import { nanoid } from "nanoid";
-import { ColumnConstraints, FieldType } from "@/lib/field-type";
 import { useDispatch } from "react-redux";
 import { addTable } from "@/store/schema/slice";
 import type { TableFormValues } from "@/contracts/schema";
 import { useTables } from "@/store/schema/selector";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { ColumnConstraints, ColumnType } from "@/contracts/columns";
 
 export const NewTable = () => {
   const tables = useTables();
@@ -17,7 +16,7 @@ export const NewTable = () => {
     return {
       id: nanoid(),
       name: "ID",
-      type: FieldType.INT,
+      type: ColumnType.INT,
       constraints: {
         [ColumnConstraints.PRIMARY_KEY]: true,
         [ColumnConstraints.NOT_NULL]: true,

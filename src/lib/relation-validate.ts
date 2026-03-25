@@ -1,5 +1,5 @@
+import { ColumnConstraints } from "@/contracts/columns";
 import type { IRelation, ITable } from "@/contracts/schema";
-import { ColumnConstraints } from "./field-type";
 
 export const relationValidate = (
   sourceTable: ITable,
