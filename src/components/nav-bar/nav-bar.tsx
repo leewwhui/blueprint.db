@@ -13,13 +13,9 @@ import {
 import { ExportSQL } from "./export-sql";
 import { Separator } from "../ui/separator";
 import { NewTable } from "../new-table";
-import { useDispatch } from "react-redux";
-import { undo } from "@/store/history/slice";
 import { Search } from "./search";
 
 export const Navbar = () => {
-  const dispatch = useDispatch();
-
   return (
     <header className="h-(--nav-height) border-b shadow flex items-center px-10 justify-between w-full">
       <div className="flex gap-2">
@@ -34,7 +30,7 @@ export const Navbar = () => {
 
         <Separator orientation="vertical"></Separator>
 
-        <Button size="icon" variant="ghost" onClick={() => dispatch(undo())}>
+        <Button size="icon" variant="ghost">
           <IconArrowBackUp />
         </Button>
 

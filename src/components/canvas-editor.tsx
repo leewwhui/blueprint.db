@@ -14,7 +14,7 @@ import { nanoid } from "nanoid";
 import { useTableNodes } from "@/hooks/use-table-nodes";
 import { useTableRelations } from "@/hooks/use-table-relations";
 import { updateTablePosition } from "@/store/ui/slice";
-import { useSelectedTable, useTablePosition } from "@/store/ui/selector";
+import { useSelectedTable } from "@/store/ui/selector";
 import { toast } from "sonner";
 import { useRelationValidate } from "@/hooks/use-relation-validate";
 import { useFocusTable } from "@/hooks/use-focus-table";
@@ -28,7 +28,6 @@ export const CanvasEditor = () => {
   const { focusTable } = useFocusTable();
 
   const dispatch = useDispatch();
-  const positions = useTablePosition();
   const selectedTable = useSelectedTable();
 
   useEffect(() => {
@@ -39,18 +38,7 @@ export const CanvasEditor = () => {
   const updateNodesPosition = (nodes: Node<TableNodeData>[]) => {
     nodes.forEach((node) => {
       const position = { tableId: node.id, position: node.position };
-      const oldPosition = { tableId: node.id, position: positions[node.id] };
-
-      const moveCommand = {
-        ...updateTablePosition({ tableId: node.id, position: node.position }),
-        meta: {
-          isCommand: true,
-          future: position,
-          past: oldPosition,
-        },
-      };
-
-      dispatch(moveCommand);
+      dispatch(updateTablePosition(position));
     });
   };
 

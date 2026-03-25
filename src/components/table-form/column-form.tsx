@@ -22,11 +22,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import type { IColumn, ITable, TableFormValues } from "@/contracts/schema";
+import type { IColumn, TableFormValues } from "@/contracts/schema";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { ErrorLabel } from "./error-label";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { Separator } from "../ui/separator";
 
 interface ColumnFormProps {
   column: IColumn;
