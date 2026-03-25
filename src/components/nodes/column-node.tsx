@@ -1,5 +1,4 @@
 import type { IColumn } from "@/contracts/schema";
-import { IconKey } from "@tabler/icons-react";
 import { createElement, type FC } from "react";
 import { ColumnHandle } from "./column-handle";
 import { Position, useConnection } from "@xyflow/react";

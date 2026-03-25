@@ -17,9 +17,3 @@ export const useTablePosition = () => {
     return state.ui.tablePositions;
   });
 };
-
-export const useTableColor = () => {
-  return useSelector((state: RootState) => {
-    return state.ui.tableColors;
-  });
-};

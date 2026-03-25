@@ -6,20 +6,17 @@ import { useDispatch } from "react-redux";
 import { deleteTable, updateTable } from "@/store/schema/slice";
 import type { IColumn, TableFormValues } from "@/contracts/schema";
 import { ColumnNode } from "./column-node";
-import { useTableColor } from "@/store/ui/selector";
-import { DefaultTableTheme } from "@/lib/colors";
 import { useTables } from "@/store/schema/selector";
 import toast from "react-hot-toast";
+import { DefaultTableTheme } from "@/lib/colors";
 
 export const TableNode = (props: NodeProps) => {
   const dispatch = useDispatch();
   const tables = useTables();
-  const tableColors = useTableColor();
 
   const { id, data } = props;
   const name = data.name as string;
   const columns = data.columns as IColumn[];
-  const color = tableColors[id] || DefaultTableTheme;
 
   const onTableSaved = (data: TableFormValues) => {
     const table = {
@@ -45,7 +42,7 @@ export const TableNode = (props: NodeProps) => {
     <div className="border text-sm w-(--node-width) overflow-hidden rounded">
       <div
         className="text-neutral-50 p-2 font-bold flex items-center justify-between"
-        style={{ backgroundColor: color }}
+        style={{ backgroundColor: DefaultTableTheme }}
       >
         <p className="truncate">{name}</p>
 
