@@ -8,17 +8,38 @@ import {
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { IconBrandMysql, IconDatabaseExport } from "@tabler/icons-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { DatabaseDialect } from "@/contracts/database";
 import { CodeEditor } from "../editor/code-editor";
+import { useGenerateSQL } from "@/hooks/use-generate-sql";
 
 export const ExportSQL = () => {
   const [open, setOpen] = useState(false);
   const [dialect, setDialect] = useState<DatabaseDialect | null>(null);
+  const generateSql = useGenerateSQL();
+
+  const code = useMemo(() => {
+    if (!dialect) return null;
+    return generateSql(dialect);
+  }, [dialect]);
+
+  const downloadSql = () => {
+    if (!code) return;
+    const blob = new Blob([code], { type: "text/sql;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+
+    anchor.href = url;
+    anchor.download = `schema-${dialect}.sql`;
+    anchor.click();
+
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <>
@@ -47,7 +68,16 @@ export const ExportSQL = () => {
           <DialogHeader>
             <DialogTitle>SQL Preview</DialogTitle>
           </DialogHeader>
-          {dialect && <CodeEditor dialect={dialect} />}
+
+          <div className="overflow-hidden">
+            {code && <CodeEditor code={code} />}
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={downloadSql}>
+              Download
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </>

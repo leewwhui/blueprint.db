@@ -1,19 +1,12 @@
-import type { DatabaseDialect } from "@/contracts/database";
-import { useGenerateSQL } from "@/hooks/use-generate-sql";
 import Editor from "@monaco-editor/react";
-import { useMemo, type FC } from "react";
+import { type FC } from "react";
 
 interface CodeEditorProps {
-  dialect: DatabaseDialect;
+  code: string;
 }
 
 export const CodeEditor: FC<CodeEditorProps> = (props) => {
-  const { dialect } = props;
-  const generateSql = useGenerateSQL();
-  
-  const code = useMemo(() => {
-    return generateSql(dialect);
-  }, [dialect]);
+  const { code } = props;
 
   return (
     <Editor
