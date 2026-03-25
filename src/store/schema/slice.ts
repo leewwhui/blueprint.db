@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addRelationAction,
   addTableAction,
+  deleteReationsAction,
+  deleteRelationAction,
   deleteTableAction,
   updateTableAction,
 } from "./reducer";
@@ -44,8 +46,16 @@ export const schemaSlice = createSlice({
     updateTable: updateTableAction,
     deleteTable: deleteTableAction,
     addRelation: addRelationAction,
+    deleteRelation: deleteRelationAction,
+    deleteRelations: deleteReationsAction,
   },
 });
 
-export const { addTable, updateTable, deleteTable, addRelation } =
-  schemaSlice.actions;
+export const {
+  addTable,
+  updateTable,
+  deleteTable,
+  addRelation,
+  deleteRelation,
+  deleteRelations,
+} = schemaSlice.actions;

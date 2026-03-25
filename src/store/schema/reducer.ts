@@ -34,3 +34,23 @@ export const addRelationAction = (
 ) => {
   state.relations.push(action.payload);
 };
+
+export const deleteRelationAction = (
+  state: ISchemaState,
+  action: PayloadAction<{ relationId: string }>,
+) => {
+  const { relationId } = action.payload;
+  state.relations = state.relations.filter((r) => r.id !== relationId);
+};
+
+export const deleteReationsAction = (
+  state: ISchemaState,
+  action: PayloadAction<{ relationIds: string[] }>,
+) => {
+  const { relationIds } = action.payload;
+
+  state.relations = state.relations.filter(
+    (r) =>
+      !relationIds.includes(r.id) && !relationIds.includes(r.targetTableId),
+  );
+};
