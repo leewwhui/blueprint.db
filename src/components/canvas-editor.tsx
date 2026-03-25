@@ -26,18 +26,11 @@ export const CanvasEditor = () => {
   const { edges, onEdgesChange } = useTableRelations();
 
   const validateRelation = useRelationValidate();
-  const { focusTable } = useFocusTable();
 
   const dispatch = useDispatch();
   const positions = useTablePosition();
-  const selectedTable = useSelectedTable();
 
   const history = useHistory();
-
-  useEffect(() => {
-    if (!selectedTable?.id) return;
-    focusTable(selectedTable.id);
-  }, [selectedTable?.id, focusTable]);
 
   const updateNodesPosition = (nodes: Node<TableNodeData>[]) => {
     nodes.forEach((node) => {
