@@ -1,6 +1,7 @@
 import { ColumnConstraints, ColumnType } from "@/contracts/columns";
 import { DatabaseDialect } from "@/contracts/database";
 import type { IColumn, IRelation, ITable } from "@/contracts/schema";
+import { ForeignKeyReferentialAction } from "@/contracts/relationship";
 
 export abstract class DatabaseAdapter {
 	public abstract readonly dialect: DatabaseDialect;
@@ -10,6 +11,17 @@ export abstract class DatabaseAdapter {
 
 	protected getAutoIncrementKeyword(): string | null {
 		return null;
+	}
+
+	protected getReferentialActionSql(
+		action: ForeignKeyReferentialAction | undefined,
+		keyword: "UPDATE" | "DELETE",
+	): string | null {
+		if (!action) {
+			return null;
+		}
+
+		return `ON ${keyword} ${action}`;
 	}
 
 	public getColumnType(columnType: ColumnType): string {
@@ -90,12 +102,29 @@ export abstract class DatabaseAdapter {
 			`fk_${sourceTable.name}_${sourceColumn.name}_${targetTable.name}_${targetColumn.name}`,
 		);
 
+		const onDeleteSql = this.getReferentialActionSql(
+			relation.onDelete,
+			"DELETE",
+		);
+		const onUpdateSql = this.getReferentialActionSql(
+			relation.onUpdate,
+			"UPDATE",
+		);
+
 		return [
 			`ALTER TABLE ${this.quoteIdentifier(sourceTable.name)}`,
 			`ADD CONSTRAINT ${relationName}`,
 			`FOREIGN KEY (${this.quoteIdentifier(sourceColumn.name)})`,
 			`REFERENCES ${this.quoteIdentifier(targetTable.name)}(${this.quoteIdentifier(targetColumn.name)});`,
-		].join(" ");
+			onDeleteSql,
+			onUpdateSql,
+		]
+			.filter((part): part is string => Boolean(part))
+			.join(" ")
+			.replace(
+				`${this.quoteIdentifier(targetTable.name)}(${this.quoteIdentifier(targetColumn.name)});`,
+				`${this.quoteIdentifier(targetTable.name)}(${this.quoteIdentifier(targetColumn.name)})`,
+			) + ";";
 	}
 
 	public generateRelationsSql(tables: ITable[], relations: IRelation[]): string {

@@ -1,4 +1,8 @@
 import type { ColumnType, ColumnConstraints } from "@/contracts/columns";
+import type {
+  ForeignKeyCardinality,
+  ForeignKeyReferentialAction,
+} from "@/contracts/relationship";
 
 export interface IColumn {
   id: string;
@@ -15,6 +19,9 @@ export interface IRelation {
   sourceColumnId: string;
   targetTableId: string;
   targetColumnId: string;
+  cardinality: ForeignKeyCardinality;
+  onUpdate: ForeignKeyReferentialAction;
+  onDelete: ForeignKeyReferentialAction;
 }
 
 export interface ITable {

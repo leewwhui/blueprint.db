@@ -89,7 +89,7 @@ export const TableForm: FC<TableFormProps> = (props) => {
           Add Column
         </Button>
 
-        <Button variant="outline" type="submit" size="sm">
+        <Button variant="outline" type="submit">
           Save Table
         </Button>
       </form>

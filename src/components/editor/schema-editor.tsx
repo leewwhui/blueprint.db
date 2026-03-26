@@ -18,9 +18,11 @@ import { MoveTableCommand } from "@/commands/MoveTableCommand";
 import { useHistory } from "@/hooks/use-history";
 import toast from "react-hot-toast";
 import { FKEdge } from "../nodes/fk-edge";
-import { useRelations, useTables } from "@/store/schema/selector";
-import { relationValidate } from "@/lib/relation-validate";
 import { useRelationValidate } from "@/hooks/use-relation-validation";
+import {
+  ForeignKeyCardinality,
+  ForeignKeyReferentialAction,
+} from "@/contracts/relationship";
 
 export const SchemaEditor = () => {
   const { nodes, onNodesChange } = useTableNodes();
@@ -56,6 +58,9 @@ export const SchemaEditor = () => {
       sourceColumnId: connection.sourceHandle,
       targetTableId: connection.target,
       targetColumnId: connection.targetHandle,
+      cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+      onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+      onDelete: ForeignKeyReferentialAction.NO_ACTION,
     };
 
     const validation = validateRelation(

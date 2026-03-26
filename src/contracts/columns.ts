@@ -1,15 +1,15 @@
 export enum ColumnType {
-  INT = "INT",
-  BIGINT = "BIGINT",
-  DECIMAL = "DECIMAL",
-  VARCHAR = "VARCHAR",
-  TEXT = "TEXT",
-  DATE = "DATE",
-  DATETIME = "DATETIME",
-  TIMESTAMP = "TIMESTAMP",
-  BOOLEAN = "BOOLEAN",
-  JSON = "JSON",
-  UUID = "UUID",
+  INT = "int",
+  BIGINT = "bigint",
+  DECIMAL = "decimal",
+  VARCHAR = "varchar",
+  TEXT = "text",
+  DATE = "date",
+  DATETIME = "datetime",
+  TIMESTAMP = "timestamp",
+  BOOLEAN = "boolean",
+  JSON = "json",
+  UUID = "uuid",
 }
 
 export enum ColumnConstraints {
