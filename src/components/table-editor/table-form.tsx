@@ -54,14 +54,10 @@ export const TableForm: FC<TableFormProps> = (props) => {
     });
   };
 
-  const onSubmit: SubmitHandler<TableFormValues> = (data) => {
-    onTableSaved(data);
-  };
-
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit(onSubmit)}
+        onSubmit={methods.handleSubmit(onTableSaved)}
         className="flex flex-col justify-between h-full gap-3 p-2"
       >
         <FieldLabel className="font-bold text-xs">Columns</FieldLabel>

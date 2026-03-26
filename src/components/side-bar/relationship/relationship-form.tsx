@@ -1,11 +1,9 @@
 import { Field, FieldLabel } from "@/components/ui/field";
 import type { IRelation } from "@/contracts/schema";
-import { useTables } from "@/store/schema/selector";
-import type { FC } from "react";
+import { type FC } from "react";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -13,69 +11,103 @@ import {
 import {
   ForeignKeyCardinality,
   ForeignKeyReferentialAction,
+  type RelationshipFormValues,
 } from "@/contracts/relationship";
 import { Button } from "@/components/ui/button";
+import { Controller, useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { updateRelation } from "@/store/schema/slice";
 
-interface RelationshipHeaderProps {
+interface RelationshipFormProps {
   relation: IRelation;
 }
 
-export const RelationshipForm: FC<RelationshipHeaderProps> = (props) => {
-  const { relation } = props;
+export const RelationshipForm: FC<RelationshipFormProps> = ({ relation }) => {
+  const dispatch = useDispatch();
+
+  const { control, handleSubmit } = useForm<RelationshipFormValues>({
+    defaultValues: {
+      cardinality: relation.cardinality,
+      onUpdate: relation.onUpdate,
+      onDelete: relation.onDelete,
+    },
+  });
+
+  const onSubmit = (values: RelationshipFormValues) => {
+    dispatch(updateRelation({ ...relation, ...values }));
+  };
 
   return (
-    <div className="p-2 flex flex-col gap-3">
+    <form onSubmit={handleSubmit(onSubmit)} className="p-2 flex flex-col gap-3">
       <Field>
         <FieldLabel className="font-bold text-xs">Cardinality</FieldLabel>
-        <Select defaultValue={relation.cardinality}>
-          <SelectTrigger>
-            <SelectValue placeholder="Theme" />
-          </SelectTrigger>
-          <SelectContent>
-            {Object.values(ForeignKeyCardinality).map((cardinality) => (
-              <SelectItem key={cardinality} value={cardinality}>
-                {cardinality}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <Controller
+          control={control}
+          name="cardinality"
+          render={({ field }) => (
+            <Select value={field.value} onValueChange={field.onChange}>
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {Object.values(ForeignKeyCardinality).map((c) => (
+                  <SelectItem key={c} value={c}>
+                    {c}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+        />
       </Field>
+
       <div className="flex gap-3">
         <Field>
           <FieldLabel className="font-bold text-xs">On Update</FieldLabel>
-          <Select defaultValue={relation.onUpdate}>
-            <SelectTrigger>
-              <SelectValue placeholder="Theme" />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.values(ForeignKeyReferentialAction).map((action) => (
-                <SelectItem key={action} value={action}>
-                  {action}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Controller
+            control={control}
+            name="onUpdate"
+            render={({ field }) => (
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.values(ForeignKeyReferentialAction).map((a) => (
+                    <SelectItem key={a} value={a}>
+                      {a}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          />
         </Field>
-
         <Field>
           <FieldLabel className="font-bold text-xs">On Delete</FieldLabel>
-          <Select defaultValue={relation.onDelete}>
-            <SelectTrigger>
-              <SelectValue placeholder="Theme" />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.values(ForeignKeyReferentialAction).map((action) => (
-                <SelectItem key={action} value={action}>
-                  {action}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Controller
+            control={control}
+            name="onDelete"
+            render={({ field }) => (
+              <Select value={field.value} onValueChange={field.onChange}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.values(ForeignKeyReferentialAction).map((a) => (
+                    <SelectItem key={a} value={a}>
+                      {a}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          />
         </Field>
       </div>
       <Button variant="outline" type="submit">
         Save
       </Button>
-    </div>
+    </form>
   );
 };

@@ -52,7 +52,7 @@ export const RelationshipItem: FC<IRelationshipItemProps> = (props) => {
     <Collapsible className="shadow-md rounded overflow-hidden">
       <CollapsibleTrigger asChild>
         <div className="w-full truncate line-clamp-1 gap-1 text-start p-2 hover:bg-accent flex items-center justify-between cursor-pointer">
-          <RelationshipHeader relation={relation} name={relationName} />
+          <RelationshipHeader name={relationName} />
         </div>
       </CollapsibleTrigger>
       <CollapsibleContent className="p-1">

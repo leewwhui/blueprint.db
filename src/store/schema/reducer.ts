@@ -43,6 +43,17 @@ export const addRelationAction = (
   state.relations.push(action.payload);
 };
 
+export const updateRelationAction = (
+  state: ISchemaState,
+  action: PayloadAction<IRelation>,
+) => {
+  const updated = action.payload;
+  const idx = state.relations.findIndex((r) => r.id === updated.id);
+  if (idx !== -1) {
+    state.relations[idx] = updated;
+  }
+};
+
 export const deleteReationsAction = (
   state: ISchemaState,
   action: PayloadAction<{ relationIds: string[] }>,

@@ -1,5 +1,10 @@
 import type { ListenerMiddlewareInstance } from "@reduxjs/toolkit";
-import { addTable, deleteRelations, deleteTable } from "./slice";
+import {
+  addTable,
+  deleteRelations,
+  deleteTable,
+  updateRelation,
+} from "./slice";
 import { updateTablePosition } from "../ui/slice";
 import type { RootState } from "../store";
 import toast from "react-hot-toast";
@@ -37,6 +42,13 @@ export const schemaListener = (listener: ListenerMiddlewareInstance) => {
           },
         ]),
       );
+    },
+  });
+
+  listener.startListening({
+    actionCreator: updateRelation,
+    effect: async () => {
+      toast.success("Relationship updated successfully");
     },
   });
 };

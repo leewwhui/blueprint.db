@@ -6,27 +6,22 @@ import {
 } from "@xyflow/react";
 import { Fragment, type FC } from "react";
 import { ForeignKeyCardinality } from "@/contracts/relationship";
+import { EdgeLabel } from "./edge-label";
 
-function EdgeLabel({ transform, label }: { transform: string; label: string }) {
-  return (
-    <div
-      style={{
-        transform,
-      }}
-      className="nodrag nopan absolute"
-    >
-      {label}
-    </div>
-  );
-}
-
-function getCardinalityLabels(cardinality: ForeignKeyCardinality | unknown): [string, string] {
+function getCardinalityLabels(
+  cardinality: ForeignKeyCardinality | unknown,
+): [string, string] {
   switch (cardinality) {
-    case ForeignKeyCardinality.ONE_TO_ONE:  return ["1", "1"];
-    case ForeignKeyCardinality.ONE_TO_MANY: return ["1", "N"];
-    case ForeignKeyCardinality.MANY_TO_ONE: return ["N", "1"];
-    case ForeignKeyCardinality.MANY_TO_MANY: return ["N", "N"];
-    default: return ["1", "1"];
+    case ForeignKeyCardinality.ONE_TO_ONE:
+      return ["1", "1"];
+    case ForeignKeyCardinality.ONE_TO_MANY:
+      return ["1", "N"];
+    case ForeignKeyCardinality.MANY_TO_ONE:
+      return ["N", "1"];
+    case ForeignKeyCardinality.MANY_TO_MANY:
+      return ["N", "N"];
+    default:
+      return ["1", "1"];
   }
 }
 
