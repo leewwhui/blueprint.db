@@ -90,7 +90,7 @@ export const TableForm: FC<TableFormProps> = (props) => {
         </Button>
 
         <Button variant="outline" type="submit">
-          Save Table
+          Save
         </Button>
       </form>
     </FormProvider>

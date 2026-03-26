@@ -22,7 +22,6 @@ interface RelationshipHeaderProps {
 
 export const RelationshipForm: FC<RelationshipHeaderProps> = (props) => {
   const { relation } = props;
-  const tables = useTables();
 
   return (
     <div className="p-2 flex flex-col gap-3">
@@ -75,7 +74,7 @@ export const RelationshipForm: FC<RelationshipHeaderProps> = (props) => {
         </Field>
       </div>
       <Button variant="outline" type="submit">
-        Save Table
+        Save
       </Button>
     </div>
   );
