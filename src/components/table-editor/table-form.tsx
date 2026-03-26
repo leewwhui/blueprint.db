@@ -6,12 +6,7 @@ import { ColumnForm } from "./column-form";
 import type { IColumn, TableFormValues } from "@/contracts/schema";
 import { Button } from "@/components/ui/button";
 import { FieldLabel } from "@/components/ui/field";
-import {
-  FormProvider,
-  useFieldArray,
-  useForm,
-  type SubmitHandler,
-} from "react-hook-form";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { tableFormSchema } from "@/components/table-editor/table-validation";
 import { cloneDeep } from "lodash";
