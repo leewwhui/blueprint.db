@@ -1,22 +1,32 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { IconLine, IconTable } from "@tabler/icons-react";
 import { TableList } from "./table/table-list";
+import { ToolbarButton } from "./tool-bar-button";
+import { useState } from "react";
 import { RelationshipList } from "./relationship/relationships";
 
 export const Sidebar = () => {
+  const [tool, setTool] = useState<"tables" | "refs">("tables");
+
   return (
-    <aside className="w-(--side-width) border-r shadow p-3 flex flex-col gap-3">
-      <Tabs defaultValue="tables">
-        <TabsList className="w-full">
-          <TabsTrigger value="tables">Tables</TabsTrigger>
-          <TabsTrigger value="relationships">Relationships</TabsTrigger>
-        </TabsList>
-        <TabsContent value="tables">
-          <TableList />
-        </TabsContent>
-        <TabsContent value="relationships">
-          <RelationshipList />
-        </TabsContent>
-      </Tabs>
+    <aside className="border-r shadow flex text-sm">
+      <div className="w-20 flex flex-col bg-muted items-center p-3 gap-1">
+        <ToolbarButton
+          active={tool === "tables"}
+          onClick={() => setTool("tables")}
+        >
+          <IconTable size={16}></IconTable>
+          <p className="text-xs">Tables</p>
+        </ToolbarButton>
+
+        <ToolbarButton active={tool === "refs"} onClick={() => setTool("refs")}>
+          <IconLine size={16}></IconLine>
+          <p className="text-xs">Refs</p>
+        </ToolbarButton>
+      </div>
+      <div className="w-(--side-width) p-3">
+        {tool === "tables" && <TableList />}
+        {tool === "refs" && <RelationshipList />}
+      </div>
     </aside>
   );
 };
