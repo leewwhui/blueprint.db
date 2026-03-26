@@ -2,6 +2,10 @@ import { describe, expect, it } from "vitest";
 import type { IRelation, ITable } from "@/contracts/schema";
 import { relationValidate } from "../lib/relation-validate";
 import { ColumnConstraints, ColumnType } from "../contracts/columns";
+import {
+  ForeignKeyCardinality,
+  ForeignKeyReferentialAction,
+} from "@/contracts/relationship";
 
 const makeTable = (
   tableId: string,
@@ -140,6 +144,9 @@ describe("relationValidate", () => {
         sourceColumnId: "user_id",
         targetTableId: "users",
         targetColumnId: "id",
+        cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+        onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+        onDelete: ForeignKeyReferentialAction.NO_ACTION,
       },
     ];
 
@@ -164,6 +171,9 @@ describe("relationValidate", () => {
         sourceColumnId: "owner_id",
         targetTableId: "accounts",
         targetColumnId: "id",
+        cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+        onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+        onDelete: ForeignKeyReferentialAction.NO_ACTION,
       },
     ];
 

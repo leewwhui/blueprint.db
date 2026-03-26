@@ -21,7 +21,7 @@ export const ImportSQL = () => {
   const onImport = () => {
     try {
       const parsed = parseSqlToSchema(sql);
-      dispatch(importSchema(parsed));
+      // dispatch(importSchema(parsed));
       toast.success("SQL imported successfully");
       setOpen(false);
     } catch (error) {

@@ -50,7 +50,7 @@ export const FKEdge: FC<EdgeProps> = (props) => {
 
   return (
     <Fragment>
-      <BaseEdge id={id} path={edgePath} />;
+      <BaseEdge id={id} path={edgePath} />
       <EdgeLabelRenderer>
         <EdgeLabel
           transform={`translate(-50%, -50%) translate(${sourceX + 10}px,${sourceY}px)`}

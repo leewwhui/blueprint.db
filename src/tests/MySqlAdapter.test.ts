@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { ColumnConstraints, ColumnType } from "@/contracts/columns";
 import { MySqlAdapter } from "@/adapter/MySqlAdapter";
 import type { ITable, IColumn, IRelation } from "@/contracts/schema";
+import { ForeignKeyCardinality, ForeignKeyReferentialAction } from "@/contracts/relationship";
 
 // Helper to create column constraints with defaults
 const createConstraints = (overrides: Partial<Record<ColumnConstraints, boolean>> = {}) => ({
@@ -348,6 +349,9 @@ describe("MySqlAdapter", () => {
         sourceColumnId: "2",
         targetTableId: "table1",
         targetColumnId: "1",
+        cardinality: ForeignKeyCardinality.ONE_TO_ONE,
+        onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+        onDelete: ForeignKeyReferentialAction.NO_ACTION
       };
 
       const result = adapter.generateRelationSql(relation, tables);
@@ -392,6 +396,9 @@ describe("MySqlAdapter", () => {
         sourceColumnId: "c2",
         targetTableId: "t1",
         targetColumnId: "c1",
+        cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+        onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+        onDelete: ForeignKeyReferentialAction.NO_ACTION,
       };
 
       const result = adapter.generateRelationSql(relation, tables);
@@ -420,6 +427,9 @@ describe("MySqlAdapter", () => {
         sourceColumnId: "2",
         targetTableId: "table1",
         targetColumnId: "1",
+        cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+        onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+        onDelete: ForeignKeyReferentialAction.NO_ACTION,
       };
 
       const result = adapter.generateRelationSql(relation, tables);
@@ -448,6 +458,9 @@ describe("MySqlAdapter", () => {
         sourceColumnId: "2",
         targetTableId: "nonexistent",
         targetColumnId: "1",
+        cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+        onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+        onDelete: ForeignKeyReferentialAction.NO_ACTION,
       };
 
       const result = adapter.generateRelationSql(relation, tables);
@@ -488,6 +501,9 @@ describe("MySqlAdapter", () => {
         sourceColumnId: "nonexistent",
         targetTableId: "table1",
         targetColumnId: "1",
+        cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+        onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+        onDelete: ForeignKeyReferentialAction.NO_ACTION,
       };
 
       const result = adapter.generateRelationSql(relation, tables);
@@ -528,6 +544,9 @@ describe("MySqlAdapter", () => {
         sourceColumnId: "2",
         targetTableId: "table1",
         targetColumnId: "nonexistent",
+        cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+        onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+        onDelete: ForeignKeyReferentialAction.NO_ACTION,
       };
 
       const result = adapter.generateRelationSql(relation, tables);
@@ -615,6 +634,9 @@ describe("MySqlAdapter", () => {
           sourceColumnId: "3",
           targetTableId: "table1",
           targetColumnId: "1",
+          cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+          onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+          onDelete: ForeignKeyReferentialAction.NO_ACTION,
         },
       ];
 
@@ -681,6 +703,9 @@ describe("MySqlAdapter", () => {
           sourceColumnId: "2",
           targetTableId: "table1",
           targetColumnId: "1",
+          cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+          onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+          onDelete: ForeignKeyReferentialAction.NO_ACTION,
         },
       ];
 
@@ -742,6 +767,9 @@ describe("MySqlAdapter", () => {
           sourceColumnId: "3",
           targetTableId: "table1",
           targetColumnId: "1",
+          cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+          onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+          onDelete: ForeignKeyReferentialAction.NO_ACTION,
         },
         {
           id: "rel2",
@@ -749,6 +777,9 @@ describe("MySqlAdapter", () => {
           sourceColumnId: "4",
           targetTableId: "table2",
           targetColumnId: "2",
+          cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+          onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+          onDelete: ForeignKeyReferentialAction.NO_ACTION,
         },
       ];
 
@@ -860,6 +891,9 @@ describe("MySqlAdapter", () => {
           sourceColumnId: "o2",
           targetTableId: "users",
           targetColumnId: "u1",
+          cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+          onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+          onDelete: ForeignKeyReferentialAction.NO_ACTION,
         },
         {
           id: "rel2",
@@ -867,6 +901,9 @@ describe("MySqlAdapter", () => {
           sourceColumnId: "o3",
           targetTableId: "products",
           targetColumnId: "p1",
+          cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+          onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+          onDelete: ForeignKeyReferentialAction.NO_ACTION,
         },
       ];
 
@@ -946,6 +983,9 @@ describe("MySqlAdapter", () => {
           sourceColumnId: "p2",
           targetTableId: "categories",
           targetColumnId: "c1",
+          cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+          onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+          onDelete: ForeignKeyReferentialAction.NO_ACTION,
         },
       ];
 

@@ -60,8 +60,5 @@ export const deleteReationsAction = (
 ) => {
   const { relationIds } = action.payload;
 
-  state.relations = state.relations.filter(
-    (r) =>
-      !relationIds.includes(r.id) && !relationIds.includes(r.targetTableId),
-  );
+  state.relations = state.relations.filter((r) => !relationIds.includes(r.id));
 };

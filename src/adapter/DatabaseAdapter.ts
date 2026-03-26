@@ -21,7 +21,7 @@ export abstract class DatabaseAdapter {
 			return null;
 		}
 
-		return `ON ${keyword} ${action}`;
+		return `ON ${keyword} ${action.toUpperCase()}`;
 	}
 
 	public getColumnType(columnType: ColumnType): string {
