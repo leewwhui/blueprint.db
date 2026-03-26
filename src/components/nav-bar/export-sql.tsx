@@ -45,9 +45,8 @@ export const ExportSQL = () => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline">
+          <Button variant="ghost" size="icon">
             <IconDatabaseExport />
-            Export
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>

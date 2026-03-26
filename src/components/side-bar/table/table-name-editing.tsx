@@ -18,7 +18,7 @@ export const TableNameEditing: FC<TableNameEditingProps> = (props) => {
   };
 
   return (
-    <Fragment>
+    <div className="w-full truncate line-clamp-1 gap-1 text-start p-2 hover:bg-accent flex items-center justify-between cursor-pointer">
       <Input
         value={tableName}
         onChange={onTableNameChange}
@@ -35,6 +35,6 @@ export const TableNameEditing: FC<TableNameEditingProps> = (props) => {
       >
         <IconCheck />
       </Button>
-    </Fragment>
+    </div>
   );
 };

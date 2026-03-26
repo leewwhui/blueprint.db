@@ -46,7 +46,7 @@ export const Search = () => {
       >
         <div className="flex items-center gap-2">
           <IconSearch></IconSearch>
-          Search Table
+          Search
         </div>
         <KbdGroup>
           <Kbd>⌘</Kbd>

@@ -33,9 +33,8 @@ export const ImportSQL = () => {
 
   return (
     <>
-      <Button variant="outline" onClick={() => setOpen(true)}>
+      <Button size="icon" variant="ghost" onClick={() => setOpen(true)}>
         <IconDatabaseImport />
-        Import
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>

@@ -1,9 +1,8 @@
 import { IconFocus2, IconPencil } from "@tabler/icons-react";
-import { Button } from "../../ui/button";
-import { Fragment } from "react/jsx-runtime";
 import type { ITable } from "@/contracts/schema";
 import type { FC } from "react";
 import { useFocusTable } from "@/hooks/use-focus-table";
+import { Button } from "@/components/ui/button";
 
 interface TableItemHeaderProps {
   table: ITable;
@@ -18,10 +17,11 @@ export const TableItemHeader: FC<TableItemHeaderProps> = (props) => {
     e.stopPropagation();
     focusTable(table.id);
   };
+
   return (
-    <Fragment>
-      <p>{table.name}</p>
-      <div>
+    <div className="group w-full truncate line-clamp-1 gap-1 text-start p-2 hover:bg-accent flex items-center justify-between cursor-pointer">
+      <p className="truncate">{table.name}</p>
+      <div className="invisible flex opacity-0 transition-opacity group-hover:visible group-hover:opacity-100">
         <Button
           size="icon-sm"
           variant="ghost"
@@ -39,6 +39,6 @@ export const TableItemHeader: FC<TableItemHeaderProps> = (props) => {
           <IconFocus2 />
         </Button>
       </div>
-    </Fragment>
+    </div>
   );
 };

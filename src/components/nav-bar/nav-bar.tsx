@@ -3,6 +3,7 @@ import {
   IconArrowBackUp,
   IconArrowForwardUp,
   IconGitFork,
+  IconPlus,
 } from "@tabler/icons-react";
 import {
   Avatar,
@@ -14,6 +15,7 @@ import { ExportSQL } from "./export-sql";
 import { ImportSQL } from "./import-sql";
 import { Separator } from "../ui/separator";
 import { useHistory } from "@/hooks/use-history";
+import { Search } from "./search";
 
 export const Navbar = () => {
   const history = useHistory();
@@ -49,6 +51,14 @@ export const Navbar = () => {
 
         <Button size="icon" variant="ghost">
           <IconGitFork />
+        </Button>
+      </div>
+
+      <div className="flex gap-1 items-center">
+        <Search />
+        <Button variant="outline">
+          <IconPlus></IconPlus>
+          New
         </Button>
       </div>
 

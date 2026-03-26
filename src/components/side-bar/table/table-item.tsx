@@ -55,18 +55,21 @@ export const TableItem: FC<TableItemProps> = (props) => {
 
   return (
     <Collapsible
-      className="border-l-4 shadow-md rounded overflow-hidden"
+      className="border-l-4 rounded overflow-hidden shadow-md"
       style={{ borderColor: DefaultTableTheme }}
     >
       <CollapsibleTrigger asChild>
-        <div className="w-full truncate line-clamp-1 gap-1 text-start p-2 hover:bg-accent flex items-center justify-between cursor-pointer">
+        <div>
           {isEditing ? (
             <TableNameEditing
               name={props.table.name}
               onSave={onTableNameSave}
             />
           ) : (
-            <TableItemHeader table={table} onEditingTableName={onEditTableName} />
+            <TableItemHeader
+              table={table}
+              onEditingTableName={onEditTableName}
+            />
           )}
         </div>
       </CollapsibleTrigger>
