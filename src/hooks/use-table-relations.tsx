@@ -13,6 +13,9 @@ export const useTableRelations = () => {
       sourceHandle: relation.sourceColumnId,
       target: relation.targetTableId,
       targetHandle: relation.targetColumnId,
+      data: {
+        cardinality: relation.cardinality,
+      },
       type: "fkEdge",
     }));
 

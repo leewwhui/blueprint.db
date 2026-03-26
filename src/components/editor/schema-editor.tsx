@@ -58,7 +58,7 @@ export const SchemaEditor = () => {
       sourceColumnId: connection.sourceHandle,
       targetTableId: connection.target,
       targetColumnId: connection.targetHandle,
-      cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+      cardinality: ForeignKeyCardinality.ONE_TO_ONE,
       onUpdate: ForeignKeyReferentialAction.NO_ACTION,
       onDelete: ForeignKeyReferentialAction.NO_ACTION,
     };
@@ -84,7 +84,6 @@ export const SchemaEditor = () => {
         onNodesChange={onNodesChange}
         edges={edges}
         onEdgesChange={onEdgesChange}
-        onPaneContextMenu={(e) => e.preventDefault()}
         nodeTypes={{
           tableNode: TableNode,
         }}
