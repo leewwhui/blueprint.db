@@ -5,7 +5,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { TableForm } from "../../table-editor/table-form";
+import { TableForm } from "../../table-form/table-form";
 import { DefaultTableTheme } from "@/lib/colors";
 import { updateTable } from "@/store/schema/slice";
 import { useTables } from "@/store/schema/selector";

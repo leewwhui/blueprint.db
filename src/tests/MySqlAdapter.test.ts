@@ -993,5 +993,78 @@ describe("MySqlAdapter", () => {
       expect(result).toContain("`metadata` JSON");
       expect(result).toContain("FOREIGN KEY (`category_id`)");
     });
+
+    it("should export cyclic foreign key relations without crashing", () => {
+      const tables: ITable[] = [
+        {
+          id: "users",
+          name: "users",
+          columns: [
+            {
+              id: "u1",
+              name: "id",
+              type: ColumnType.INT,
+              constraints: createConstraints({
+                [ColumnConstraints.PRIMARY_KEY]: true,
+              }),
+            },
+            {
+              id: "u2",
+              name: "profile_id",
+              type: ColumnType.INT,
+              constraints: createConstraints(),
+            },
+          ],
+        },
+        {
+          id: "profiles",
+          name: "profiles",
+          columns: [
+            {
+              id: "p1",
+              name: "id",
+              type: ColumnType.INT,
+              constraints: createConstraints({
+                [ColumnConstraints.PRIMARY_KEY]: true,
+              }),
+            },
+            {
+              id: "p2",
+              name: "user_id",
+              type: ColumnType.INT,
+              constraints: createConstraints(),
+            },
+          ],
+        },
+      ];
+
+      const relations: IRelation[] = [
+        {
+          id: "rel1",
+          sourceTableId: "users",
+          sourceColumnId: "u2",
+          targetTableId: "profiles",
+          targetColumnId: "p1",
+          cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+          onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+          onDelete: ForeignKeyReferentialAction.NO_ACTION,
+        },
+        {
+          id: "rel2",
+          sourceTableId: "profiles",
+          sourceColumnId: "p2",
+          targetTableId: "users",
+          targetColumnId: "u1",
+          cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+          onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+          onDelete: ForeignKeyReferentialAction.NO_ACTION,
+        },
+      ];
+
+      const result = adapter.generateSchemaSql(tables, relations);
+      expect(result.match(/ALTER TABLE/g)?.length).toBe(2);
+      expect(result).toContain("FOREIGN KEY (`profile_id`) REFERENCES `profiles`(`id`)");
+      expect(result).toContain("FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)");
+    });
   });
 });
