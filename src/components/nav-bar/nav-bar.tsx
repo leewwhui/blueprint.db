@@ -1,10 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  IconArrowBackUp,
-  IconArrowForwardUp,
-  IconGitFork,
-  IconPlus,
-} from "@tabler/icons-react";
+import { IconArrowBackUp, IconArrowForwardUp } from "@tabler/icons-react";
 import {
   Avatar,
   AvatarBadge,
@@ -15,7 +10,6 @@ import { ExportSQL } from "./export-sql";
 import { ImportSQL } from "./import-sql";
 import { Separator } from "../ui/separator";
 import { useHistory } from "@/hooks/use-history";
-import { Search } from "./search";
 
 export const Navbar = () => {
   const history = useHistory();
@@ -45,20 +39,6 @@ export const Navbar = () => {
           disabled={!history.canRedo}
         >
           <IconArrowForwardUp />
-        </Button>
-
-        <Separator orientation="vertical" />
-
-        <Button size="icon" variant="ghost">
-          <IconGitFork />
-        </Button>
-      </div>
-
-      <div className="flex gap-1 items-center">
-        <Search />
-        <Button variant="outline">
-          <IconPlus></IconPlus>
-          New
         </Button>
       </div>
 
