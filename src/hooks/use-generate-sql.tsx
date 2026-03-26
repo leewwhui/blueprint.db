@@ -1,12 +1,17 @@
 import { mySqlAdapter } from "@/adapter/MySqlAdapter";
+import { PostgreSqlAdapter } from "@/adapter/PostgreSqlAdapter";
+import { SqliteAdapter } from "@/adapter/SqliteAdapter";
 import { DatabaseDialect } from "@/contracts/database";
 import { useRelations, useTables } from "@/store/schema/selector";
+
+const postgreSqlAdapter = new PostgreSqlAdapter();
+const sqliteAdapter = new SqliteAdapter();
 
 export const useGenerateSQL = () => {
   const dialects = {
     [DatabaseDialect.MYSQL]: mySqlAdapter,
-    [DatabaseDialect.POSTGRESQL]: mySqlAdapter, // TODO: add PostgreSqlAdapter
-    [DatabaseDialect.SQLITE]: mySqlAdapter, // TODO: add SqliteAdapter
+    [DatabaseDialect.POSTGRESQL]: postgreSqlAdapter,
+    [DatabaseDialect.SQLITE]: sqliteAdapter,
   };
 
   const tables = useTables();

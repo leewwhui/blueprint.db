@@ -12,7 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { IconBrandMysql, IconDatabaseExport } from "@tabler/icons-react";
+import { IconBrandMysql, IconDatabase, IconDatabaseExport } from "@tabler/icons-react";
 import { useMemo, useState } from "react";
 import { DatabaseDialect } from "@/contracts/database";
 import { CodeEditor } from "../editor/code-editor";
@@ -58,6 +58,24 @@ export const ExportSQL = () => {
           >
             <IconBrandMysql />
             MySQL
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              setOpen(true);
+              setDialect(DatabaseDialect.POSTGRESQL);
+            }}
+          >
+            <IconDatabase />
+            PostgreSQL
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              setOpen(true);
+              setDialect(DatabaseDialect.SQLITE);
+            }}
+          >
+            <IconDatabase />
+            SQLite
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

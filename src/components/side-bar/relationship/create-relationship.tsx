@@ -18,9 +18,21 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addRelation } from "@/store/schema/slice";
+import { nanoid } from "nanoid";
+import {
+  ForeignKeyCardinality,
+  ForeignKeyReferentialAction,
+} from "@/contracts/relationship";
+import { useRelationValidate } from "@/hooks/use-relation-validation";
+import toast from "react-hot-toast";
 
 export const CreateRelationship = () => {
   const tables = useTables();
+  const dispatch = useDispatch();
+  const validateRelation = useRelationValidate();
+  const [open, setOpen] = useState(false);
   const [primaryTableId, setPrimaryTableId] = useState<string | null>(null);
   const [primaryColumnId, setPrimaryColumnId] = useState<string | null>(null);
   const [foreignTableId, setForeignTableId] = useState<string | null>(null);
@@ -39,8 +51,42 @@ export const CreateRelationship = () => {
     setForeignColumnId(null);
   };
 
+  const onSave = () => {
+    if (!primaryTableId || !primaryColumnId || !foreignTableId || !foreignColumnId) return;
+
+    const validation = validateRelation(
+      foreignTableId,
+      foreignColumnId,
+      primaryTableId,
+      primaryColumnId,
+    );
+
+    if (!validation.valid) {
+      return toast.error(validation.message);
+    }
+
+    dispatch(
+      addRelation({
+        id: nanoid(),
+        sourceTableId: foreignTableId,
+        sourceColumnId: foreignColumnId,
+        targetTableId: primaryTableId,
+        targetColumnId: primaryColumnId,
+        cardinality: ForeignKeyCardinality.MANY_TO_ONE,
+        onUpdate: ForeignKeyReferentialAction.NO_ACTION,
+        onDelete: ForeignKeyReferentialAction.NO_ACTION,
+      }),
+    );
+
+    setOpen(false);
+    setPrimaryTableId(null);
+    setPrimaryColumnId(null);
+    setForeignTableId(null);
+    setForeignColumnId(null);
+  };
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="secondary">
           <IconLine />
@@ -145,7 +191,7 @@ export const CreateRelationship = () => {
         </div>
 
         <DialogFooter>
-          <Button disabled={!primaryColumnId || !foreignColumnId}>Save</Button>
+          <Button disabled={!primaryColumnId || !foreignColumnId} onClick={onSave}>Save</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

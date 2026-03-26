@@ -13,7 +13,7 @@ import {
   deleteTableAction,
   addRelationAction,
   updateRelationAction,
-  deleteReationsAction,
+  deleteRelationsAction,
 } from "@/store/schema/reducer";
 
 const createConstraints = (
@@ -171,7 +171,7 @@ describe("Schema Reducer", () => {
     });
   });
 
-  describe("deleteReationsAction", () => {
+  describe("deleteRelationsAction", () => {
     it("should delete relations by ids", () => {
       const state = createState([], [
         makeRelation("r1"),
@@ -179,7 +179,7 @@ describe("Schema Reducer", () => {
         makeRelation("r3"),
       ]);
 
-      deleteReationsAction(state, action({ relationIds: ["r1", "r3"] }));
+      deleteRelationsAction(state, action({ relationIds: ["r1", "r3"] }));
 
       expect(state.relations).toHaveLength(1);
       expect(state.relations[0].id).toBe("r2");
@@ -187,7 +187,7 @@ describe("Schema Reducer", () => {
 
     it("should do nothing if no ids match", () => {
       const state = createState([], [makeRelation("r1")]);
-      deleteReationsAction(state, action({ relationIds: ["r999"] }));
+      deleteRelationsAction(state, action({ relationIds: ["r999"] }));
       expect(state.relations).toHaveLength(1);
     });
   });

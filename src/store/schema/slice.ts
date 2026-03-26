@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addRelationAction,
   addTableAction,
-  deleteReationsAction,
+  deleteRelationsAction,
   deleteTableAction,
   importSchemaAction,
   updateRelationAction,
@@ -50,7 +50,7 @@ export const schemaSlice = createSlice({
     deleteTable: deleteTableAction,
     addRelation: addRelationAction,
     updateRelation: updateRelationAction,
-    deleteRelations: deleteReationsAction,
+    deleteRelations: deleteRelationsAction,
   },
 });
 

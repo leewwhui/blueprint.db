@@ -54,7 +54,7 @@ export const updateRelationAction = (
   }
 };
 
-export const deleteReationsAction = (
+export const deleteRelationsAction = (
   state: ISchemaState,
   action: PayloadAction<{ relationIds: string[] }>,
 ) => {
