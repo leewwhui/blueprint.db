@@ -10,7 +10,7 @@ export const RelationshipHeader: FC<RelationshipHeaderProps> = (props) => {
 
   return (
     <div className="min-w-0">
-      <p className="truncate text-sm">{relation.name}</p>
+      <p className="truncate text-sm">{relation.id}</p>
     </div>
   );
 };

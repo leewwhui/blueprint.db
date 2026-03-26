@@ -20,17 +20,15 @@ import toast from "react-hot-toast";
 import { FKEdge } from "../nodes/fk-edge";
 import { useRelations, useTables } from "@/store/schema/selector";
 import { relationValidate } from "@/lib/relation-validate";
+import { useRelationValidate } from "@/hooks/use-relation-validation";
 
 export const SchemaEditor = () => {
   const { nodes, onNodesChange } = useTableNodes();
   const { edges, onEdgesChange } = useTableRelations();
-
-  const tables = useTables();
-  const relations = useRelations();
+  const validateRelation = useRelationValidate();
 
   const dispatch = useDispatch();
   const positions = useTablePosition();
-
   const history = useHistory();
 
   const updateNodesPosition = (nodes: Node<TableNodeData>[]) => {
@@ -52,53 +50,20 @@ export const SchemaEditor = () => {
   const onConnect = (connection: Connection) => {
     if (!connection.sourceHandle || !connection.targetHandle) return;
 
-    const sourceTableId = connection.source;
-    const sourceColumnId = connection.sourceHandle;
-    const targetTableId = connection.target;
-    const targetColumnId = connection.targetHandle;
-
-    const sourceTable = tables.find((table) => table.id === sourceTableId);
-    const targetTable = tables.find((table) => table.id === targetTableId);
-
-    if (!sourceTable) {
-      return {
-        valid: false,
-        message: "Source table not found",
-      };
-    }
-
-    if (!targetTable) {
-      return {
-        valid: false,
-        message: "Target table not found",
-      };
-    }
-
-    const validation = relationValidate(
-      sourceTable,
-      targetTable,
-      sourceColumnId,
-      targetColumnId,
-      sourceTableId,
-      targetTableId,
-      relations,
-    );
-
-    const sourceColumn = sourceTable.columns.find(
-      (col) => col.id === sourceColumnId,
-    );
-    const targetColumn = targetTable.columns.find(
-      (col) => col.id === targetColumnId,
-    );
-
     const relation = {
       id: nanoid(),
-      name: `fk_${sourceTable.name}_${sourceColumn!.name}_${targetTable.name}_${targetColumn!.name}`,
-      sourceTableId,
-      sourceColumnId,
-      targetTableId,
-      targetColumnId,
+      sourceTableId: connection.source,
+      sourceColumnId: connection.sourceHandle,
+      targetTableId: connection.target,
+      targetColumnId: connection.targetHandle,
     };
+
+    const validation = validateRelation(
+      relation.sourceTableId,
+      relation.sourceColumnId,
+      relation.targetTableId,
+      relation.targetColumnId,
+    );
 
     if (!validation.valid) {
       return toast.error(validation.message);
