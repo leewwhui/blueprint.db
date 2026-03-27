@@ -12,21 +12,28 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { IconBrandMysql, IconDatabase, IconDatabaseExport } from "@tabler/icons-react";
+import {
+  IconBrandMysql,
+  IconDatabase,
+  IconDatabaseExport,
+} from "@tabler/icons-react";
 import { useMemo, useState } from "react";
 import { DatabaseDialect } from "@/contracts/database";
 import { CodeEditor } from "../editor/code-editor";
 import { useGenerateSQL } from "@/hooks/use-generate-sql";
+import { useRelations, useTables } from "@/store/schema/selector";
 
 export const ExportSQL = () => {
   const [open, setOpen] = useState(false);
   const [dialect, setDialect] = useState<DatabaseDialect | null>(null);
+  const tables = useTables();
+  const relations = useRelations();
   const generateSql = useGenerateSQL();
 
   const code = useMemo(() => {
     if (!dialect) return null;
-    return generateSql(dialect);
-  }, [dialect]);
+    return generateSql(dialect, tables, relations);
+  }, [dialect, tables, relations]);
 
   const downloadSql = () => {
     if (!code) return;

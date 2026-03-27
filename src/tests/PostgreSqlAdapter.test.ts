@@ -80,10 +80,10 @@ describe("PostgreSqlAdapter", () => {
         type: ColumnType.INT,
         constraints: createConstraints(),
       };
-      expect(adapter.generateColumnSql(column)).toBe('  "id" INTEGER');
+      expect(adapter.generateColumnSql(column)).toBe('  "id" INTEGER NOT NULL');
     });
 
-    it("should generate column with NOT_NULL constraint", () => {
+    it("should generate nullable column SQL", () => {
       const column: IColumn = {
         id: "2",
         name: "email",
@@ -91,7 +91,7 @@ describe("PostgreSqlAdapter", () => {
         constraints: createConstraints({ [ColumnConstraints.NULLABLE]: true }),
       };
       expect(adapter.generateColumnSql(column)).toBe(
-        '  "email" VARCHAR(255) NOT NULL',
+        '  "email" VARCHAR(255)',
       );
     });
 
@@ -103,7 +103,7 @@ describe("PostgreSqlAdapter", () => {
         constraints: createConstraints({ [ColumnConstraints.UNIQUE]: true }),
       };
       expect(adapter.generateColumnSql(column)).toBe(
-        '  "username" VARCHAR(255) UNIQUE',
+        '  "username" VARCHAR(255) NOT NULL UNIQUE',
       );
     });
 
@@ -117,7 +117,7 @@ describe("PostgreSqlAdapter", () => {
         }),
       };
       const result = adapter.generateColumnSql(column);
-      expect(result).toBe('  "id" INTEGER');
+      expect(result).toBe('  "id" INTEGER NOT NULL');
       expect(result).not.toContain("AUTO_INCREMENT");
     });
 
@@ -132,7 +132,7 @@ describe("PostgreSqlAdapter", () => {
         }),
       };
       expect(adapter.generateColumnSql(column)).toBe(
-        '  "email" VARCHAR(255) NOT NULL UNIQUE',
+        '  "email" VARCHAR(255) UNIQUE',
       );
     });
   });
@@ -230,7 +230,7 @@ describe("PostgreSqlAdapter", () => {
       const result = adapter.generateTableSql(table);
       expect(result).toContain('CREATE TABLE "users"');
       expect(result).toContain('"id" INTEGER');
-      expect(result).toContain('"name" VARCHAR(255) NOT NULL');
+      expect(result).toContain('"name" VARCHAR(255)');
       expect(result).toContain('PRIMARY KEY ("id")');
       expect(result).toContain(");");
     });

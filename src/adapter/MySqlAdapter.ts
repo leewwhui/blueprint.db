@@ -19,11 +19,11 @@ export class MySqlAdapter extends DatabaseAdapter {
     [ColumnType.UUID]: "CHAR(36)",
   };
 
-  protected quoteIdentifier(name: string): string {
+  protected override quoteIdentifier(name: string): string {
     return `\`${name}\``;
   }
 
-  protected getAutoIncrementKeyword(): string {
+  protected override getAutoIncrementKeyword(): string {
     return "AUTO_INCREMENT";
   }
 }

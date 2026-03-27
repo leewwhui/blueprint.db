@@ -80,10 +80,10 @@ describe("SqliteAdapter", () => {
         type: ColumnType.INT,
         constraints: createConstraints(),
       };
-      expect(adapter.generateColumnSql(column)).toBe('  "id" INTEGER');
+      expect(adapter.generateColumnSql(column)).toBe('  "id" INTEGER NOT NULL');
     });
 
-    it("should generate column with NOT_NULL constraint", () => {
+    it("should generate nullable column SQL", () => {
       const column: IColumn = {
         id: "2",
         name: "name",
@@ -91,7 +91,7 @@ describe("SqliteAdapter", () => {
         constraints: createConstraints({ [ColumnConstraints.NULLABLE]: true }),
       };
       expect(adapter.generateColumnSql(column)).toBe(
-        '  "name" TEXT NOT NULL',
+        '  "name" TEXT',
       );
     });
 
@@ -105,7 +105,7 @@ describe("SqliteAdapter", () => {
         }),
       };
       const result = adapter.generateColumnSql(column);
-      expect(result).toBe('  "id" INTEGER');
+      expect(result).toBe('  "id" INTEGER NOT NULL');
       expect(result).not.toContain("AUTO_INCREMENT");
     });
   });
@@ -166,7 +166,7 @@ describe("SqliteAdapter", () => {
       expect(result).toContain('CREATE TABLE "events"');
       expect(result).toContain('"id" INTEGER');
       expect(result).toContain('"payload" TEXT');
-      expect(result).toContain('"created_at" TEXT NOT NULL');
+      expect(result).toContain('"created_at" TEXT');
       expect(result).toContain('PRIMARY KEY ("id")');
     });
   });

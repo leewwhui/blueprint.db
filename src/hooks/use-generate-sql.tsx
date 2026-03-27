@@ -2,7 +2,7 @@ import { mySqlAdapter } from "@/adapter/MySqlAdapter";
 import { PostgreSqlAdapter } from "@/adapter/PostgreSqlAdapter";
 import { SqliteAdapter } from "@/adapter/SqliteAdapter";
 import { DatabaseDialect } from "@/contracts/database";
-import { useRelations, useTables } from "@/store/schema/selector";
+import type { IRelation, ITable } from "@/contracts/schema";
 
 const postgreSqlAdapter = new PostgreSqlAdapter();
 const sqliteAdapter = new SqliteAdapter();
@@ -14,15 +14,14 @@ export const useGenerateSQL = () => {
     [DatabaseDialect.SQLITE]: sqliteAdapter,
   };
 
-  const tables = useTables();
-  const relations = useRelations();
-
-  return (dialect: DatabaseDialect) => {
+  return (dialect: DatabaseDialect, tables: ITable[], relations: IRelation[]) => {
     const adapter = dialects[dialect];
 
     if (!adapter) {
       throw new Error(`Unsupported database dialect: ${dialect}`);
     }
+
+    console.log(tables);
 
     return adapter.generateSchemaSql(tables, relations);
   };

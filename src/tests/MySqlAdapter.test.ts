@@ -78,10 +78,10 @@ describe("MySqlAdapter", () => {
       };
 
       const result = adapter.generateColumnSql(column);
-      expect(result).toBe("  `id` INT");
+      expect(result).toBe("  `id` INT NOT NULL");
     });
 
-    it("should generate column with NOT_NULL constraint", () => {
+    it("should generate nullable column SQL", () => {
       const column: IColumn = {
         id: "2",
         name: "email",
@@ -90,7 +90,7 @@ describe("MySqlAdapter", () => {
       };
 
       const result = adapter.generateColumnSql(column);
-      expect(result).toBe("  `email` VARCHAR(255) NOT NULL");
+      expect(result).toBe("  `email` VARCHAR(255)");
     });
 
     it("should generate column with UNIQUE constraint", () => {
@@ -102,7 +102,7 @@ describe("MySqlAdapter", () => {
       };
 
       const result = adapter.generateColumnSql(column);
-      expect(result).toBe("  `username` VARCHAR(255) UNIQUE");
+      expect(result).toBe("  `username` VARCHAR(255) NOT NULL UNIQUE");
     });
 
     it("should generate column with AUTO_INCREMENT constraint", () => {
@@ -114,7 +114,7 @@ describe("MySqlAdapter", () => {
       };
 
       const result = adapter.generateColumnSql(column);
-      expect(result).toBe("  `user_id` INT AUTO_INCREMENT");
+      expect(result).toBe("  `user_id` INT NOT NULL AUTO_INCREMENT");
     });
 
     it("should generate column with multiple constraints", () => {
@@ -130,7 +130,7 @@ describe("MySqlAdapter", () => {
       };
 
       const result = adapter.generateColumnSql(column);
-      expect(result).toBe("  `id` INT NOT NULL AUTO_INCREMENT");
+      expect(result).toBe("  `id` INT AUTO_INCREMENT");
     });
 
     it("should handle column names with special characters", () => {
@@ -276,9 +276,9 @@ describe("MySqlAdapter", () => {
 
       const result = adapter.generateTableSql(table);
       expect(result).toContain("CREATE TABLE `users`");
-      expect(result).toContain("`id` INT AUTO_INCREMENT");
-      expect(result).toContain("`email` VARCHAR(255) NOT NULL UNIQUE");
-      expect(result).toContain("`status` VARCHAR(255)");
+      expect(result).toContain("`id` INT NOT NULL AUTO_INCREMENT");
+      expect(result).toContain("`email` VARCHAR(255) UNIQUE");
+      expect(result).toContain("`status` VARCHAR(255) NOT NULL");
       expect(result).toContain("PRIMARY KEY (`id`)");
     });
 
@@ -582,8 +582,8 @@ describe("MySqlAdapter", () => {
 
       const result = adapter.generateSchemaSql(tables);
       expect(result).toContain("CREATE TABLE `users`");
-      expect(result).toContain("`id` INT AUTO_INCREMENT");
-      expect(result).toContain("`email` VARCHAR(255) NOT NULL");
+      expect(result).toContain("`id` INT NOT NULL AUTO_INCREMENT");
+      expect(result).toContain("`email` VARCHAR(255)");
       expect(result).toContain("PRIMARY KEY (`id`)");
     });
 
