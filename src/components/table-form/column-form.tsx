@@ -51,7 +51,7 @@ export const ColumnForm: FC<ColumnFormProps> = (props) => {
       const constraints = getValues(path);
       setValue(path, {
         ...constraints,
-        [ColumnConstraints.NOT_NULL]: false,
+        [ColumnConstraints.NULLABLE]: false,
       });
     }
   }, [getValues, isPrimary, setValue, index]);
@@ -120,7 +120,7 @@ export const ColumnForm: FC<ColumnFormProps> = (props) => {
       <CollapsibleContent className="flex gap-3 py-3 border-b">
         {Object.values(ColumnConstraints).map((constraint) => {
           const disable =
-            isPrimary && constraint === ColumnConstraints.NOT_NULL;
+            isPrimary && constraint === ColumnConstraints.NULLABLE;
 
           return (
             <Controller

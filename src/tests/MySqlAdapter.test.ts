@@ -7,7 +7,7 @@ import { ForeignKeyCardinality, ForeignKeyReferentialAction } from "@/contracts/
 // Helper to create column constraints with defaults
 const createConstraints = (overrides: Partial<Record<ColumnConstraints, boolean>> = {}) => ({
   [ColumnConstraints.PRIMARY_KEY]: false,
-  [ColumnConstraints.NOT_NULL]: false,
+  [ColumnConstraints.NULLABLE]: false,
   [ColumnConstraints.UNIQUE]: false,
   [ColumnConstraints.AUTO_INCREMENT]: false,
   ...overrides,
@@ -86,7 +86,7 @@ describe("MySqlAdapter", () => {
         id: "2",
         name: "email",
         type: ColumnType.VARCHAR,
-        constraints: createConstraints({ [ColumnConstraints.NOT_NULL]: true }),
+        constraints: createConstraints({ [ColumnConstraints.NULLABLE]: true }),
       };
 
       const result = adapter.generateColumnSql(column);
@@ -125,7 +125,7 @@ describe("MySqlAdapter", () => {
         constraints: createConstraints({
           [ColumnConstraints.PRIMARY_KEY]: true,
           [ColumnConstraints.AUTO_INCREMENT]: true,
-          [ColumnConstraints.NOT_NULL]: true,
+          [ColumnConstraints.NULLABLE]: true,
         }),
       };
 
@@ -210,7 +210,7 @@ describe("MySqlAdapter", () => {
             id: "1",
             name: "name",
             type: ColumnType.VARCHAR,
-            constraints: createConstraints({ [ColumnConstraints.NOT_NULL]: true }),
+            constraints: createConstraints({ [ColumnConstraints.NULLABLE]: true }),
           },
         ],
       };
@@ -261,7 +261,7 @@ describe("MySqlAdapter", () => {
             name: "email",
             type: ColumnType.VARCHAR,
             constraints: createConstraints({
-              [ColumnConstraints.NOT_NULL]: true,
+              [ColumnConstraints.NULLABLE]: true,
               [ColumnConstraints.UNIQUE]: true,
             }),
           },
@@ -297,7 +297,7 @@ describe("MySqlAdapter", () => {
             id: "2",
             name: "name",
             type: ColumnType.VARCHAR,
-            constraints: createConstraints({ [ColumnConstraints.NOT_NULL]: true }),
+            constraints: createConstraints({ [ColumnConstraints.NULLABLE]: true }),
           },
         ],
       };
@@ -574,7 +574,7 @@ describe("MySqlAdapter", () => {
               id: "2",
               name: "email",
               type: ColumnType.VARCHAR,
-              constraints: createConstraints({ [ColumnConstraints.NOT_NULL]: true }),
+              constraints: createConstraints({ [ColumnConstraints.NULLABLE]: true }),
             },
           ],
         },
@@ -664,7 +664,7 @@ describe("MySqlAdapter", () => {
               id: "2",
               name: "name",
               type: ColumnType.VARCHAR,
-              constraints: createConstraints({ [ColumnConstraints.NOT_NULL]: true }),
+              constraints: createConstraints({ [ColumnConstraints.NULLABLE]: true }),
             },
           ],
         },
@@ -810,7 +810,7 @@ describe("MySqlAdapter", () => {
               name: "email",
               type: ColumnType.VARCHAR,
               constraints: createConstraints({
-                [ColumnConstraints.NOT_NULL]: true,
+                [ColumnConstraints.NULLABLE]: true,
                 [ColumnConstraints.UNIQUE]: true,
               }),
             },
@@ -818,7 +818,7 @@ describe("MySqlAdapter", () => {
               id: "u3",
               name: "created_at",
               type: ColumnType.TIMESTAMP,
-              constraints: createConstraints({ [ColumnConstraints.NOT_NULL]: true }),
+              constraints: createConstraints({ [ColumnConstraints.NULLABLE]: true }),
             },
           ],
         },
@@ -839,13 +839,13 @@ describe("MySqlAdapter", () => {
               id: "p2",
               name: "name",
               type: ColumnType.VARCHAR,
-              constraints: createConstraints({ [ColumnConstraints.NOT_NULL]: true }),
+              constraints: createConstraints({ [ColumnConstraints.NULLABLE]: true }),
             },
             {
               id: "p3",
               name: "price",
               type: ColumnType.DECIMAL,
-              constraints: createConstraints({ [ColumnConstraints.NOT_NULL]: true }),
+              constraints: createConstraints({ [ColumnConstraints.NULLABLE]: true }),
             },
           ],
         },
@@ -866,19 +866,19 @@ describe("MySqlAdapter", () => {
               id: "o2",
               name: "user_id",
               type: ColumnType.INT,
-              constraints: createConstraints({ [ColumnConstraints.NOT_NULL]: true }),
+              constraints: createConstraints({ [ColumnConstraints.NULLABLE]: true }),
             },
             {
               id: "o3",
               name: "product_id",
               type: ColumnType.INT,
-              constraints: createConstraints({ [ColumnConstraints.NOT_NULL]: true }),
+              constraints: createConstraints({ [ColumnConstraints.NULLABLE]: true }),
             },
             {
               id: "o4",
               name: "quantity",
               type: ColumnType.INT,
-              constraints: createConstraints({ [ColumnConstraints.NOT_NULL]: true }),
+              constraints: createConstraints({ [ColumnConstraints.NULLABLE]: true }),
             },
           ],
         },
@@ -935,7 +935,7 @@ describe("MySqlAdapter", () => {
               name: "slug",
               type: ColumnType.VARCHAR,
               constraints: createConstraints({
-                [ColumnConstraints.NOT_NULL]: true,
+                [ColumnConstraints.NULLABLE]: true,
                 [ColumnConstraints.UNIQUE]: true,
               }),
             },

@@ -34,7 +34,7 @@ export abstract class DatabaseAdapter {
 			this.getColumnType(column.type),
 		];
 
-		if (column.constraints[ColumnConstraints.NOT_NULL]) {
+		if (!column.constraints[ColumnConstraints.NULLABLE]) {
 			parts.push("NOT NULL");
 		}
 

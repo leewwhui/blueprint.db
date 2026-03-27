@@ -14,7 +14,7 @@ export enum ColumnType {
 
 export enum ColumnConstraints {
   PRIMARY_KEY = "PRIMARY_KEY",
-  NOT_NULL = "NOT_NULL",
+  NULLABLE = "NULLABLE",
   UNIQUE = "UNIQUE",
   AUTO_INCREMENT = "AUTO_INCREMENT",
 }

@@ -11,7 +11,7 @@ const createConstraints = (
   overrides: Partial<Record<ColumnConstraints, boolean>> = {},
 ) => ({
   [ColumnConstraints.PRIMARY_KEY]: false,
-  [ColumnConstraints.NOT_NULL]: false,
+  [ColumnConstraints.NULLABLE]: false,
   [ColumnConstraints.UNIQUE]: false,
   [ColumnConstraints.AUTO_INCREMENT]: false,
   ...overrides,
@@ -88,7 +88,7 @@ describe("SqliteAdapter", () => {
         id: "2",
         name: "name",
         type: ColumnType.VARCHAR,
-        constraints: createConstraints({ [ColumnConstraints.NOT_NULL]: true }),
+        constraints: createConstraints({ [ColumnConstraints.NULLABLE]: true }),
       };
       expect(adapter.generateColumnSql(column)).toBe(
         '  "name" TEXT NOT NULL',
@@ -157,7 +157,7 @@ describe("SqliteAdapter", () => {
             name: "created_at",
             type: ColumnType.TIMESTAMP,
             constraints: createConstraints({
-              [ColumnConstraints.NOT_NULL]: true,
+              [ColumnConstraints.NULLABLE]: true,
             }),
           },
         ],

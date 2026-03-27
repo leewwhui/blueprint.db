@@ -42,7 +42,7 @@ export const TableForm: FC<TableFormProps> = (props) => {
       type: ColumnType.INT,
       constraints: {
         [ColumnConstraints.PRIMARY_KEY]: false,
-        [ColumnConstraints.NOT_NULL]: false,
+        [ColumnConstraints.NULLABLE]: true,
         [ColumnConstraints.UNIQUE]: false,
         [ColumnConstraints.AUTO_INCREMENT]: false,
       },

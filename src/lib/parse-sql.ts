@@ -109,6 +109,7 @@ export const parseSqlToSchema = (
         def.primary_key === "primary key" ||
         tableLevelPKs.has(name.toLowerCase());
       const isNotNull = def.nullable?.value === "not null";
+      const isNullable = !isNotNull && !isPK;
       const isUnique = def.unique === "unique";
       const isAutoIncrement = def.auto_increment === "auto_increment";
 
@@ -118,7 +119,7 @@ export const parseSqlToSchema = (
         type: normalizeColumnType(dataType),
         constraints: {
           [ColumnConstraints.PRIMARY_KEY]: isPK,
-          [ColumnConstraints.NOT_NULL]: isNotNull,
+          [ColumnConstraints.NULLABLE]: isNullable,
           [ColumnConstraints.UNIQUE]: isUnique,
           [ColumnConstraints.AUTO_INCREMENT]: isAutoIncrement,
         },

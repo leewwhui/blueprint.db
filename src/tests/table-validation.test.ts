@@ -6,7 +6,7 @@ const createConstraints = (
   overrides: Partial<Record<ColumnConstraints, boolean>> = {},
 ) => ({
   [ColumnConstraints.PRIMARY_KEY]: false,
-  [ColumnConstraints.NOT_NULL]: false,
+  [ColumnConstraints.NULLABLE]: false,
   [ColumnConstraints.UNIQUE]: false,
   [ColumnConstraints.AUTO_INCREMENT]: false,
   ...overrides,
@@ -48,7 +48,7 @@ describe("tableFormSchema", () => {
             name: "name",
             type: ColumnType.VARCHAR,
             constraints: createConstraints({
-              [ColumnConstraints.NOT_NULL]: true,
+              [ColumnConstraints.NULLABLE]: true,
             }),
           },
           {

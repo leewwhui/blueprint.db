@@ -11,7 +11,7 @@ const createConstraints = (
   overrides: Partial<Record<ColumnConstraints, boolean>> = {},
 ) => ({
   [ColumnConstraints.PRIMARY_KEY]: false,
-  [ColumnConstraints.NOT_NULL]: false,
+  [ColumnConstraints.NULLABLE]: false,
   [ColumnConstraints.UNIQUE]: false,
   [ColumnConstraints.AUTO_INCREMENT]: false,
   ...overrides,
@@ -88,7 +88,7 @@ describe("PostgreSqlAdapter", () => {
         id: "2",
         name: "email",
         type: ColumnType.VARCHAR,
-        constraints: createConstraints({ [ColumnConstraints.NOT_NULL]: true }),
+        constraints: createConstraints({ [ColumnConstraints.NULLABLE]: true }),
       };
       expect(adapter.generateColumnSql(column)).toBe(
         '  "email" VARCHAR(255) NOT NULL',
@@ -127,7 +127,7 @@ describe("PostgreSqlAdapter", () => {
         name: "email",
         type: ColumnType.VARCHAR,
         constraints: createConstraints({
-          [ColumnConstraints.NOT_NULL]: true,
+          [ColumnConstraints.NULLABLE]: true,
           [ColumnConstraints.UNIQUE]: true,
         }),
       };
@@ -222,7 +222,7 @@ describe("PostgreSqlAdapter", () => {
             name: "name",
             type: ColumnType.VARCHAR,
             constraints: createConstraints({
-              [ColumnConstraints.NOT_NULL]: true,
+              [ColumnConstraints.NULLABLE]: true,
             }),
           },
         ],

@@ -22,7 +22,7 @@ const makeTable = (
       type,
       constraints: {
         [ColumnConstraints.PRIMARY_KEY]: false,
-        [ColumnConstraints.NOT_NULL]: false,
+        [ColumnConstraints.NULLABLE]: false,
         [ColumnConstraints.UNIQUE]: false,
         [ColumnConstraints.AUTO_INCREMENT]: false,
         ...constraints,

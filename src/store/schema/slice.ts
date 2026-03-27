@@ -29,7 +29,7 @@ const initialState: ISchemaState = {
           type: ColumnType.INT,
           constraints: {
             [ColumnConstraints.PRIMARY_KEY]: true,
-            [ColumnConstraints.NOT_NULL]: false,
+            [ColumnConstraints.NULLABLE]: false,
             [ColumnConstraints.UNIQUE]: false,
             [ColumnConstraints.AUTO_INCREMENT]: false,
           },

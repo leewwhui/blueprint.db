@@ -3,7 +3,7 @@ import { ColumnConstraints, ColumnType } from "@/contracts/columns";
 
 const constraintsSchema = z.object({
   [ColumnConstraints.PRIMARY_KEY]: z.boolean(),
-  [ColumnConstraints.NOT_NULL]: z.boolean(),
+  [ColumnConstraints.NULLABLE]: z.boolean(),
   [ColumnConstraints.UNIQUE]: z.boolean(),
   [ColumnConstraints.AUTO_INCREMENT]: z.boolean(),
 });

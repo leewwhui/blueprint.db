@@ -27,13 +27,15 @@ describe("parseSqlToSchema", () => {
       expect(id.name).toBe("id");
       expect(id.type).toBe(ColumnType.INT);
       expect(id.constraints[ColumnConstraints.PRIMARY_KEY]).toBe(true);
+      expect(id.constraints[ColumnConstraints.NULLABLE]).toBe(false);
       expect(id.constraints[ColumnConstraints.AUTO_INCREMENT]).toBe(true);
 
       expect(name.name).toBe("name");
       expect(name.type).toBe(ColumnType.VARCHAR);
-      expect(name.constraints[ColumnConstraints.NOT_NULL]).toBe(true);
+      expect(name.constraints[ColumnConstraints.NULLABLE]).toBe(false);
 
       expect(email.name).toBe("email");
+      expect(email.constraints[ColumnConstraints.NULLABLE]).toBe(true);
       expect(email.constraints[ColumnConstraints.UNIQUE]).toBe(true);
 
       expect(relations).toHaveLength(0);
