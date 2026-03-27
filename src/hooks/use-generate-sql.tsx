@@ -21,8 +21,6 @@ export const useGenerateSQL = () => {
       throw new Error(`Unsupported database dialect: ${dialect}`);
     }
 
-    console.log(tables);
-
     return adapter.generateSchemaSql(tables, relations);
   };
 };

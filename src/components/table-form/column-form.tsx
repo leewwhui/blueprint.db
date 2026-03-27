@@ -44,6 +44,16 @@ export const ColumnForm: FC<ColumnFormProps> = (props) => {
     name: `columns.${index}.constraints.${ColumnConstraints.PRIMARY_KEY}`,
   });
 
+  const isAutoIncrement = useWatch({
+    control,
+    name: `columns.${index}.constraints.${ColumnConstraints.AUTO_INCREMENT}`,
+  });
+
+  const type = useWatch({
+    control,
+    name: `columns.${index}.type`,
+  });
+
   useEffect(() => {
     const path = `columns.${index}.constraints` as const;
 
@@ -55,6 +65,21 @@ export const ColumnForm: FC<ColumnFormProps> = (props) => {
       });
     }
   }, [getValues, isPrimary, setValue, index]);
+
+  useEffect(() => {
+    const path = `columns.${index}.constraints` as const;
+    if (
+      isAutoIncrement &&
+      type !== ColumnType.INT &&
+      type !== ColumnType.BIGINT
+    ) {
+      const constraints = getValues(path);
+      setValue(path, {
+        ...constraints,
+        [ColumnConstraints.AUTO_INCREMENT]: false,
+      });
+    }
+  }, [isAutoIncrement, type, setValue, index]);
 
   return (
     <Collapsible key={column.id}>
@@ -119,8 +144,13 @@ export const ColumnForm: FC<ColumnFormProps> = (props) => {
 
       <CollapsibleContent className="flex gap-3 py-3 border-b">
         {Object.values(ColumnConstraints).map((constraint) => {
-          const disable =
+          const disableNullable =
             isPrimary && constraint === ColumnConstraints.NULLABLE;
+
+          const disableAutoIncrement =
+            type !== ColumnType.INT &&
+            type !== ColumnType.BIGINT &&
+            constraint === ColumnConstraints.AUTO_INCREMENT;
 
           return (
             <Controller
@@ -132,7 +162,7 @@ export const ColumnForm: FC<ColumnFormProps> = (props) => {
                   <TooltipTrigger asChild>
                     <Button
                       type="button"
-                      disabled={disable}
+                      disabled={disableNullable || disableAutoIncrement}
                       onClick={() => field.onChange(!field.value)}
                       variant={field.value ? "default" : "outline"}
                       size="icon"
