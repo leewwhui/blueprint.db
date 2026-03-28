@@ -1,11 +1,22 @@
 import { IconGitFork, IconLine, IconTable } from "@tabler/icons-react";
 import { TableList } from "./table/table-list";
 import { ToolbarButton } from "./tool-bar-button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RelationshipList } from "./relationship/relationships";
+import { useSelectedRelation, useSelectedTable } from "@/store/ui/selector";
 
 export const Sidebar = () => {
   const [tool, setTool] = useState<"tables" | "refs" | "versions">("tables");
+  const selectedTable = useSelectedTable();
+  const selectedRelation = useSelectedRelation();
+
+  useEffect(() => {
+    if (selectedTable) {
+      setTool("tables");
+    } else if (selectedRelation) {
+      setTool("refs");
+    }
+  }, [selectedTable, selectedRelation]);
 
   return (
     <aside className="border-r shadow flex text-sm h-full min-h-0 overflow-hidden">

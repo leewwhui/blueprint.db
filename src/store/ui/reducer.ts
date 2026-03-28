@@ -9,9 +9,16 @@ export type TablePositionUpdate = {
 
 export const selectTableAction = (
   state: IUIState,
-  action: PayloadAction<string>,
+  action: PayloadAction<string | null>,
 ) => {
   state.selectedTableId = action.payload;
+};
+
+export const selectRelationAction = (
+  state: IUIState,
+  action: PayloadAction<string | null>,
+) => {
+  state.selectedRelationId = action.payload;
 };
 
 export const updateTablePositionAction = (

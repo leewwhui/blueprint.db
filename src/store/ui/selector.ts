@@ -12,6 +12,19 @@ export const useSelectedTable = () => {
   });
 };
 
+export const useSelectedRelation = () => {
+  return useSelector((state: RootState) => {
+    const selectedRelationId = state.ui.selectedRelationId;
+    if (!selectedRelationId) return null;
+
+    return (
+      state.schema.relations.find(
+        (relation) => relation.id === selectedRelationId,
+      ) || null
+    );
+  });
+};
+
 export const useTablePosition = () => {
   return useSelector((state: RootState) => {
     return state.ui.tablePositions;

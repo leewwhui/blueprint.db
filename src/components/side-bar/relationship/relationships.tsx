@@ -2,9 +2,11 @@ import { useRelations } from "@/store/schema/selector";
 import { RelationshipItem } from "./relationship-item";
 import { Input } from "@/components/ui/input";
 import { CreateRelationship } from "./create-relationship";
+import { useSelectedRelation } from "@/store/ui/selector";
 
 export const RelationshipList = () => {
   const relations = useRelations();
+  const selectedRelation = useSelectedRelation();
 
   return (
     <div className="flex flex-col relative">
@@ -15,7 +17,11 @@ export const RelationshipList = () => {
 
       <div className="flex flex-col gap-2 px-3 pb-3">
         {relations.map((relation) => (
-          <RelationshipItem relation={relation} key={relation.id} />
+          <RelationshipItem
+            relation={relation}
+            key={relation.id}
+            active={selectedRelation?.id === relation.id}
+          />
         ))}
       </div>
     </div>

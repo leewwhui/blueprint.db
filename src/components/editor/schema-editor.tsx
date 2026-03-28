@@ -4,6 +4,7 @@ import {
   Controls,
   type Node,
   type Connection,
+  type Edge,
 } from "@xyflow/react";
 import { TableNode } from "../nodes/table-node";
 import { useDispatch } from "react-redux";
@@ -18,7 +19,7 @@ import { MoveTableCommand } from "@/commands/MoveTableCommand";
 import { useHistory } from "@/hooks/use-history";
 import toast from "react-hot-toast";
 import { FKEdge } from "../nodes/fk-edge";
-import { selectTable } from "@/store/ui/slice";
+import { selectRelation, selectTable } from "@/store/ui/slice";
 import { useRelationValidate } from "@/hooks/use-relation-validation";
 import {
   ForeignKeyCardinality,
@@ -80,8 +81,16 @@ export const SchemaEditor = () => {
     dispatch(addRelation(relation));
   };
 
-  const onNodeDoubleClick = (_: React.MouseEvent, node: Node<TableNodeData>) => {
+  const onNodeDoubleClick = (
+    _: React.MouseEvent,
+    node: Node<TableNodeData>,
+  ) => {
     dispatch(selectTable(node.id));
+  };
+
+  const onEdgeDoubleClick = (_: React.MouseEvent, edge: Edge) => {
+    console.log(edge);
+    dispatch(selectRelation(edge.id));
   };
 
   return (
@@ -89,6 +98,7 @@ export const SchemaEditor = () => {
       <ReactFlow
         nodes={nodes}
         onNodeDoubleClick={onNodeDoubleClick}
+        onEdgeDoubleClick={onEdgeDoubleClick}
         onNodesChange={onNodesChange}
         edges={edges}
         onEdgesChange={onEdgesChange}
