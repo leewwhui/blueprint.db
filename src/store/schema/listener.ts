@@ -5,7 +5,6 @@ import {
   deleteTable,
   updateRelation,
 } from "./slice";
-import { updateTablePosition } from "../ui/slice";
 import type { RootState } from "../store";
 import toast from "react-hot-toast";
 
@@ -30,18 +29,8 @@ export const schemaListener = (listener: ListenerMiddlewareInstance) => {
 
   listener.startListening({
     actionCreator: addTable,
-    effect: async (action, listenerApi) => {
+    effect: async () => {
       toast.success("Table added successfully");
-      const tableId = action.payload.id;
-
-      listenerApi.dispatch(
-        updateTablePosition([
-          {
-            tableId,
-            position: { x: 0, y: 0 },
-          },
-        ]),
-      );
     },
   });
 

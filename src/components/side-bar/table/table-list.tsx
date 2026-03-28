@@ -8,12 +8,26 @@ import { nanoid } from "nanoid";
 import { ColumnConstraints, ColumnType } from "@/contracts/columns";
 import { useDispatch } from "react-redux";
 import { addTable } from "@/store/schema/slice";
+import { updateTablePosition } from "@/store/ui/slice";
+import { useReactFlow } from "@xyflow/react";
 
 export const TableList = () => {
   const tables = useTables();
   const dispatch = useDispatch();
+  const reactFlow = useReactFlow();
 
   const onAddTable = () => {
+    const reactFlowCanvas = document.querySelector(".react-flow");
+    if (!(reactFlowCanvas instanceof HTMLElement)) {
+      return;
+    }
+
+    const canvasRect = reactFlowCanvas.getBoundingClientRect();
+    const canvasCenter = reactFlow.screenToFlowPosition({
+      x: canvasRect.left + canvasRect.width / 2,
+      y: canvasRect.top + canvasRect.height / 2,
+    });
+
     const id = nanoid();
     const table: ITable = {
       id,
@@ -33,6 +47,11 @@ export const TableList = () => {
       ],
     };
     dispatch(addTable(table));
+    dispatch(
+      updateTablePosition([
+        { tableId: id, position: canvasCenter },
+      ]),
+    );
   };
 
   return (
