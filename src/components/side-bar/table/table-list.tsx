@@ -55,21 +55,24 @@ export const TableList = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="flex gap-1">
+    <div className="flex flex-col relative">
+      <div className="flex gap-1 sticky top-0 bg-background p-3">
         <Input placeholder="Search tables..." />
         <Button variant="secondary" onClick={onAddTable}>
           <IconTable></IconTable>
           Add Table
         </Button>
       </div>
-      {tables.map((table) => (
-        <TableItem
-          table={table}
-          key={table.id}
-          active={selectedTable?.id === table.id}
-        />
-      ))}
+
+      <div className="flex flex-col gap-2 px-3 pb-3">
+        {tables.map((table) => (
+          <TableItem
+            table={table}
+            key={table.id}
+            active={selectedTable?.id === table.id}
+          />
+        ))}
+      </div>
     </div>
   );
 };

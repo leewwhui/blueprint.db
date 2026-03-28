@@ -1,5 +1,5 @@
 import type { ITable, TableFormValues } from "@/contracts/schema";
-import { useEffect, useState, type FC } from "react";
+import { useEffect, useRef, useState, type FC } from "react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -26,12 +26,21 @@ export const TableItem: FC<TableItemProps> = (props) => {
   const tables = useTables();
   const dispatch = useDispatch();
   const history = useHistory();
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const [isEditing, setIsEditing] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    setOpen(active)
+    setOpen(active);
+
+    if (!active) {
+      return;
+    }
+
+    containerRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
   }, [active]);
 
   const onTableSaved = (data: TableFormValues) => {
@@ -66,35 +75,37 @@ export const TableItem: FC<TableItemProps> = (props) => {
   };
 
   return (
-    <Collapsible
-      className="border-l-4 rounded overflow-hidden shadow-md"
-      style={{ borderColor: DefaultTableTheme }}
-      open={open}
-      onOpenChange={setOpen}
-    >
-      <CollapsibleTrigger asChild>
-        <div>
-          {isEditing ? (
-            <TableNameEditing
-              name={props.table.name}
-              onSave={onTableNameSave}
-            />
-          ) : (
-            <TableItemHeader
-              table={table}
-              onEditingTableName={onEditTableName}
-              onDeleteTable={onDeleteTable}
-            />
-          )}
-        </div>
-      </CollapsibleTrigger>
-      <CollapsibleContent className="p-1">
-        <TableForm
-          tableName={table.name}
-          columns={table.columns}
-          onTableSaved={onTableSaved}
-        />
-      </CollapsibleContent>
-    </Collapsible>
+    <div ref={containerRef} className="scroll-mt-20">
+      <Collapsible
+        className="border-l-4 rounded overflow-hidden shadow-md"
+        style={{ borderColor: DefaultTableTheme }}
+        open={open}
+        onOpenChange={setOpen}
+      >
+        <CollapsibleTrigger asChild>
+          <div>
+            {isEditing ? (
+              <TableNameEditing
+                name={props.table.name}
+                onSave={onTableNameSave}
+              />
+            ) : (
+              <TableItemHeader
+                table={table}
+                onEditingTableName={onEditTableName}
+                onDeleteTable={onDeleteTable}
+              />
+            )}
+          </div>
+        </CollapsibleTrigger>
+        <CollapsibleContent className="p-1">
+          <TableForm
+            tableName={table.name}
+            columns={table.columns}
+            onTableSaved={onTableSaved}
+          />
+        </CollapsibleContent>
+      </Collapsible>
+    </div>
   );
 };

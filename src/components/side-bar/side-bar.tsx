@@ -31,7 +31,7 @@ export const Sidebar = () => {
           <p className="text-xs">Version</p>
         </ToolbarButton>
       </div>
-      <div className="w-(--side-width) h-full min-h-0 p-3 overflow-y-auto overflow-x-hidden">
+      <div className="w-(--side-width) h-full min-h-0 overflow-y-auto overflow-x-hidden">
         {tool === "tables" && <TableList />}
         {tool === "refs" && <RelationshipList />}
       </div>
