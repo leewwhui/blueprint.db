@@ -7,15 +7,17 @@ export const RelationshipList = () => {
   const relations = useRelations();
 
   return (
-    <div className="flex flex-col gap-3">
-      <div className="flex gap-1">
+    <div className="flex flex-col relative">
+      <div className="flex gap-1 sticky top-0 bg-background p-3">
         <Input placeholder="Search relations..." />
         <CreateRelationship />
       </div>
 
-      {relations.map((relation) => (
-        <RelationshipItem relation={relation} key={relation.id} />
-      ))}
+      <div className="flex flex-col gap-2 px-3 pb-3">
+        {relations.map((relation) => (
+          <RelationshipItem relation={relation} key={relation.id} />
+        ))}
+      </div>
     </div>
   );
 };
