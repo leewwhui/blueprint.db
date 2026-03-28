@@ -3,27 +3,28 @@ import { type FC } from "react";
 import { ColumnConstraints, ColumnType } from "@/contracts/columns";
 import { nanoid } from "nanoid";
 import { ColumnForm } from "./column-form";
-import type { IColumn, TableFormValues } from "@/contracts/schema";
+import type { ITable, TableFormValues } from "@/contracts/schema";
 import { Button } from "@/components/ui/button";
 import { FieldLabel } from "@/components/ui/field";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { tableFormSchema } from "@/components/table-form/table-validation";
 import { cloneDeep } from "lodash";
+import { useDispatch } from "react-redux";
+import { updateTable } from "@/store/schema/slice";
 
-interface TableFormProps extends React.PropsWithChildren {
-  tableName: string;
-  columns: IColumn[];
-  onTableSaved: (table: TableFormValues) => boolean;
+interface TableFormProps {
+  table: ITable;
 }
 
 export const TableForm: FC<TableFormProps> = (props) => {
-  const { tableName, columns, onTableSaved } = props;
+  const { name, columns, id } = props.table;
+  const dispatch = useDispatch();
 
   const methods = useForm<TableFormValues>({
     resolver: zodResolver(tableFormSchema),
     defaultValues: {
-      name: tableName,
+      name,
       columns: cloneDeep(columns),
     },
   });
@@ -47,6 +48,17 @@ export const TableForm: FC<TableFormProps> = (props) => {
         [ColumnConstraints.AUTO_INCREMENT]: false,
       },
     });
+  };
+
+  const onTableSaved = (data: TableFormValues) => {
+    const table = {
+      id,
+      name: data.name,
+      columns: data.columns,
+    };
+
+    dispatch(updateTable(table));
+    return true;
   };
 
   return (

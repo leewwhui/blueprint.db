@@ -1,4 +1,4 @@
-import type { ITable, TableFormValues } from "@/contracts/schema";
+import type { ITable } from "@/contracts/schema";
 import { useEffect, useRef, useState, type FC } from "react";
 import {
   Collapsible,
@@ -7,8 +7,6 @@ import {
 } from "@/components/ui/collapsible";
 import { TableForm } from "../../table-form/table-form";
 import { DefaultTableTheme } from "@/lib/colors";
-import { updateTable } from "@/store/schema/slice";
-import { useDispatch } from "react-redux";
 import { TableItemHeader } from "./table-item-header";
 
 interface TableItemProps {
@@ -18,7 +16,6 @@ interface TableItemProps {
 
 export const TableItem: FC<TableItemProps> = (props) => {
   const { table, active } = props;
-  const dispatch = useDispatch();
   const containerRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
 
@@ -34,17 +31,6 @@ export const TableItem: FC<TableItemProps> = (props) => {
     });
   }, [active]);
 
-  const onTableSaved = (data: TableFormValues) => {
-    const table = {
-      id: props.table.id,
-      name: data.name,
-      columns: data.columns,
-    };
-
-    dispatch(updateTable(table));
-    return true;
-  };
-
   return (
     <div ref={containerRef} className="scroll-mt-20">
       <Collapsible
@@ -54,14 +40,12 @@ export const TableItem: FC<TableItemProps> = (props) => {
         onOpenChange={setOpen}
       >
         <CollapsibleTrigger asChild>
-          <TableItemHeader table={table} />
+          <div>
+            <TableItemHeader table={table} />
+          </div>
         </CollapsibleTrigger>
         <CollapsibleContent className="p-1">
-          <TableForm
-            tableName={table.name}
-            columns={table.columns}
-            onTableSaved={onTableSaved}
-          />
+          <TableForm table={table} />
         </CollapsibleContent>
       </Collapsible>
     </div>
