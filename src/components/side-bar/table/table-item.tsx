@@ -8,13 +8,8 @@ import {
 import { TableForm } from "../../table-form/table-form";
 import { DefaultTableTheme } from "@/lib/colors";
 import { updateTable } from "@/store/schema/slice";
-import { useTables } from "@/store/schema/selector";
-import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { TableNameEditing } from "./table-name-editing";
 import { TableItemHeader } from "./table-item-header";
-import { useHistory } from "@/hooks/use-history";
-import { DeleteTableCommand } from "@/commands/DeleteTableCommand";
 
 interface TableItemProps {
   table: ITable;
@@ -23,12 +18,8 @@ interface TableItemProps {
 
 export const TableItem: FC<TableItemProps> = (props) => {
   const { table, active } = props;
-  const tables = useTables();
   const dispatch = useDispatch();
-  const history = useHistory();
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const [isEditing, setIsEditing] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -54,26 +45,6 @@ export const TableItem: FC<TableItemProps> = (props) => {
     return true;
   };
 
-  const onTableNameSave = (name: string) => {
-    if (tables.some((t) => t.name === name && t.id !== props.table.id)) {
-      toast.error("Table name must be unique");
-      return false;
-    }
-
-    dispatch(updateTable({ ...table, name }));
-    setIsEditing(false);
-  };
-
-  const onEditTableName = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsEditing(true);
-  };
-
-  const onDeleteTable = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    history.executeCommand(new DeleteTableCommand(table));
-  };
-
   return (
     <div ref={containerRef} className="scroll-mt-20">
       <Collapsible
@@ -83,20 +54,7 @@ export const TableItem: FC<TableItemProps> = (props) => {
         onOpenChange={setOpen}
       >
         <CollapsibleTrigger asChild>
-          <div>
-            {isEditing ? (
-              <TableNameEditing
-                name={props.table.name}
-                onSave={onTableNameSave}
-              />
-            ) : (
-              <TableItemHeader
-                table={table}
-                onEditingTableName={onEditTableName}
-                onDeleteTable={onDeleteTable}
-              />
-            )}
-          </div>
+          <TableItemHeader table={table} />
         </CollapsibleTrigger>
         <CollapsibleContent className="p-1">
           <TableForm

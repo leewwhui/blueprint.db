@@ -3,7 +3,6 @@ import { TableItem } from "./table-item";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { IconTable } from "@tabler/icons-react";
-import type { ITable } from "@/contracts/schema";
 import { nanoid } from "nanoid";
 import { ColumnConstraints, ColumnType } from "@/contracts/columns";
 import { useDispatch } from "react-redux";
@@ -33,7 +32,7 @@ export const TableList = () => {
     });
 
     const id = nanoid();
-    const table: ITable = {
+    const table = {
       id,
       name: `Table_${id.slice(0, 6)}`,
       columns: [
