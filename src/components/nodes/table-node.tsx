@@ -25,10 +25,6 @@ export const TableNode = (props: NodeProps) => {
         style={{ backgroundColor: DefaultTableTheme }}
       >
         <p className="truncate">{name}</p>
-
-        <Button variant="ghost" size="icon-sm" onClick={onDeleteTable}>
-          <IconX />
-        </Button>
       </div>
       {columns.map((column) => (
         <ColumnNode key={column.id} tableId={id} column={column} />

@@ -8,8 +8,8 @@ export const Sidebar = () => {
   const [tool, setTool] = useState<"tables" | "refs" | "versions">("tables");
 
   return (
-    <aside className="border-r shadow flex text-sm">
-      <div className="w-20 flex flex-col bg-muted items-center p-3 gap-1">
+    <aside className="border-r shadow flex text-sm h-full min-h-0 overflow-hidden">
+      <div className="w-20 shrink-0 flex flex-col bg-muted items-center p-3 gap-1">
         <ToolbarButton
           active={tool === "tables"}
           onClick={() => setTool("tables")}
@@ -31,7 +31,7 @@ export const Sidebar = () => {
           <p className="text-xs">Version</p>
         </ToolbarButton>
       </div>
-      <div className="w-(--side-width) p-3">
+      <div className="w-(--side-width) h-full min-h-0 p-3 overflow-y-auto overflow-x-hidden">
         {tool === "tables" && <TableList />}
         {tool === "refs" && <RelationshipList />}
       </div>

@@ -1,5 +1,5 @@
 import type { ITable, TableFormValues } from "@/contracts/schema";
-import { useState, type FC } from "react";
+import { useEffect, useState, type FC } from "react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -13,16 +13,26 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { TableNameEditing } from "./table-name-editing";
 import { TableItemHeader } from "./table-item-header";
+import { useHistory } from "@/hooks/use-history";
+import { DeleteTableCommand } from "@/commands/DeleteTableCommand";
 
 interface TableItemProps {
   table: ITable;
+  active: boolean;
 }
 
 export const TableItem: FC<TableItemProps> = (props) => {
-  const { table } = props;
+  const { table, active } = props;
   const tables = useTables();
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const [isEditing, setIsEditing] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setOpen(active)
+  }, [active]);
 
   const onTableSaved = (data: TableFormValues) => {
     const table = {
@@ -32,7 +42,6 @@ export const TableItem: FC<TableItemProps> = (props) => {
     };
 
     dispatch(updateTable(table));
-    toast.success("Table updated successfully");
     return true;
   };
 
@@ -43,9 +52,7 @@ export const TableItem: FC<TableItemProps> = (props) => {
     }
 
     dispatch(updateTable({ ...table, name }));
-
     setIsEditing(false);
-    toast.success("Table name updated successfully");
   };
 
   const onEditTableName = (e: React.MouseEvent) => {
@@ -53,10 +60,17 @@ export const TableItem: FC<TableItemProps> = (props) => {
     setIsEditing(true);
   };
 
+  const onDeleteTable = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    history.executeCommand(new DeleteTableCommand(table));
+  };
+
   return (
     <Collapsible
       className="border-l-4 rounded overflow-hidden shadow-md"
       style={{ borderColor: DefaultTableTheme }}
+      open={open}
+      onOpenChange={setOpen}
     >
       <CollapsibleTrigger asChild>
         <div>
@@ -69,6 +83,7 @@ export const TableItem: FC<TableItemProps> = (props) => {
             <TableItemHeader
               table={table}
               onEditingTableName={onEditTableName}
+              onDeleteTable={onDeleteTable}
             />
           )}
         </div>

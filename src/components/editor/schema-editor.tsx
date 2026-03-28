@@ -18,6 +18,7 @@ import { MoveTableCommand } from "@/commands/MoveTableCommand";
 import { useHistory } from "@/hooks/use-history";
 import toast from "react-hot-toast";
 import { FKEdge } from "../nodes/fk-edge";
+import { selectTable } from "@/store/ui/slice";
 import { useRelationValidate } from "@/hooks/use-relation-validation";
 import {
   ForeignKeyCardinality,
@@ -77,10 +78,15 @@ export const SchemaEditor = () => {
     dispatch(addRelation(relation));
   };
 
+  const onNodeDoubleClick = (_: React.MouseEvent, node: Node<TableNodeData>) => {
+    dispatch(selectTable(node.id));
+  };
+
   return (
     <div className="relative flex-1">
       <ReactFlow
         nodes={nodes}
+        onNodeDoubleClick={onNodeDoubleClick}
         onNodesChange={onNodesChange}
         edges={edges}
         onEdgesChange={onEdgesChange}

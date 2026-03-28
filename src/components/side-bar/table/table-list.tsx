@@ -7,14 +7,18 @@ import type { ITable } from "@/contracts/schema";
 import { nanoid } from "nanoid";
 import { ColumnConstraints, ColumnType } from "@/contracts/columns";
 import { useDispatch } from "react-redux";
-import { addTable } from "@/store/schema/slice";
 import { updateTablePosition } from "@/store/ui/slice";
 import { useReactFlow } from "@xyflow/react";
+import { useHistory } from "@/hooks/use-history";
+import { CreateTableCommand } from "@/commands/CreateTableCommand";
+import { useSelectedTable } from "@/store/ui/selector";
 
 export const TableList = () => {
   const tables = useTables();
   const dispatch = useDispatch();
   const reactFlow = useReactFlow();
+  const history = useHistory();
+  const selectedTable = useSelectedTable();
 
   const onAddTable = () => {
     const reactFlowCanvas = document.querySelector(".react-flow");
@@ -46,12 +50,8 @@ export const TableList = () => {
         },
       ],
     };
-    dispatch(addTable(table));
-    dispatch(
-      updateTablePosition([
-        { tableId: id, position: canvasCenter },
-      ]),
-    );
+    history.executeCommand(new CreateTableCommand(table));
+    dispatch(updateTablePosition([{ tableId: id, position: canvasCenter }]));
   };
 
   return (
@@ -64,7 +64,11 @@ export const TableList = () => {
         </Button>
       </div>
       {tables.map((table) => (
-        <TableItem table={table} key={table.id} />
+        <TableItem
+          table={table}
+          key={table.id}
+          active={selectedTable?.id === table.id}
+        />
       ))}
     </div>
   );

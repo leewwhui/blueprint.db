@@ -4,6 +4,7 @@ import {
   deleteRelations,
   deleteTable,
   updateRelation,
+  updateTable,
 } from "./slice";
 import type { RootState } from "../store";
 import toast from "react-hot-toast";
@@ -24,6 +25,13 @@ export const schemaListener = (listener: ListenerMiddlewareInstance) => {
       );
 
       toast.success("Table deleted successfully");
+    },
+  });
+
+  listener.startListening({
+    actionCreator: updateTable,
+    effect: async () => {
+      toast.success("Table updated successfully");
     },
   });
 
