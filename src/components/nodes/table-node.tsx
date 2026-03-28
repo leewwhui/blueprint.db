@@ -1,22 +1,13 @@
-import { IconX } from "@tabler/icons-react";
 import type { NodeProps } from "@xyflow/react";
-import { Button } from "@/components/ui/button";
-import { useDispatch } from "react-redux";
-import { deleteTable } from "@/store/schema/slice";
 import type { IColumn } from "@/contracts/schema";
 import { ColumnNode } from "./column-node";
 import { DefaultTableTheme } from "@/lib/colors";
+import React from "react";
 
-export const TableNode = (props: NodeProps) => {
-  const dispatch = useDispatch();
-
+export const TableNode = React.memo((props: NodeProps) => {
   const { id, data } = props;
   const name = data.name as string;
   const columns = data.columns as IColumn[];
-
-  const onDeleteTable = () => {
-    dispatch(deleteTable({ tableId: id }));
-  };
 
   return (
     <div className="border text-sm w-(--node-width) overflow-hidden rounded">
@@ -31,4 +22,4 @@ export const TableNode = (props: NodeProps) => {
       ))}
     </div>
   );
-};
+});

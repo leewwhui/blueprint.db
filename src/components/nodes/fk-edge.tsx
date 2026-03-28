@@ -7,6 +7,7 @@ import {
 import { Fragment, type FC } from "react";
 import { ForeignKeyCardinality } from "@/contracts/relationship";
 import { EdgeLabel } from "./edge-label";
+import React from "react";
 
 function getCardinalityLabels(
   cardinality: ForeignKeyCardinality | unknown,
@@ -25,7 +26,7 @@ function getCardinalityLabels(
   }
 }
 
-export const FKEdge: FC<EdgeProps> = (props) => {
+export const FKEdge: FC<EdgeProps> = React.memo((props) => {
   const {
     id,
     sourceX,
@@ -63,4 +64,4 @@ export const FKEdge: FC<EdgeProps> = (props) => {
       </EdgeLabelRenderer>
     </Fragment>
   );
-};
+});

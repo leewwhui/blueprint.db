@@ -34,18 +34,20 @@ export const SchemaEditor = () => {
   const positions = useTablePosition();
   const history = useHistory();
 
-  const updateNodesPosition = (nodes: Node<TableNodeData>[]) => {
-    const toPositions = nodes.map((node) => ({
-      tableId: node.id,
-      position: node.position,
-    }));
+  const updateNodePosition = (node: Node<TableNodeData>) => {
+    const previousPosition = positions[node.id] || { x: 0, y: 0 };
 
-    const fromPositions = nodes.map((node) => ({
-      tableId: node.id,
-      position: positions[node.id] || { x: 0, y: 0 },
-    }));
+    if (
+      previousPosition.x === node.position.x &&
+      previousPosition.y === node.position.y
+    ) {
+      return;
+    }
 
-    const moveTableCommand = new MoveTableCommand(fromPositions, toPositions);
+    const moveTableCommand = new MoveTableCommand(
+      [{ tableId: node.id, position: previousPosition }],
+      [{ tableId: node.id, position: node.position }],
+    );
 
     history.executeCommand(moveTableCommand);
   };
@@ -97,7 +99,7 @@ export const SchemaEditor = () => {
           fkEdge: FKEdge,
         }}
         onConnect={onConnect}
-        onNodeDragStop={(_, __, nodes) => updateNodesPosition(nodes)}
+        onNodeDragStop={(_, node) => updateNodePosition(node)}
       >
         <Background />
         <Controls />
