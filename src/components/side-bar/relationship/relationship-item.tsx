@@ -7,16 +7,15 @@ import type { IRelation } from "@/contracts/schema";
 import { type FC, useEffect, useRef, useState } from "react";
 import { RelationshipHeader } from "./relationship-header";
 import { RelationshipForm } from "./relationship-form";
-import { useRelationShipName } from "@/hooks/use-relation-name";
 
 interface IRelationshipItemProps {
   relation: IRelation;
+  relationName: string;
   active: boolean;
 }
 
 export const RelationshipItem: FC<IRelationshipItemProps> = (props) => {
-  const { relation, active } = props;
-  const relationName = useRelationShipName(relation);
+  const { relation, relationName, active } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
 

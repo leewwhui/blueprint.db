@@ -11,6 +11,8 @@ import { useReactFlow } from "@xyflow/react";
 import { useHistory } from "@/hooks/use-history";
 import { CreateTableCommand } from "@/commands/CreateTableCommand";
 import { useSelectedTable } from "@/store/ui/selector";
+import { useState } from "react";
+import { useDebounce } from "@uidotdev/usehooks";
 
 export const TableList = () => {
   const tables = useTables();
@@ -18,6 +20,8 @@ export const TableList = () => {
   const reactFlow = useReactFlow();
   const history = useHistory();
   const selectedTable = useSelectedTable();
+  const [searchTerm, setSearchTerm] = useState<string | null>(null);
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
   const onAddTable = () => {
     const reactFlowCanvas = document.querySelector(".react-flow");
@@ -56,7 +60,10 @@ export const TableList = () => {
   return (
     <div className="flex flex-col relative">
       <div className="flex gap-1 sticky top-0 bg-background p-3">
-        <Input placeholder="Search tables..." />
+        <Input
+          placeholder="Search tables..."
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
         <Button variant="secondary" onClick={onAddTable}>
           <IconTable></IconTable>
           Add Table
@@ -64,13 +71,21 @@ export const TableList = () => {
       </div>
 
       <div className="flex flex-col gap-2 px-3 pb-3">
-        {tables.map((table) => (
-          <TableItem
-            table={table}
-            key={table.id}
-            active={selectedTable?.id === table.id}
-          />
-        ))}
+        {tables
+          .filter((table) =>
+            debouncedSearchTerm
+              ? table.name
+                  .toLowerCase()
+                  .includes(debouncedSearchTerm.toLowerCase())
+              : true,
+          )
+          .map((table) => (
+            <TableItem
+              table={table}
+              key={table.id}
+              active={selectedTable?.id === table.id}
+            />
+          ))}
       </div>
     </div>
   );
