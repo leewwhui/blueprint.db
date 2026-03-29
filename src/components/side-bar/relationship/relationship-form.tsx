@@ -38,7 +38,7 @@ export const RelationshipForm: FC<RelationshipFormProps> = ({ relation }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="p-2 flex flex-col gap-3">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
       <Field>
         <FieldLabel className="font-bold text-xs">Cardinality</FieldLabel>
         <Controller

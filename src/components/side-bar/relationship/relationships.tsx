@@ -51,6 +51,12 @@ export const RelationshipList = () => {
             key={relation.relation.id}
             active={selectedRelation?.id === relation.relation.id}
             relationName={relation.name}
+            primaryTable={
+              tables.find((t) => t.id === relation.relation.targetTableId)!
+            }
+            foreignTable={
+              tables.find((t) => t.id === relation.relation.sourceTableId)!
+            }
           />
         ))}
       </div>

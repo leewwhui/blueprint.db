@@ -26,7 +26,9 @@ export const TableItem: FC<TableItemProps> = (props) => {
       return;
     }
 
-    containerRef.current?.scrollIntoView({
+    scrollTo({
+      left: 0,
+      top: containerRef.current?.offsetTop ?? 0,
       behavior: "smooth",
     });
   }, [active]);
