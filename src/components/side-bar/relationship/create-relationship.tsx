@@ -18,8 +18,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addRelation } from "@/store/schema/slice";
 import { nanoid } from "nanoid";
 import {
   ForeignKeyCardinality,
@@ -27,10 +25,12 @@ import {
 } from "@/contracts/relationship";
 import { useRelationValidate } from "@/hooks/use-relation-validation";
 import toast from "react-hot-toast";
+import { useHistory } from "@/hooks/use-history";
+import { CreateRelationCommand } from "@/commands/CreateRelationCommand";
 
 export const CreateRelationship = () => {
   const tables = useTables();
-  const dispatch = useDispatch();
+  const history = useHistory();
   const validateRelation = useRelationValidate();
   const [open, setOpen] = useState(false);
   const [primaryTableId, setPrimaryTableId] = useState<string | null>(null);
@@ -65,8 +65,8 @@ export const CreateRelationship = () => {
       return toast.error(validation.message);
     }
 
-    dispatch(
-      addRelation({
+    history.executeCommand(
+      new CreateRelationCommand({
         id: nanoid(),
         sourceTableId: foreignTableId,
         sourceColumnId: foreignColumnId,

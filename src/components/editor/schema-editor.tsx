@@ -10,13 +10,13 @@ import { TableNode } from "../nodes/table-node";
 import { useDispatch } from "react-redux";
 import { NoTable } from "../no-table";
 import type { TableNodeData } from "@/contracts/schema";
-import { addRelation } from "@/store/schema/slice";
 import { nanoid } from "nanoid";
 import { useTableNodes } from "@/hooks/use-table-nodes";
 import { useTableRelations } from "@/hooks/use-table-relations";
 import { useTablePosition } from "@/store/ui/selector";
 import { MoveTableCommand } from "@/commands/MoveTableCommand";
 import { useHistory } from "@/hooks/use-history";
+import { CreateRelationCommand } from "@/commands/CreateRelationCommand";
 import toast from "react-hot-toast";
 import { FKEdge } from "../nodes/fk-edge";
 import { selectRelation, selectTable } from "@/store/ui/slice";
@@ -78,7 +78,7 @@ export const SchemaEditor = () => {
       return toast.error(validation.message);
     }
 
-    dispatch(addRelation(relation));
+    history.executeCommand(new CreateRelationCommand(relation));
   };
 
   const onNodeDoubleClick = (
