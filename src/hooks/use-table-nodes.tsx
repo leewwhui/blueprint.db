@@ -28,7 +28,7 @@ export const useTableNodes = () => {
     });
 
     setNodes(aggregatedNodes);
-  }, [tables, tablePositions]);
+  }, [tables, tablePositions, setNodes]);
 
   return { nodes, setNodes, onNodesChange };
 };

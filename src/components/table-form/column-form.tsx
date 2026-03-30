@@ -64,7 +64,7 @@ export const ColumnForm: FC<ColumnFormProps> = (props) => {
         [ColumnConstraints.NULLABLE]: false,
       });
     }
-  }, [getValues, isPrimary, setValue, index]);
+  }, [isPrimary, setValue, index]);
 
   useEffect(() => {
     const path = `columns.${index}.constraints` as const;
