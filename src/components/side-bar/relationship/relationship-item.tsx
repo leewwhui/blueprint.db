@@ -13,42 +13,43 @@ import { useWindowScroll } from "@uidotdev/usehooks";
 import { Separator } from "@/components/ui/separator";
 import { useDispatch } from "react-redux";
 import { selectTable } from "@/store/ui/slice";
+import { useSelected } from "@/store/ui/selector";
 
 interface IRelationshipItemProps {
   relation: IRelation;
   relationName: string;
-  active: boolean;
-  primaryTable?: ITable;
-  foreignTable?: ITable;
+  primaryTable: ITable;
+  foreignTable: ITable;
 }
 
 export const RelationshipItem: FC<IRelationshipItemProps> = (props) => {
-  const { relation, relationName, active, primaryTable, foreignTable } = props;
+  const { relation, relationName, primaryTable, foreignTable } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const selected = useSelected();
   const [_, scrollTo] = useWindowScroll();
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setOpen(active);
+    const isSelected = selected.relationId === relation.id;
 
-    if (!active) {
+    if (!isSelected) {
       return;
     }
+
+    setOpen(isSelected);
 
     scrollTo({
       left: 0,
       top: containerRef.current?.offsetTop ?? 0,
       behavior: "smooth",
     });
-  }, [active]);
+  }, [selected]);
 
   const onSelectTable = (tableId: string) => {
     dispatch(selectTable(tableId));
   };
-
-  if (!primaryTable || !foreignTable) return null;
 
   return (
     <div ref={containerRef} className="scroll-mt-20">
