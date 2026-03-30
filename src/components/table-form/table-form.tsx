@@ -9,9 +9,9 @@ import { FieldLabel } from "@/components/ui/field";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { tableFormSchema } from "@/components/table-form/table-validation";
-import { cloneDeep } from "lodash";
-import { useDispatch } from "react-redux";
-import { updateTable } from "@/store/schema/slice";
+import { cloneDeep, isEqual } from "lodash";
+import { useHistory } from "@/hooks/use-history";
+import { UpdateTableCommand } from "@/commands/UpdateTableCommand";
 
 interface TableFormProps {
   table: ITable;
@@ -19,7 +19,7 @@ interface TableFormProps {
 
 export const TableForm: FC<TableFormProps> = (props) => {
   const { name, columns, id } = props.table;
-  const dispatch = useDispatch();
+  const history = useHistory();
 
   const methods = useForm<TableFormValues>({
     resolver: zodResolver(tableFormSchema),
@@ -51,14 +51,18 @@ export const TableForm: FC<TableFormProps> = (props) => {
   };
 
   const onTableSaved = (data: TableFormValues) => {
-    const table = {
+    const previousTable = cloneDeep(props.table);
+    const nextTable = {
       id,
       name: data.name,
       columns: data.columns,
     };
 
-    dispatch(updateTable(table));
-    return true;
+    if (isEqual(previousTable, nextTable)) {
+      return;
+    }
+
+    history.executeCommand(new UpdateTableCommand(previousTable, nextTable));
   };
 
   return (

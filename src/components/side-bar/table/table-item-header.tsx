@@ -10,8 +10,7 @@ import { useFocusTable } from "@/hooks/use-focus-table";
 import { Button } from "@/components/ui/button";
 import { useHistory } from "@/hooks/use-history";
 import { DeleteTableCommand } from "@/commands/DeleteTableCommand";
-import { useDispatch } from "react-redux";
-import { updateTable } from "@/store/schema/slice";
+import { UpdateTableCommand } from "@/commands/UpdateTableCommand";
 import { useTables } from "@/store/schema/selector";
 import toast from "react-hot-toast";
 import { Input } from "@/components/ui/input";
@@ -24,7 +23,6 @@ export const TableItemHeader: FC<TableItemHeaderProps> = (props) => {
   const { table } = props;
   const tables = useTables();
   const history = useHistory();
-  const dispatch = useDispatch();
   const { focusTable } = useFocusTable();
   const [isEditing, setIsEditing] = useState(false);
   const [tableName, setTableName] = useState(table.name);
@@ -50,7 +48,11 @@ export const TableItemHeader: FC<TableItemHeaderProps> = (props) => {
       return false;
     }
 
-    dispatch(updateTable({ ...table, name }));
+    if (table.name === name) {
+      setIsEditing(false);
+    }
+
+    history.executeCommand(new UpdateTableCommand(table, { ...table, name }));
     setIsEditing(false);
   };
 
