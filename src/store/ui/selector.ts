@@ -1,9 +1,15 @@
 import { useSelector } from "react-redux";
 import type { RootState } from "../store";
 
+export const useSelected = () => {
+  return useSelector((state: RootState) => {
+    return state.ui.selected;
+  });
+};
+
 export const useSelectedTable = () => {
   return useSelector((state: RootState) => {
-    const selectedNodeId = state.ui.selectedTableId;
+    const selectedNodeId = state.ui.selected.tableId;
     if (!selectedNodeId) return null;
 
     return (
@@ -14,7 +20,7 @@ export const useSelectedTable = () => {
 
 export const useSelectedRelation = () => {
   return useSelector((state: RootState) => {
-    const selectedRelationId = state.ui.selectedRelationId;
+    const selectedRelationId = state.ui.selected.relationId;
     if (!selectedRelationId) return null;
 
     return (

@@ -10,7 +10,6 @@ import { updateTablePosition } from "@/store/ui/slice";
 import { useReactFlow } from "@xyflow/react";
 import { useHistory } from "@/hooks/use-history";
 import { CreateTableCommand } from "@/commands/CreateTableCommand";
-import { useSelectedTable } from "@/store/ui/selector";
 import { useState } from "react";
 import { useDebounce } from "@uidotdev/usehooks";
 
@@ -19,7 +18,6 @@ export const TableList = () => {
   const dispatch = useDispatch();
   const reactFlow = useReactFlow();
   const history = useHistory();
-  const selectedTable = useSelectedTable();
   const [searchTerm, setSearchTerm] = useState<string | null>(null);
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
@@ -80,11 +78,7 @@ export const TableList = () => {
               : true,
           )
           .map((table) => (
-            <TableItem
-              table={table}
-              key={table.id}
-              active={selectedTable?.id === table.id}
-            />
+            <TableItem table={table} key={table.id} />
           ))}
       </div>
     </div>

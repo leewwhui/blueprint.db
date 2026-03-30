@@ -3,20 +3,19 @@ import { TableList } from "./table/table-list";
 import { ToolbarButton } from "./tool-bar-button";
 import { useEffect, useState } from "react";
 import { RelationshipList } from "./relationship/relationships";
-import { useSelectedRelation, useSelectedTable } from "@/store/ui/selector";
+import { useSelected } from "@/store/ui/selector";
 
 export const Sidebar = () => {
   const [tool, setTool] = useState<"tables" | "refs" | "versions">("tables");
-  const selectedTable = useSelectedTable();
-  const selectedRelation = useSelectedRelation();
+  const selected = useSelected();
 
   useEffect(() => {
-    if (selectedTable) {
+    if (selected.tableId) {
       setTool("tables");
-    } else if (selectedRelation) {
+    } else if (selected.relationId) {
       setTool("refs");
     }
-  }, [selectedTable, selectedRelation]);
+  }, [selected]);
 
   return (
     <aside className="border-r shadow flex text-sm h-full min-h-0 overflow-hidden">

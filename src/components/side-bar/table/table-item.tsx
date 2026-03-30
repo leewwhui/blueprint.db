@@ -8,30 +8,34 @@ import {
 import { TableForm } from "../../table-form/table-form";
 import { DefaultTableTheme } from "@/lib/colors";
 import { TableItemHeader } from "./table-item-header";
+import { useSelected } from "@/store/ui/selector";
 
 interface TableItemProps {
   table: ITable;
-  active: boolean;
 }
 
 export const TableItem: FC<TableItemProps> = (props) => {
-  const { table, active } = props;
-  const containerRef = useRef<HTMLDivElement>(null);
+  const { table } = props;
+
+  const selected = useSelected();
   const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setOpen(active);
+    const isSelected = selected.tableId === table.id;
 
-    if (!active) {
+    if (!isSelected) {
       return;
     }
+
+    setOpen(isSelected);
 
     scrollTo({
       left: 0,
       top: containerRef.current?.offsetTop ?? 0,
       behavior: "smooth",
     });
-  }, [active]);
+  }, [selected]);
 
   return (
     <div ref={containerRef} className="scroll-mt-20">

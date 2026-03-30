@@ -7,14 +7,20 @@ import {
 import type { IVector2 } from "@/contracts/math";
 
 export interface IUIState {
-  selectedTableId: string | null;
-  selectedRelationId: string | null;
+  selected: {
+    tableId: string | null;
+    relationId: string | null;
+  };
   tablePositions: Record<string, IVector2>;
 }
 
 const initialState: IUIState = {
-  selectedTableId: null,
-  selectedRelationId: null,
+  // selectedTableId: null,
+  // selectedRelationId: null,
+  selected: {
+    tableId: null,
+    relationId: null,
+  },
   tablePositions: {},
 };
 

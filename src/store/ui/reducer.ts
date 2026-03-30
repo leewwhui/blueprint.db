@@ -11,14 +11,20 @@ export const selectTableAction = (
   state: IUIState,
   action: PayloadAction<string | null>,
 ) => {
-  state.selectedTableId = action.payload;
+  state.selected = {
+    tableId: action.payload,
+    relationId: null,
+  };
 };
 
 export const selectRelationAction = (
   state: IUIState,
   action: PayloadAction<string | null>,
 ) => {
-  state.selectedRelationId = action.payload;
+  state.selected = {
+    tableId: null,
+    relationId: action.payload,
+  };
 };
 
 export const updateTablePositionAction = (
