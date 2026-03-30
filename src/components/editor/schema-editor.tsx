@@ -89,7 +89,6 @@ export const SchemaEditor = () => {
   };
 
   const onEdgeDoubleClick = (_: React.MouseEvent, edge: Edge) => {
-    console.log(edge);
     dispatch(selectRelation(edge.id));
   };
 
