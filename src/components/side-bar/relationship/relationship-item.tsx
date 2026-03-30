@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { useDispatch } from "react-redux";
 import { selectTable } from "@/store/ui/slice";
 import { useSelected } from "@/store/ui/selector";
+import { deleteRelations } from "@/store/schema/slice";
 
 interface IRelationshipItemProps {
   relation: IRelation;
@@ -51,6 +52,11 @@ export const RelationshipItem: FC<IRelationshipItemProps> = (props) => {
     dispatch(selectTable(tableId));
   };
 
+  const onDeleteRelation = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    dispatch(deleteRelations({ relationIds: [relation.id] }));
+  };
+
   return (
     <div ref={containerRef} className="scroll-mt-20">
       <Collapsible
@@ -60,7 +66,7 @@ export const RelationshipItem: FC<IRelationshipItemProps> = (props) => {
       >
         <CollapsibleTrigger asChild>
           <div className="w-full truncate line-clamp-1 gap-1 text-start p-2 hover:bg-accent flex items-center justify-between cursor-pointer">
-            <RelationshipHeader name={relationName} />
+            <RelationshipHeader name={relationName} onDelete={onDeleteRelation} />
           </div>
         </CollapsibleTrigger>
         <CollapsibleContent className="p-1">
